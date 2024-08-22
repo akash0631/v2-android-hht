@@ -1,0 +1,78 @@
+<resources>
+    <string name="app_name">V2RetailOps</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title"> V2 Store</string>
+    <string name="nav_header_subtitle">Variety \u0026 Value</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_login">Sign in</string>
+    <string name="scanner_activity">Scan</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">User</string>
+    <string name="prompt_password">Password </string>
+    <string name="action_sign_in">Login</string>
+    <string name="action_sign_in_short">Login in</string>
+    <string name="error_invalid_email">This user name is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+
+    <string name="dev">8080 (Prod)</string>
+    <string name="qa">7080 (QA) </string>
+    <string name="prod">6080 (Dev)</string>
+
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!--
+    <string name="version">Version : 2.5</string>
+    -->
+    <string name="date">Date.</string>
+
+    <array name="ipAddress">
+
+        <item>https://app.v2axasync-prd.v2rtl.com:8443/xmwgw (Prod)</item>
+        <!--
+        <item>http://192.168.144.200:8080/xmwgw (Prod)</item>
+        <item>http://192.168.151.40:7080/xmwgw (QA)</item>
+        <item>http://192.168.151.40:6080/xmwgw (Dev)</item>
+        -->
+        <item>http://192.168.144.200:9080/xmwgw (HanaProd)</item>
+        <item>http://192.168.144.200:18080/xmwgw (HanaPP)</item>
+        <item>http://192.168.151.40:17080/xmwgw (HanaQA)</item>
+        <item>http://192.168.151.40:16080/xmwgw (HanaDev)</item>
+
+        <!--<item>http://223.30.160.101:1080/xmwgwqa (QA)</item>
+        <item>http://223.30.160.101:1080/xmwgwdev (Dev)</item>-->
+
+        <item>http://103.55.63.14:1080/hanaqa (hanaQA)</item>
+        <item>http://103.55.63.14:1080/hanadev (hanaDev)</item>
+    </array>
+    <array name="choose_store">
+        <item>DC</item>
+        <item>Store</item>
+    </array>
+    <array name="store_name">
+        <item>Select Store Name</item>
+        <item>0001</item>
+        <item>V01</item>
+        <item>V02</item>
+        <item>0003</item>
+        <item>0004</item>
+        <item>0005</item>
+        <item>0006</item>
+    </array>
+
+    <array name="delivery_rejection_reason">
+        <item>Select Reason</item>
+        <item>RTO (Return to origin)</item>
+        <item>Customer refused to accept</item>
+        <item>Other</item>
+    </array>
+
+</resources>

@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".IPActivity">
+
+    <LinearLayout
+        android:padding="10dp"
+
+        android:layout_margin="5dp"
+        android:gravity="center|center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Enter Host IP Address"
+            android:textStyle="bold"
+            android:textSize="20sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="vertical"
+            android:padding="4dp"
+            android:gravity="center"
+            android:background="#eee5e5"
+            android:layout_margin="3dp">
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:id="@+id/ip_spinner"
+            android:entries="@array/ipAddress">
+        </Spinner>
+
+
+        </LinearLayout>
+
+        <TextView
+            android:visibility="gone"
+            android:layout_width="218dp"
+            android:layout_height="30dp"
+            android:layout_margin="2dp"
+            android:layout_gravity="left"
+            android:text="Port No"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="left"
+            android:padding="8dp"
+            android:visibility="visible"
+            android:layout_margin="3dp">
+
+            <LinearLayout
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <RadioGroup
+                    android:id="@+id/portgrp"
+                    android:layout_gravity="left"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <RadioButton
+                        android:text="@string/dev"
+                        android:textSize="18sp"
+                        android:id="@+id/dev"
+                        android:checked="true"
+                        android:layout_gravity="left"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <RadioButton
+                        android:id="@+id/prod"
+                        android:text="@string/prod"
+                        android:textSize="18sp"
+                        android:layout_gravity="left"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <RadioButton
+                        android:text="@string/qa"
+                        android:textSize="18sp"
+                        android:id="@+id/qa"
+                        android:layout_gravity="left"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </RadioGroup>
+            </LinearLayout>
+
+
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="5dp">
+
+            <Button
+                android:layout_weight="1.5"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="EXIT"
+                android:id="@+id/exit"
+
+                android:background="@drawable/shadow"
+                android:layout_margin="5dp"
+
+                android:textSize="15sp" />
+
+            <Button
+                android:layout_weight="1.5"
+                android:textSize="15sp"
+                android:text="Connect"
+                android:id="@+id/connect"
+                android:background="@drawable/shadow"
+                android:layout_margin="5dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="" />
+        </LinearLayout>
+
+
+        <ImageView
+            android:layout_width="91dp"
+            android:layout_height="72dp"
+            android:layout_marginTop="1dp"
+            app:srcCompat="@mipmap/ic_launcher_foreground" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:text=""
+            android:id="@+id/ver"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_height="wrap_content" />
+
+
+    </LinearLayout>
+</RelativeLayout>

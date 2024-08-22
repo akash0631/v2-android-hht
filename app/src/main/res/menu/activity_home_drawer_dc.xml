@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+
+    <group
+        android:checkableBehavior="single"
+        android:id="@+id/g2">
+
+        <item
+            android:id="@+id/nav_home_frag"
+            android:icon="@drawable/arrow_up"
+            android:title="Home" />
+        <item
+            android:id="@+id/nav_inward"
+            android:icon="@drawable/arrow_down"
+            android:title="Inward" />
+        <item
+            android:id="@+id/nav_outward"
+            android:icon="@drawable/arrow_up"
+            android:title="Outward" />
+        <item
+            android:id="@+id/nav_stocktake_frag"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="Stock Take" />
+    </group>
+
+
+   <!-- <item android:title="Communicate">
+        <menu>
+            <item
+                android:id="@+id/nav_stock"
+                android:icon="@drawable/ic_menu_share"
+                android:title="STOCK in Gondola" />
+            <item
+                android:id="@+id/nav_Fire_issue"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Fire Issue" />
+        </menu>
+    </item>-->
+
+</menu>

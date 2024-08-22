@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.v2retail.dotvik.dc.DC_DashBoard">
+
+    <!-- TODO: Update blank fragment layout -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="2dp"
+        android:background="#000"
+        android:padding="5dp">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:textColor="#fff"
+
+            android:id="@+id/inward"
+            android:background="#e71821"
+            android:text="Inward" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Outward"
+            android:layout_margin="5dp"
+            android:textColor="#fff"
+
+            android:id="@+id/outward"
+            android:background="#e71821" />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="V11 To Msa"
+            android:id="@+id/v11_to_msa"
+            android:layout_margin="5dp"
+            android:textColor="#fff"
+            android:background="#e71821" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Stock Take"
+
+            android:id="@+id/stock_take"
+            android:layout_margin="5dp"
+            android:textColor="#fff"
+            android:background="#e71821" />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="GRT"
+            android:id="@+id/grt_process"
+            android:layout_margin="5dp"
+            android:textColor="#fff"
+            android:background="#e71821" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="PTL"
+            android:id="@+id/ptl_process"
+            android:layout_margin="5dp"
+            android:textColor="#fff"
+            android:background="#e71821" />
+        <!--<Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="GRT Crate Picking"
+
+            android:id="@+id/grt_crate_picking"
+            android:layout_margin="5dp"
+            android:textColor="#fff"
+            android:background="#e71821" />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="GRT Crate Sorting"
+            android:id="@+id/grt_crate_sorting"
+            android:layout_margin="5dp"
+            android:textColor="#fff"
+            android:background="#e71821" />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="HU Creation"
+            android:id="@+id/hu_creation_process"
+            android:layout_margin="5dp"
+            android:textColor="#fff"
+            android:background="#e71821" />-->
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="CLA Process"
+
+            android:id="@+id/cla_process"
+            android:layout_margin="5dp"
+            android:textColor="#fff"
+            android:background="#e71821" />
+
+    </LinearLayout>
+
+</FrameLayout>

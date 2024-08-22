@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="10"
+        android:orientation="horizontal"
+        >
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"
+            android:orientation="vertical"
+            >
+
+            <TextView
+                android:id="@+id/text_bin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text=""
+                android:gravity="center"
+                android:textStyle="bold"
+                android:background="@drawable/input_bg"
+                android:textAppearance="@style/MyEditTextStyle"
+                android:textColor="@drawable/text_view_selector"
+                />
+
+            <TextView
+                android:id="@+id/text_line_crate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text=""
+                android:gravity="center"
+                android:textStyle="bold"
+                android:background="@drawable/input_bg"
+                android:textAppearance="@style/MyEditTextStyle"
+                android:textColor="@drawable/text_view_selector"
+                />
+
+            <TextView
+                android:id="@+id/text_nature"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint=""
+                android:padding="5dp"
+                android:layout_marginEnd="2dp"
+                android:background="@drawable/input_bg"
+                android:textAppearance="@style/MyEditTextStyle"
+                android:textColor="@drawable/text_view_selector"
+                />
+        </LinearLayout>
+
+
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:orientation="vertical"
+            >
+
+            <TextView
+                android:id="@+id/text_item_matnr"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint=""
+                android:padding="10dp"
+                android:layout_marginEnd="2dp"
+                android:background="@drawable/input_bg"
+                android:maxLines="3"
+                android:textAppearance="@style/MyEditTextStyle"
+                android:textColor="@drawable/text_view_selector"
+                />
+
+
+            <TextView
+                android:id="@+id/text_item_qty"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/input_bg"
+                android:gravity="center_horizontal|center_vertical"
+                android:hint=""
+                android:padding="3dp"
+                android:textAlignment="gravity"
+                android:textAppearance="@style/MyEditTextStyle"
+                android:textColor="@drawable/text_view_selector" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/iv_article_image"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:layout_weight="2"
+            android:background="@drawable/input_bg"
+            />
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            android:orientation="vertical">
+
+            <CheckBox
+                android:id="@+id/cb_not_found"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=""
+                />
+
+            <TextView
+                android:id="@+id/cb_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Not Found"
+                />
+        </LinearLayout>
+
+
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/black"/>
+</LinearLayout>

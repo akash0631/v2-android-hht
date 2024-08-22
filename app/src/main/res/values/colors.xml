@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#e71821</color>
+    <color name="colorPrimaryDark">#cb1019</color>
+    <color name="colorAccent">#c6c4c4</color>
+    <color name="lightGrey">#DCDCDC</color>
+    <color name="redAccent">#fffaea</color>
+    <color name="buttonColor">#e71821</color>
+    <color name="buttonColortext">#000</color>
+    <color name="viewBg">#f1f5f8</color>
+    <color name="album_title">#4c4c4c</color>
+    <color name="white">#fff</color>
+    <color name="black">#CB000000</color>
+    <color name="sales">#d5abea</color>
+    <color name="stock">#ec4169</color>
+    <color name="sales_gen">#f1c97b</color>
+    <color name="ageing">#FFC107</color>
+    <color name="stock_gen">#f18054</color>
+    <color name="merchandise">#f77edf</color>
+    <color name="dc">#FFEB3B</color>
+
+    <!-- for edittext control enable and disable color-->
+    <color name="enabled_color">#000000</color>
+    <color name="disabled_color">#555555</color>
+
+    <!-- for textview control enable and disable color-->
+    <color name="toggle_false">#B6B6B6</color>
+    <color name="tv_enabled_color">#888888</color>
+    <color name="tv_disabled_color">#888888</color>
+</resources>

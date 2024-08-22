@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:id="@+id/dashboard">
+
+    <!-- TODO: Update blank fragment layout -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_margin="2dp"
+            android:background="#000"
+            android:padding="5dp"
+            android:tag="home_tag">
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:textColor="#fff"
+                android:id="@+id/inbound"
+                android:background="#e71821"
+                android:text="InBound" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="OutBound"
+                android:layout_margin="5dp"
+                android:textColor="#fff"
+                android:id="@+id/outbound"
+                android:background="#e71821" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Stock Take (Old)"
+                android:id="@+id/stock_take"
+                android:layout_margin="5dp"
+                android:textColor="#fff"
+                android:background="#e71821" />
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Stock Take (New)"
+                android:id="@+id/stock_take2"
+                android:layout_margin="5dp"
+                android:textColor="#fff"
+                android:background="#e71821"/>
+            <!--   android:textColor="#000"
+               android:background="@color/colorAccent" -->
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Retail App"
+                android:id="@+id/retailApp"
+                android:layout_margin="5dp"
+                android:textColor="#fff"
+                android:background="#e71821" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Ecomm"
+                android:id="@+id/store_ecomm"
+                android:layout_margin="5dp"
+                android:textColor="#fff"
+                android:background="#e71821" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="RF id Scanner"
+                android:id="@+id/Rf_idScanner"
+                android:layout_margin="5dp"
+                android:textColor="#fff"
+                android:background="#e71821" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Save Picklist"
+                android:id="@+id/picklist_save"
+                android:layout_margin="5dp"
+                android:textColor="#fff"
+                android:background="#e71821" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</FrameLayout>

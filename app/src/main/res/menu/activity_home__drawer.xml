@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+
+    <group
+        android:checkableBehavior="single"
+        android:id="@+id/g1">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/arrow_up"
+            android:title="Home" />
+        <item
+            android:id="@+id/nav_inbound"
+            android:icon="@drawable/arrow_down"
+            android:title="Inbound" />
+        <item
+            android:id="@+id/nav_outbound"
+            android:icon="@drawable/arrow_up"
+            android:title="OutBound" />
+        <item
+            android:id="@+id/nav_stocktake"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="Stock Take" />
+        <item
+            android:id="@+id/nav_retailApp"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="Retail App" />
+     <!--   <item
+            android:id="@+id/nav_baseStock"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="Base Stock" />
+        <item
+            android:id="@+id/nav_msa"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="GRT from MSA" />
+        <item
+            android:id="@+id/nav_display"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="GRT from Display" />-->
+    </group>
+
+
+    <!--<item android:title="Communicate">
+        <menu>
+            <item
+                android:id="@+id/nav_stock"
+                android:icon="@drawable/ic_menu_share"
+                android:title="STOCK in Gondola" />
+            <item
+                android:id="@+id/nav_Fire_issue"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Fire Issue" />
+        </menu>
+    </item>-->
+
+</menu>

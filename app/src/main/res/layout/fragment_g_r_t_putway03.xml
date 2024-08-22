@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".dc.GRTPutway03Fragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_margin="5dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_margin="2dp"
+                android:padding="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="5dp">
+
+                    <TextView
+                        android:layout_weight=".9"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="DC Site"
+                        android:textSize="15sp" />
+
+                    <EditText
+                        android:layout_weight="1.5"
+                        android:textSize="15sp"
+                        android:id="@+id/dc_site"
+                        android:imeOptions="actionNext"
+                        android:singleLine="true"
+                        android:inputType="text"
+                        android:lines="1"
+                        android:text=""
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:hint="DC Site" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="5dp">
+
+                    <TextView
+                        android:layout_weight=".9"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="Crate"
+                        android:textSize="15sp" />
+
+                    <EditText
+                        android:layout_weight="1.5"
+                        android:textSize="15sp"
+                        android:id="@+id/crate"
+                        android:layout_width="0dp"
+                        android:enabled="true"
+                        android:singleLine="true"
+                        android:imeOptions="actionSearch"
+                        android:layout_height="wrap_content"
+                        android:hint="Crate" />
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="5dp">
+
+                    <TextView
+                        android:layout_weight=".9"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="Destination Bin"
+                        android:textSize="15sp" />
+
+                    <EditText
+                        android:layout_weight="1.5"
+                        android:textSize="15sp"
+                        android:id="@+id/destination_bin"
+                        android:layout_width="0dp"
+                        android:imeOptions="actionSearch"
+                        android:singleLine="true"
+                        android:inputType="text"
+                        android:lines="1"
+                        android:layout_height="wrap_content"
+                        android:hint="Destination Bin" />
+
+                </LinearLayout>
+
+
+
+
+
+            </LinearLayout>
+
+        </ScrollView>
+
+        <TextView
+            android:id="@+id/response"
+
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_margin="2dp"
+            android:padding="5dp"
+            android:text="status:"
+            android:layout_weight="0"
+            android:visibility="gone"
+            android:textColor="@color/colorPrimary" />
+
+        <LinearLayout
+            android:layout_weight="0"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="5dp">
+
+            <Button
+                android:layout_weight="1.5"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Back"
+                android:id="@+id/back"
+                android:background="@drawable/shadow"
+                android:layout_margin="2dp"
+                android:textSize="15sp" />
+
+            <Button
+                android:layout_weight="1.5"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Reset"
+                android:id="@+id/reset"
+                android:background="@drawable/shadow"
+                android:layout_margin="2dp"
+                android:textSize="15sp" />
+
+            <Button
+                android:layout_weight="1.5"
+                android:textSize="15sp"
+                android:text="Submit"
+                android:id="@+id/submit"
+                android:background="@drawable/shadow"
+                android:layout_margin="2dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</FrameLayout>
