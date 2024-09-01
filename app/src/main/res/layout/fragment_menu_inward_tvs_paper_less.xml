@@ -38,7 +38,14 @@
             android:id="@+id/btn_tvs_paperless_re_print"
             android:background="#e71821"
             android:text="Re-Print" />
-
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:textColor="#fff"
+            android:id="@+id/btn_tvs_paperless_test_print"
+            android:background="#e71821"
+            android:text="Test Print" />
     </LinearLayout>
 
 </FrameLayout>

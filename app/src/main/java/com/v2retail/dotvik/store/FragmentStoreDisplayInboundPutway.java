@@ -64,7 +64,8 @@ public class FragmentStoreDisplayInboundPutway extends Fragment implements View.
     ProgressDialog dialog;
     String TAG = FragmentStoreDisplayInboundPutway.class.getName();
     private static final int REQUEST_VALIDATE_BIN = 5201;
-    private static final int REQUEST_SAVE = 5202;
+    private static final int REQUEST_VALIDATE_EAN = 5202;
+    private static final int REQUEST_SAVE = 5203;
     String URL;
     String WERKS;
     String USER;
@@ -272,9 +273,6 @@ public class FragmentStoreDisplayInboundPutway extends Fragment implements View.
     }
     private void validateBin() {
         String binno = UIFuncs.toUpperTrim(txt_scanbin);
-        if(binAlreadyScanned(binno)){
-            return;
-        }
         JSONObject args = new JSONObject();
         try {
             args.put("bapiname", Vars.ZWM_STORE_IROD_PUTWAY_VALIDATE);
@@ -305,7 +303,10 @@ public class FragmentStoreDisplayInboundPutway extends Fragment implements View.
             if(arrlength > 0){
                 for(int recordIndex = 1; recordIndex < arrlength; recordIndex++){
                     JSONObject ET_RECORD  = arrEtData.getJSONObject(recordIndex);
-                    etData.put(ET_RECORD.getString("MATNR"),ETDataStorePutway.newInstance(ET_RECORD,UIFuncs.toUpperTrim(txt_sloc),WERKS,binno));
+                    ETDataStorePutway etRecord = ETDataStorePutway.newInstance(ET_RECORD,UIFuncs.toUpperTrim(txt_sloc),WERKS,binno);
+                    if(!etData.containsKey(etRecord.getMatnr())){
+                        etData.put(ET_RECORD.getString("MATNR"),etRecord);
+                    }
                 }
             }
             arrlength = arrEtEanData.length();
@@ -313,23 +314,19 @@ public class FragmentStoreDisplayInboundPutway extends Fragment implements View.
                 HashMap<String, ETEanDataStorePutway> mapEtEanData = new HashMap<>();
                 for(int recordIndex = 1; recordIndex < arrlength; recordIndex++){
                     JSONObject ET_EAN_RECORD  = arrEtEanData.getJSONObject(recordIndex);
-                    etEanData.put(ET_EAN_RECORD.getString("EAN11"),ETEanDataStorePutway.newInstance(ET_EAN_RECORD));
+                    ETEanDataStorePutway eanRecord = ETEanDataStorePutway.newInstance(ET_EAN_RECORD);
+                    if(!etEanData.containsKey(eanRecord.getEan11())){
+                        etEanData.put(ET_EAN_RECORD.getString("EAN11"),eanRecord);
+                    }
                 }
             }
-            resetBinScanFields(binno);
             calculateTotalQty();
+            incrementCount(UIFuncs.toUpperTrim(txt_ean));
         }catch (Exception exce){
             box.getErrBox(exce);
         }
     }
-    private boolean binAlreadyScanned(String binno){
-        if(etEanData.containsKey(binno)){
-            resetBinScanFields(binno);
-            return true;
-        }
-        return false;
-    }
-    private void resetBinScanFields(String binno){
+    private void resetBinScanFields(){
         UIFuncs.disableInput(con, txt_scanbin);
         txt_ean.setText("");
         txt_article.setText("");
@@ -338,38 +335,55 @@ public class FragmentStoreDisplayInboundPutway extends Fragment implements View.
     }
     private void validateEan(){
         String eanno = UIFuncs.toUpperTrim(txt_ean);
-        ETEanDataStorePutway eanRecord = searchEan(eanno);
-        if(eanRecord != null){
+        if(etEanData.containsKey(eanno)){
+            incrementCount(eanno);
+        }else{
+            JSONObject args = new JSONObject();
+            try {
+                args.put("bapiname", Vars.ZWM_STORE_IROD_EAN_STOCK_V01);
+                args.put("IM_WERKS", WERKS);
+                args.put("IM_USER", USER);
+                args.put("IM_MATNR", eanno);
+                showProcessingAndSubmit(Vars.ZWM_STORE_IROD_EAN_STOCK_V01, REQUEST_VALIDATE_EAN, args);
+            } catch (JSONException e) {
+                e.printStackTrace();
+                UIFuncs.errorSound(con);
+                if(dialog!=null) {
+                    dialog.dismiss();
+                    dialog = null;
+                }
+                AlertBox box = new AlertBox(getContext());
+                box.getErrBox(e);
+            }
+        }
+    }
+    private void incrementCount(String eanno){
+        if(etEanData.containsKey(eanno)){
+            ETEanDataStorePutway eanRecord = etEanData.get(eanno);
             String matnr = eanRecord.getMatnr();
-            if(etData.containsKey(matnr)){
+            if (etData.containsKey(matnr)) {
                 ETDataStorePutway etRecord = etData.get(matnr);
                 int allowedQty = (int) Double.parseDouble(etRecord.getVerme1());
                 int matnrSqty = (int) Double.parseDouble(etRecord.getVerme());
                 int lotQty = (int) Double.parseDouble(eanRecord.getUmrez());
 
-                if(matnrSqty + lotQty > allowedQty){
-                    showError("Not Allowed","Already scanned maximum allowed Qty");
-                }else{
+                if (matnrSqty + lotQty > allowedQty) {
+                    showError("Not Allowed", "Already scanned maximum allowed Qty");
+                } else {
                     totalScannedQty = totalScannedQty + lotQty;
-                    etRecord.setVerme((matnrSqty + lotQty)+"");
-                    txt_sqty.setText(totalScannedQty+"");
+                    etRecord.setVerme((matnrSqty + lotQty) + "");
+                    txt_sqty.setText(totalScannedQty + "");
                     txt_article.setText(UIFuncs.removeLeadingZeros(etRecord.getMatnr()));
                     txt_description.setText(etRecord.getMaktx());
                 }
-            }else{
-                showError("Invalid Article","Article not found in ET Records");
+            } else {
+                showError("Invalid Article", "No Stock Found");
             }
+        }else{
+            showError("Invalid EAN", "EAN not found in ET EAN Records");
         }
         txt_ean.setText("");
         txt_ean.requestFocus();
-    }
-    private ETEanDataStorePutway searchEan(String eanno){
-        if(etEanData.containsKey(eanno)){
-            return etEanData.get(eanno);
-        }else{
-            showError("Invalid EAN","Scanned Article is not valid");
-        }
-        return null;
     }
 
     private void saveData() {
@@ -493,6 +507,10 @@ public class FragmentStoreDisplayInboundPutway extends Fragment implements View.
                                             txt_scanbin.setText("");
                                             txt_scanbin.requestFocus();
                                         }
+                                        if(request == REQUEST_VALIDATE_EAN){
+                                            txt_ean.setText("");
+                                            txt_ean.requestFocus();
+                                        }
                                         if(request == REQUEST_SAVE){
                                             txt_ean.setText("");
                                             txt_ean.requestFocus();
@@ -502,6 +520,10 @@ public class FragmentStoreDisplayInboundPutway extends Fragment implements View.
                                         box.getBox("Err", returnobj.getString("MESSAGE"));
                                     } else {
                                         if(request == REQUEST_VALIDATE_BIN){
+                                            resetBinScanFields();
+                                            return;
+                                        }
+                                        if(request == REQUEST_VALIDATE_EAN){
                                             setData(responsebody);
                                             return;
                                         }

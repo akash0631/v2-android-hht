@@ -122,19 +122,20 @@ public class TSPLPrinter {
         String weight = "HU Weight:- XXKg";
         String tvstext = "XXXXXX";
         String huno = "1234567890";
-        try{
-            werks = huObj.getString("DWERKS");
-            warehouse = huObj.getString("DWERKS_NAME1");
-            qty = String.format("Qty %s", Util.convertToDoubleString(huObj.getString("VEMNG")));
-            hhtid = String.format("HHT ID %s", huObj.getString("HHT_ID"));
-            date = String.format("Date:- %s", huObj.getString("DATUM"));
-            weight = "HU Weight:- XXKg";
-            tvstext = huObj.getString("TVS_TEXT");
-            huno = huObj.getString("SAP_HU");
-        }catch (Exception exce){
+        if(huObj != null){
+            try{
+                werks = huObj.getString("DWERKS");
+                warehouse = huObj.getString("DWERKS_NAME1");
+                qty = String.format("Qty %s", Util.convertToDoubleString(huObj.getString("VEMNG")));
+                hhtid = String.format("HHT ID %s", huObj.getString("HHT_ID"));
+                date = String.format("Date:- %s", huObj.getString("DATUM"));
+                weight = "HU Weight:- XXKg";
+                tvstext = huObj.getString("TVS_TEXT");
+                huno = huObj.getString("SAP_HU");
+            }catch (Exception exce){
 
+            }
         }
-
         double labelWidthInDots = (70 / 25.4) * 203;
         return "SIZE 70 mm, 40 mm\n" +
                 "GAP 3 mm, 0 mm\n" +

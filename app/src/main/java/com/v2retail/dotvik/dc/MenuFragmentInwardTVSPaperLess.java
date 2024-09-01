@@ -19,6 +19,7 @@ import com.v2retail.dotvik.R;
 import com.v2retail.dotvik.store.Home_Activity;
 import com.v2retail.dotvik.store.PaperLessDate;
 import com.v2retail.util.AlertBox;
+import com.v2retail.util.TSPLPrinter;
 
 /**
  * @author Narayanan
@@ -27,7 +28,7 @@ import com.v2retail.util.AlertBox;
  */
 public class MenuFragmentInwardTVSPaperLess extends Fragment implements View.OnClickListener {
 
-    Button btn_picking, btn_picking_confirmation, btn_reprint;
+    Button btn_picking, btn_picking_confirmation, btn_reprint, btn_testprint;
     FragmentManager fm;
     Context con;
     private OnFragmentInteractionListener mListener;
@@ -63,10 +64,12 @@ public class MenuFragmentInwardTVSPaperLess extends Fragment implements View.OnC
         btn_picking = view.findViewById(R.id.btn_tvs_paperless_picking);
         btn_picking_confirmation = view.findViewById(R.id.btn_tvs_paperless_picking_confirm);
         btn_reprint = view.findViewById(R.id.btn_tvs_paperless_re_print);
+        btn_testprint = view.findViewById(R.id.btn_tvs_paperless_test_print);
 
         btn_picking.setOnClickListener(this);
         btn_picking_confirmation.setOnClickListener(this);
         btn_reprint.setOnClickListener(this);
+        btn_testprint.setOnClickListener(this);
 
         return view;
     }
@@ -111,6 +114,10 @@ public class MenuFragmentInwardTVSPaperLess extends Fragment implements View.OnC
 
             case R.id.btn_tvs_paperless_re_print:
 
+                break;
+            case R.id.btn_tvs_paperless_test_print:
+                TSPLPrinter printer = new TSPLPrinter(getContext());
+                printer.sendPrintCommandToBluetoothPrinter("4B-2033PA-BFA4", null);
                 break;
         }
 

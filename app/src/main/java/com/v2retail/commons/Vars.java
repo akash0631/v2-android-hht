@@ -136,4 +136,5 @@ public class Vars {
     public static String ZWM_STORE_IROD_EAN_VALIDATE = "ZWM_STORE_IROD_EAN_VALIDATE";
     public static String ZWM_STORE_IROD_PICK = "ZWM_STORE_IROD_PICK";
     public static String ZWM_STORE_IROD_EMPTY = "ZWM_STORE_IROD_EMPTY";
+    public static String ZWM_STORE_IROD_EAN_STOCK_V01 = "ZWM_STORE_IROD_EAN_STOCK_V01";
 }

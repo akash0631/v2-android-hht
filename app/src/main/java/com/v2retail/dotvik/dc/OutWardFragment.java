@@ -25,7 +25,8 @@ import com.v2retail.util.AlertBox;
  * Use the {@link OutWardFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class OutWardFragment extends Fragment implements View.OnClickListener
+public class OutWardFragment extends Fragment implements View.OnClickListener,
+        MenuFragmentInwardTVSPaperLess.OnFragmentInteractionListener
 
 {
     // TODO: Rename parameter arguments, choose names that match
@@ -39,7 +40,7 @@ public class OutWardFragment extends Fragment implements View.OnClickListener
     Button hu_cla;
     Context con;
     AlertBox box;
-    Button sample_stock_movement,shade_stock_movement,empty_bin,grt_hu_move,hu_weight;
+    Button sample_stock_movement,shade_stock_movement,empty_bin,grt_hu_move,hu_weight,tvs_paperless_picking;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -105,6 +106,7 @@ public class OutWardFragment extends Fragment implements View.OnClickListener
         empty_bin = (Button) view.findViewById(R.id.empty_bin);
         grt_hu_move = (Button) view.findViewById(R.id.grt_hu_move);
         hu_weight = view.findViewById(R.id.outward_hu_weight);
+        tvs_paperless_picking= view.findViewById(R.id.tvs_paperless_picking);
 
         picking.setOnClickListener(this);
         hu_scan.setOnClickListener(this);
@@ -113,6 +115,8 @@ public class OutWardFragment extends Fragment implements View.OnClickListener
         empty_bin.setOnClickListener(this);
         grt_hu_move.setOnClickListener(this);
         hu_weight.setOnClickListener(this);
+        tvs_paperless_picking.setOnClickListener(this);
+
         return view;
     }
 
@@ -188,6 +192,9 @@ public class OutWardFragment extends Fragment implements View.OnClickListener
             case R.id.outward_hu_weight:
                 fragment = new OutwardHUWeightFragment();
                 break;
+            case R.id.tvs_paperless_picking:
+                fragment = MenuFragmentInwardTVSPaperLess.newInstance();
+                break;
 
         }
         if (fragment != null) {
@@ -212,5 +219,10 @@ public class OutWardFragment extends Fragment implements View.OnClickListener
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 }
