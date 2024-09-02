@@ -275,11 +275,11 @@ public class FragmentStoreDisplayInboundPutway extends Fragment implements View.
         String binno = UIFuncs.toUpperTrim(txt_scanbin);
         JSONObject args = new JSONObject();
         try {
-            args.put("bapiname", Vars.ZWM_STORE_IROD_PUTWAY_VALIDATE);
+            args.put("bapiname", Vars.ZWM_STORE_IROD_PUTWAY_VALID1);
             args.put("IM_WERKS", WERKS);
             args.put("IM_USER", USER);
             args.put("IM_IROD", binno);
-            showProcessingAndSubmit(Vars.ZWM_STORE_IROD_PUTWAY_VALIDATE, REQUEST_VALIDATE_BIN, args);
+            showProcessingAndSubmit(Vars.ZWM_STORE_IROD_PUTWAY_VALID1, REQUEST_VALIDATE_BIN, args);
 
         } catch (JSONException e) {
             e.printStackTrace();

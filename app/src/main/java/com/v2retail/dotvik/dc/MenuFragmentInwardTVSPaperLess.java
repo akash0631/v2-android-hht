@@ -1,13 +1,24 @@
 package com.v2retail.dotvik.dc;
 
+import android.Manifest;
+import android.app.Activity;
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothClass;
+import android.bluetooth.BluetoothDevice;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +32,10 @@ import com.v2retail.dotvik.store.PaperLessDate;
 import com.v2retail.util.AlertBox;
 import com.v2retail.util.TSPLPrinter;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
 /**
  * @author Narayanan
  * @version 11.73
@@ -32,6 +47,9 @@ public class MenuFragmentInwardTVSPaperLess extends Fragment implements View.OnC
     FragmentManager fm;
     Context con;
     private OnFragmentInteractionListener mListener;
+    BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+    Set<BluetoothDevice> pairedDevices = null;
+    List<BluetoothDevice> bluetoothDevices = null;
 
     public MenuFragmentInwardTVSPaperLess() {
         // Required empty public constructor
@@ -116,6 +134,7 @@ public class MenuFragmentInwardTVSPaperLess extends Fragment implements View.OnC
 
                 break;
             case R.id.btn_tvs_paperless_test_print:
+                //discover();
                 TSPLPrinter printer = new TSPLPrinter(getContext());
                 printer.sendPrintCommandToBluetoothPrinter("4B-2033PA-BFA4", null);
                 break;
@@ -130,5 +149,46 @@ public class MenuFragmentInwardTVSPaperLess extends Fragment implements View.OnC
     }
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(Uri uri);
+    }
+
+    public void discover(){
+        if (ActivityCompat.checkSelfPermission(con, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
+            requestBluetoothPermission(con);
+        }
+        final BroadcastReceiver receiver = new BroadcastReceiver() {
+            public void onReceive(Context context, Intent intent) {
+                String action = intent.getAction();
+                if (BluetoothDevice.ACTION_FOUND.equals(action)) {
+                    BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+                    bluetoothDevices.add(device);
+                }
+            }
+        };
+        pairedDevices = bluetoothAdapter.getBondedDevices();
+        bluetoothDevices = new ArrayList<>(pairedDevices);
+        IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
+        getActivity().registerReceiver(receiver, filter);
+        bluetoothAdapter.startDiscovery();
+        for (BluetoothDevice device: bluetoothDevices
+             ) {
+            Log.d("DEVICE NAME", device.getName());
+            int majorDeviceClass = device.getBluetoothClass().getMajorDeviceClass();
+            if (device.getBluetoothClass().getMajorDeviceClass() == BluetoothClass.Device.Major.IMAGING || device.getBluetoothClass().getDeviceClass() == 1664) {
+                Log.d("DEVICE TYPE","IMAGING "+ device.getBluetoothClass().getDeviceClass());
+            }
+        }
+    }
+
+    public void requestBluetoothPermission(Context con) {
+        if (ActivityCompat.checkSelfPermission(con, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED ||
+                ActivityCompat.checkSelfPermission(con, Manifest.permission.BLUETOOTH_SCAN) != PackageManager.PERMISSION_GRANTED ||
+                ActivityCompat.checkSelfPermission(con, Manifest.permission.BLUETOOTH_ADVERTISE) != PackageManager.PERMISSION_GRANTED) {
+            // Request the permission
+            ActivityCompat.requestPermissions(
+                    (Activity) con,
+                    new String[]{Manifest.permission.BLUETOOTH_CONNECT,Manifest.permission.BLUETOOTH_SCAN,Manifest.permission.BLUETOOTH_ADVERTISE,Manifest.permission.BLUETOOTH_ADMIN},
+                    1
+            );
+        }
     }
 }
