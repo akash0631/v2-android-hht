@@ -28,6 +28,7 @@ public class Vars {
 
     public static final String PAPER_LESS = "paperless";
     public static final String TVS_PAPER_LESS = "tvs_paperless";
+    public static final String TVS_PRINTER = "TVS_PRINTER";
 
     public static final String BREADCRUMB_DISPLAY_INTERNAL = "Display > Internal";
     public static final String BREADCRUMB_IROD_TO_IROD = "IROD To IROD";
@@ -141,4 +142,5 @@ public class Vars {
 
     public static String ZWM_STORE_IROD_TRAN_VALIDATE = "ZWM_STORE_IROD_TRAN_VALIDATE";
     public static String ZWM_STORE_IROD_GANDOLA_TAG = "ZWM_STORE_IROD_GANDOLA_TAG";
+    public static String ZWM_PRINT_HU_TVS = "ZWM_PRINT_HU_TVS";
 }

@@ -39,7 +39,7 @@ public class TSPLPrinter {
     private BluetoothSocket bluetoothSocket;
     private BluetoothDevice printerDevice;
     Context con;
-
+    private String printerName;
     // UUID for serial port connection (SPP)
     private static final UUID SERIAL_PORT_SERVICE_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
 
@@ -53,7 +53,7 @@ public class TSPLPrinter {
     public void sendPrintCommandToBluetoothPrinter(String printerName, JSONObject huObj) {
         try {
             // Find the Bluetooth printer by name
-            findBluetoothPrinter(printerName);
+            findBluetoothPrinter(printerName, false);
 
             if (printerDevice != null) {
                 // Connect to the Bluetooth printer
@@ -85,7 +85,7 @@ public class TSPLPrinter {
     }
 
     // Function to find the Bluetooth printer by name
-    private void findBluetoothPrinter(String printerName) {
+    public boolean findBluetoothPrinter(String printerName, boolean checkStartsWith) {
         if (ActivityCompat.checkSelfPermission(con, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
             requestBluetoothPermission(con);
         }
@@ -93,15 +93,18 @@ public class TSPLPrinter {
         if (pairedDevices.size() > 0) {
             // Loop through paired devices to find the printer
             for (BluetoothDevice device : pairedDevices) {
-                Log.d("PRINTER NAME", device.getName());
-                if (device.getName().equalsIgnoreCase(printerName)) {
+                if (device.getName().equalsIgnoreCase(printerName) || (checkStartsWith && device.getName().toUpperCase().startsWith(printerName.toUpperCase()))) {
+                    this.printerName = device.getName();
                     printerDevice = device;
-                    break;
+                    return true;
                 }
             }
         }
+        return false;
     }
-
+    public String getPrinterName(){
+        return this.printerName;
+    }
     // Function to connect to the Bluetooth printer
     private void connectToBluetoothPrinter() throws Exception {
         if (printerDevice != null) {
@@ -127,7 +130,7 @@ public class TSPLPrinter {
                 werks = huObj.getString("DWERKS");
                 warehouse = huObj.getString("DWERKS_NAME1");
                 qty = String.format("Qty %s", Util.convertToDoubleString(huObj.getString("VEMNG")));
-                hhtid = String.format("HHT ID %s", huObj.getString("HHT_ID"));
+                hhtid = String.format("HHT ID %s", UIFuncs.removeLeadingZeros(huObj.getString("HHT_ID")));
                 date = String.format("Date:- %s", huObj.getString("DATUM"));
                 weight = String.format("HU Weight:- %s", huObj.getString("WEIGHT")+huObj.getString("GEWEI"));
                 tvstext = huObj.getString("TVS_TEXT");

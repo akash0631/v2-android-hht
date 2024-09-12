@@ -102,9 +102,8 @@ public class PapperLessScan extends Fragment implements IBarcodeResult  {
     String requestUrl = "";
     String loginUser = "";
     String mode = Vars.PAPER_LESS;
-
+    String tvsprinter;
     ProgressDialog dialog = null;
-
     // ChainwayBarCode
     private Barcode2D barcode2D;
     private EditText chainwayContextEditText = null;
@@ -131,6 +130,7 @@ public class PapperLessScan extends Fragment implements IBarcodeResult  {
         SharedPreferencesData data = new SharedPreferencesData(getContext());
         this.requestUrl = data.read("URL");
         this.loginUser = data.read("USER");
+        this.tvsprinter = data.read(Vars.TVS_PRINTER);
        //  initializeChainway();
 
     }
@@ -143,7 +143,7 @@ public class PapperLessScan extends Fragment implements IBarcodeResult  {
              if(mEtBinMc != null) mExLikp = null;
              if( mEtEanData != null) mEtEanData = null;
              if(scannedDataForSubmit !=null) scannedDataForSubmit = null;
-                scanMap = new HashMap<String, Integer>();
+             scanMap = new HashMap<String, Integer>();
              if(emptyBinMap!=null) { emptyBinMap.clear(); emptyBinMap = null; }
         } catch(Exception e) {
 
@@ -177,6 +177,7 @@ public class PapperLessScan extends Fragment implements IBarcodeResult  {
         currentScanArticle = view.findViewById(R.id.current_scan_article);
         currentScanQuantity = view.findViewById(R.id.current_scan_quantity);
         currentScanOpenQuantity = view.findViewById(R.id.current_scan_open_quantity);
+        ((TextView)view.findViewById(R.id.tv_printer_name)).setText(this.tvsprinter);
 
 //        Edit Type filed
 
@@ -264,7 +265,7 @@ public class PapperLessScan extends Fragment implements IBarcodeResult  {
         configureTextChangeListners();
 
         ((Process_Selection_Activity) getActivity())
-                .setActionBarTitle("Paperless - Scanning");
+                .setActionBarTitle(Vars.PAPER_LESS.equals(mode) ?  "Paperless - Scanning" : "TVS Paperless - Scanning");
 
         // Validate_zmw_DELIVERY_GET_DETAILS_PLP2("packingNo","editDeliverySelection","inputExternalHu");
         // from first position
@@ -425,7 +426,7 @@ public class PapperLessScan extends Fragment implements IBarcodeResult  {
     public void onResume() {
         super.onResume();
         ((Process_Selection_Activity) getActivity())
-                .setActionBarTitle("Paperless - Scanning");
+                .setActionBarTitle(Vars.PAPER_LESS.equals(mode) ?  "Paperless - Scanning" : "TVS Paperless - Scanning");
     }
 
     void configureTextChangeListners() {
@@ -1492,7 +1493,7 @@ public class PapperLessScan extends Fragment implements IBarcodeResult  {
     private void printHu(JSONObject huObj) {
         TSPLPrinter printer = new TSPLPrinter(getContext());
         //4B-2033PA-BFA4
-        printer.sendPrintCommandToBluetoothPrinter("4B-2033PA-9B5A", huObj);
+        printer.sendPrintCommandToBluetoothPrinter(this.tvsprinter, huObj);
     }
 
     @Override

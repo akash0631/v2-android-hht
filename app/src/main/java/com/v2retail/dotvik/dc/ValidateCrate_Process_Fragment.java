@@ -589,15 +589,13 @@ public class ValidateCrate_Process_Fragment extends Fragment implements View.OnC
 
             if (flag==1){
                 if (getEANNR.equals(StorageType)) {
+                    boolean mixallowed = etPoDataModels.get(0).getMXALOW().equals("X");
                     for (int i = 0; i < etPoDataModels.size(); i++) {
-
                         if (etPoDataModels.get(i).getMATERIAL().equals(getEAMMAterial)) {
                             lastScan.setText(article+","+getEAMMAterial);
                             MAterialDesc = etPoDataModels.get(i).getMAT_DESC();
                             OpenQty = Double.valueOf(etPoDataModels.get(i).getOPEN_QTY()).intValue();
-//                            newOpenQty = OpenQty +(OpenQty*10)/100;
                             newOpenQty = OpenQty;
-//                            sum =  sum + Integer.valueOf(UMREZ);
                             flag1 =1;
                             rq_et.setText(String.valueOf(OpenQty));
                             curCrate_et.setText(MAterialDesc);
@@ -609,7 +607,7 @@ public class ValidateCrate_Process_Fragment extends Fragment implements View.OnC
                                     String m = jsonObject1.getString("MATERIAL");
                                     String c = jsonObject1.getString("CRATE");
                                     if(c.equals(crate)) {
-                                        if (m.equals(etPoDataModels.get(i).getMATERIAL()) || etPoDataModels.get(i).getMXALOW().equalsIgnoreCase("X")){
+                                        if (m.equals(etPoDataModels.get(i).getMATERIAL())){
                                             String sq = jsonObject1.getString("SCAN_QTY");
                                             sum = Integer.valueOf(sq);
                                             sum =  sum + Integer.valueOf(UMREZ);
@@ -619,10 +617,12 @@ public class ValidateCrate_Process_Fragment extends Fragment implements View.OnC
                                             check=false;
                                             break;
                                         }else{
-                                            box.getBox("Alert", "Different articles are not allowed. You can scan only article "+m+" in this crate");
-                                            article_no_et.setText("");
-                                            article_no_et.requestFocus();
-                                            return;
+                                            if(!mixallowed){
+                                                box.getBox("Alert", "Different articles are not allowed. You can scan only article "+m+" in this crate");
+                                                article_no_et.setText("");
+                                                article_no_et.requestFocus();
+                                                return;
+                                            }
                                         }
                                     }
                                 }
@@ -633,9 +633,6 @@ public class ValidateCrate_Process_Fragment extends Fragment implements View.OnC
                             }catch (Exception e){
                                 e.printStackTrace();
                             }
-
-//                            sum =  sum + Integer.valueOf(UMREZ);
-
                             if (sum <=  newOpenQty){
                                 ScQty = ScQty + Integer.valueOf(UMREZ);
                                 tsq_et.setText(String.valueOf(ScQty));
@@ -665,21 +662,30 @@ public class ValidateCrate_Process_Fragment extends Fragment implements View.OnC
                                 curCrate_et.setFocusable(false);
                                 crate_et.setEnabled(false);
                             } else {
-//                                box.getBox("Alert", "Scanned Qty can't be greater than Open Qty with extra 10%");
                                 box.getBox("Alert", "Scanned Qty can't be greater than Open Qty!");
+                                return;
                             }
                             break;
                         }
                     }
                 } else {
                     box.getBox("Alert", "No storage type maintain for article " + article);
+                    article_no_et.setText("");
+                    article_no_et.requestFocus();
+                    return;
                 }
             } else {
                 box.getBox("Alert", "Invalid Material");
+                article_no_et.setText("");
+                article_no_et.requestFocus();
+                return;
             }
 
             if (flag1==0&&flag==1){
                 box.getBox("Alert", "Material " + getEAMMAterial + " not found in Po");
+                article_no_et.setText("");
+                article_no_et.requestFocus();
+                return;
             }
 
         } else {

@@ -170,9 +170,20 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="8"
+                android:layout_weight="6"
                 android:padding="4dp"
                 android:text="Current/Previous Scan :"
+                android:textColor="@color/black" />
+            <TextView
+                android:id="@+id/tv_printer_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3.5"
+                android:padding="4dp"
+                android:background="@color/dc"
+                android:textAlignment="textEnd"
+                android:textSize="10dp"
+                android:text=""
                 android:textColor="@color/black" />
         </LinearLayout>
 

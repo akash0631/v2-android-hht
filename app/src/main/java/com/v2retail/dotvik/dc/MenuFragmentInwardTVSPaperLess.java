@@ -30,6 +30,7 @@ import com.v2retail.dotvik.R;
 import com.v2retail.dotvik.store.Home_Activity;
 import com.v2retail.dotvik.store.PaperLessDate;
 import com.v2retail.util.AlertBox;
+import com.v2retail.util.SharedPreferencesData;
 import com.v2retail.util.TSPLPrinter;
 
 import java.util.ArrayList;
@@ -50,6 +51,7 @@ public class MenuFragmentInwardTVSPaperLess extends Fragment implements View.OnC
     BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
     Set<BluetoothDevice> pairedDevices = null;
     List<BluetoothDevice> bluetoothDevices = null;
+    SharedPreferencesData data;
 
     public MenuFragmentInwardTVSPaperLess() {
         // Required empty public constructor
@@ -79,6 +81,8 @@ public class MenuFragmentInwardTVSPaperLess extends Fragment implements View.OnC
         View view = inflater.inflate(R.layout.fragment_menu_inward_tvs_paper_less, container, false);
 
         con = getContext();
+        data = new SharedPreferencesData(con);
+
         btn_picking = view.findViewById(R.id.btn_tvs_paperless_picking);
         btn_picking_confirmation = view.findViewById(R.id.btn_tvs_paperless_picking_confirm);
         btn_reprint = view.findViewById(R.id.btn_tvs_paperless_re_print);
@@ -131,13 +135,11 @@ public class MenuFragmentInwardTVSPaperLess extends Fragment implements View.OnC
                 break;
 
             case R.id.btn_tvs_paperless_re_print:
-
+                fragment = FragmentInwardTVSPaperLessRePrint.newInstance("TVS Paperless");
                 break;
             case R.id.btn_tvs_paperless_test_print:
                 //discover();
-                TSPLPrinter printer = new TSPLPrinter(getContext());
-                //4B-2033PA-BFA4
-                printer.sendPrintCommandToBluetoothPrinter("4B-2033PA-9B5A", null);
+                testPrint();
                 break;
         }
 
@@ -148,6 +150,30 @@ public class MenuFragmentInwardTVSPaperLess extends Fragment implements View.OnC
             ft.commit();
         }
     }
+
+    private void testPrint(){
+        //4B-2033PA-BFA4 4B-2033PA-9B5A
+        TSPLPrinter printerHelper = new TSPLPrinter(con);
+        String defaultPrinter = data.read(Vars.TVS_PRINTER);
+        boolean printerFound = false;
+        if(defaultPrinter != null && defaultPrinter.length() > 0){
+            printerFound = printerHelper.findBluetoothPrinter(defaultPrinter, false);
+        }
+        if(!printerFound){
+            printerFound = printerHelper.findBluetoothPrinter("4B-2033", true);
+            if(printerFound){
+                defaultPrinter = printerHelper.getPrinterName();
+                data.write(Vars.TVS_PRINTER, defaultPrinter);
+            }
+        }
+        if(!printerFound){
+            AlertBox box = new AlertBox(con);
+            box.getBox("Printer Not Found", "No paired TVS bluetooth printer found. Please pair");
+            return;
+        }
+        printerHelper.sendPrintCommandToBluetoothPrinter(defaultPrinter, null);
+    }
+
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(Uri uri);
     }

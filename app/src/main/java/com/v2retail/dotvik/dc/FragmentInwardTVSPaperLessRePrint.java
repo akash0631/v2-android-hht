@@ -1,7 +1,8 @@
-package com.v2retail.dotvik.store;
+package com.v2retail.dotvik.dc;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -18,7 +19,6 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
@@ -34,53 +34,49 @@ import com.android.volley.ServerError;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.google.gson.Gson;
 import com.v2retail.ApplicationController;
 import com.v2retail.commons.UIFuncs;
 import com.v2retail.commons.Vars;
 import com.v2retail.dotvik.R;
-import com.v2retail.dotvik.modal.putaway.ETDataStorePutway;
-import com.v2retail.dotvik.modal.putaway.ETEanDataStorePutway;
+import com.v2retail.dotvik.store.FragmentStoreDisplayInternalIRODToIRODTransfer;
+import com.v2retail.dotvik.store.Home_Activity;
 import com.v2retail.util.AlertBox;
 import com.v2retail.util.SharedPreferencesData;
-import com.v2retail.util.Util;
+import com.v2retail.util.TSPLPrinter;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * @author Narayanan
- * @version 11.76
- * {@code Author: Narayanan, Revision: 1, Created: 07th Sep 2024, Modified: 07th Sep 2024}
+ * @version 11.79
+ * {@code Author: Narayanan, Revision: 1, Created: 12th Sep 2024, Modified: 12th Sep 2024}
  */
-public class FragmentStoreDisplayInternalIRODToIRODTransfer extends Fragment implements View.OnClickListener {
+public class FragmentInwardTVSPaperLessRePrint extends Fragment implements View.OnClickListener {
 
     View view;
     Context con;
     FragmentManager fm;
     AlertBox box;
     ProgressDialog dialog;
-    String TAG = FragmentStoreDisplayInternalIRODToIRODTransfer.class.getName();
-    private static final int REQUEST_VALIDATE_IROD = 5401;
+    String TAG = FragmentInwardTVSPaperLessRePrint.class.getName();
     private static final int REQUEST_SAVE = 5403;
     String URL;
     String WERKS;
     String USER;
     private static String parent;
-    Button btn_back, btn_reset, btn_next, btn_save;
-    EditText txt_store, txt_sloc, txt_irod, txt_scanned_irod, txt_bin, txt_scanned_bin, txt_tqty;
-    LinearLayout ll_screen2;
+    Button btn_back, btn_reset;
+    EditText txt_printer, txt_hu;
+    SharedPreferencesData data;
     String title;
-    public FragmentStoreDisplayInternalIRODToIRODTransfer() {
+    String tvsprinter;
+
+    public FragmentInwardTVSPaperLessRePrint() {
         // Required empty public constructor
     }
 
-    public static FragmentStoreDisplayInternalIRODToIRODTransfer newInstance(String breadcrumb) {
-        FragmentStoreDisplayInternalIRODToIRODTransfer fragment = new FragmentStoreDisplayInternalIRODToIRODTransfer();
+    public static FragmentInwardTVSPaperLessRePrint newInstance(String breadcrumb) {
+        FragmentInwardTVSPaperLessRePrint fragment = new FragmentInwardTVSPaperLessRePrint();
         fragment.title  = breadcrumb;
         return fragment;
     }
@@ -88,8 +84,8 @@ public class FragmentStoreDisplayInternalIRODToIRODTransfer extends Fragment imp
     @Override
     public void onResume() {
         super.onResume();
-        ((Home_Activity) getActivity())
-                .getSupportActionBar().setTitle(UIFuncs.getSmallTitle(title + " > TRANSFER"));
+        ((Process_Selection_Activity) getActivity())
+                .getSupportActionBar().setTitle(UIFuncs.getSmallTitle(title + " > RE-PRINT"));
     }
 
     @Override
@@ -101,42 +97,36 @@ public class FragmentStoreDisplayInternalIRODToIRODTransfer extends Fragment imp
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_store_display_internal_irod_to_irod_transfer, container, false);
+        // Inflate the layout for this fragment
+        view = inflater.inflate(R.layout.fragment_inward_tvs_paperless_reprint, container, false);
 
         con = getContext();
         box = new AlertBox(con);
         dialog = new ProgressDialog(con);
-        SharedPreferencesData data = new SharedPreferencesData(con);
+        data = new SharedPreferencesData(con);
         URL = data.read("URL");
         WERKS = data.read("WERKS");
         USER = data.read("USER");
 
-        txt_store = view.findViewById(R.id.txt_disp_internal_irod_to_irod_transfer_store);
-        txt_sloc = view.findViewById(R.id.txt_disp_internal_irod_to_irod_transfer_sloc);
-        txt_irod = view.findViewById(R.id.txt_disp_internal_irod_to_irod_transfer_irod);
-        txt_scanned_irod = view.findViewById(R.id.txt_disp_internal_irod_to_irod_transfer_scanned_irod);
-        txt_bin = view.findViewById(R.id.txt_disp_internal_irod_to_irod_transfer_bin);
-        txt_scanned_bin = view.findViewById(R.id.txt_disp_internal_irod_to_irod_transfer_scanned_bin);
-        txt_tqty = view.findViewById(R.id.txt_disp_internal_irod_to_irod_transfer_tqty);
+        txt_printer = view.findViewById(R.id.txt_outward_tvs_paperless_reprint_printer);
+        txt_hu = view.findViewById(R.id.txt_outward_tvs_paperless_reprint_huno);
 
-        btn_back = view.findViewById(R.id.btn_disp_internal_irod_to_irod_transfer_back);
-        btn_reset = view.findViewById(R.id.btn_disp_internal_irod_to_irod_transfer_reset);
-        btn_next = view.findViewById(R.id.btn_disp_internal_irod_to_irod_transfer_next);
-        btn_save = view.findViewById(R.id.btn_disp_internal_irod_to_irod_transfer_save);
-
-        ll_screen2 = view.findViewById(R.id.ll_disp_internal_irod_to_irod_transfer_screen2);
+        btn_back = view.findViewById(R.id.btn_outward_tvs_paperless_reprint_back);
+        btn_reset = view.findViewById(R.id.btn_outward_tvs_paperless_reprint_reset);
 
         btn_back.setOnClickListener(this);
         btn_reset.setOnClickListener(this);
-        btn_next.setOnClickListener(this);
-        btn_save.setOnClickListener(this);
-
-        txt_store.setText(WERKS);
-        txt_sloc.setText("0001");
 
         clear();
         addInputEvents();
-        step2();
+
+        TSPLPrinter printerHelper = new TSPLPrinter(con);
+        String defaultrPrinter = data.read(Vars.TVS_PRINTER);
+        if(defaultrPrinter != null && defaultrPrinter.length() > 0){
+            if(printerHelper.findBluetoothPrinter(defaultrPrinter, false)){
+                txt_printer.setText(data.read(Vars.TVS_PRINTER));
+            }
+        }
 
         return view;
     }
@@ -144,41 +134,35 @@ public class FragmentStoreDisplayInternalIRODToIRODTransfer extends Fragment imp
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.btn_disp_internal_irod_to_irod_transfer_back:
+            case R.id.btn_outward_tvs_paperless_reprint_back:
                 box.confirmBack(fm, con);
                 break;
-            case R.id.btn_disp_internal_irod_to_irod_transfer_reset:
+            case R.id.btn_outward_tvs_paperless_reprint_reset:
                 box.getBox("Confirm", "Reset! Are you sure?", (dialogInterface, i) -> {
-                    step2();
+                    clear();
                 }, (dialogInterface, i) -> {
                     return;
                 });
-                break;
-            case R.id.btn_disp_internal_irod_to_irod_transfer_next:
-                step2();
-                break;
-            case R.id.btn_disp_internal_irod_to_irod_transfer_save:
-                saveData();
                 break;
         }
     }
 
     private void addInputEvents() {
-        txt_irod.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        txt_printer.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
                     UIFuncs.hideKeyboard(getActivity());
-                    String value = UIFuncs.toUpperTrim(txt_irod);
+                    String value = UIFuncs.toUpperTrim(txt_printer);
                     if (value.length() > 0) {
-                        validateIrod();
+                        validatePrinter(value);
                         return true;
                     }
                 }
                 return false;
             }
         });
-        txt_irod.addTextChangedListener(new TextWatcher() {
+        txt_printer.addTextChangedListener(new TextWatcher() {
             boolean scannerReading = false;
 
             @Override
@@ -199,25 +183,26 @@ public class FragmentStoreDisplayInternalIRODToIRODTransfer extends Fragment imp
             public void afterTextChanged(Editable s) {
                 String value = s.toString().toUpperCase().trim();
                 if (value.length() > 0 && scannerReading) {
-                    validateIrod();
+                    validatePrinter(value);
                 }
             }
         });
-        txt_bin.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+
+        txt_hu.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
                     UIFuncs.hideKeyboard(getActivity());
-                    String value = UIFuncs.toUpperTrim(txt_bin);
+                    String value = UIFuncs.toUpperTrim(txt_hu);
                     if (value.length() > 0) {
-                        saveData();
+                        validateHU(value);
                         return true;
                     }
                 }
                 return false;
             }
         });
-        txt_bin.addTextChangedListener(new TextWatcher() {
+        txt_hu.addTextChangedListener(new TextWatcher() {
             boolean scannerReading = false;
 
             @Override
@@ -238,42 +223,38 @@ public class FragmentStoreDisplayInternalIRODToIRODTransfer extends Fragment imp
             public void afterTextChanged(Editable s) {
                 String value = s.toString().toUpperCase().trim();
                 if (value.length() > 0 && scannerReading) {
-                    saveData();
+                    validateHU(value);
                 }
             }
         });
     }
 
     private void clear() {
-        step2();
-        ll_screen2.setVisibility(View.GONE);
-        btn_reset.setVisibility(View.INVISIBLE);
-        btn_next.setVisibility(View.VISIBLE);
-        btn_save.setVisibility(View.GONE);
+        txt_printer.setText(data.read(Vars.TVS_PRINTER));
+        txt_hu.setText("");
+        UIFuncs.disableInput(con, txt_hu);
+        txt_printer.requestFocus();
     }
 
-    private void step2() {
-        ll_screen2.setVisibility(View.VISIBLE);
-        btn_reset.setVisibility(View.VISIBLE);
-        btn_next.setVisibility(View.GONE);
-        btn_save.setVisibility(View.GONE);
-        txt_irod.setText("");
-        txt_scanned_irod.setText("");
-        txt_bin.setText("");
-        txt_scanned_bin.setText("");
-        txt_tqty.setText("");
-        UIFuncs.disableInput(con, txt_bin);
-        UIFuncs.enableInput(con, txt_irod);
+    private void validatePrinter(String printerName){
+        TSPLPrinter printerHelper = new TSPLPrinter(con);
+        if(!printerHelper.findBluetoothPrinter(printerName, false)){
+            box.getBox("Not Paired", "Scanned printer ( "+ printerName +" ) is not paired with this device.");
+            return;
+        }
+        data.write(Vars.TVS_PRINTER, printerName);
+        this.tvsprinter = printerName;
+        txt_hu.setText("");
+        UIFuncs.enableInput(con, txt_hu);
     }
 
-    private void validateIrod() {
+    private void validateHU(String huno) {
         JSONObject args = new JSONObject();
         try {
-            args.put("bapiname", Vars.ZWM_STORE_IROD_TRAN_VALIDATE);
-            args.put("IM_WERKS", WERKS);
+            args.put("bapiname", Vars.ZWM_PRINT_HU_TVS);
             args.put("IM_USER", USER);
-            args.put("IM_IROD", UIFuncs.toUpperTrim(txt_irod));
-            showProcessingAndSubmit(Vars.ZWM_STORE_IROD_TRAN_VALIDATE, REQUEST_VALIDATE_IROD, args);
+            args.put("IM_EXIDV", huno);
+            showProcessingAndSubmit(Vars.ZWM_PRINT_HU_TVS, REQUEST_SAVE, args);
         } catch (JSONException e) {
             e.printStackTrace();
             UIFuncs.errorSound(con);
@@ -286,42 +267,11 @@ public class FragmentStoreDisplayInternalIRODToIRODTransfer extends Fragment imp
         }
     }
 
-    private void setData(JSONObject response) {
-        try {
-            String exQty = response.getString("EX_QTY");
-            txt_tqty.setText(Util.convertToDoubleString(exQty));
-            txt_scanned_irod.setText(UIFuncs.toUpperTrim(txt_irod));
-            txt_irod.setText("");
-            txt_bin.setText("");
-            UIFuncs.enableInput(con, txt_bin);
-            return;
-        } catch (Exception exce) {
-            box.getErrBox(exce);
-        }
-        txt_irod.setText("");
-        txt_irod.requestFocus();
-    }
-
-    private void saveData() {
-        JSONObject args = new JSONObject();
-        try {
-            args.put("bapiname", Vars.ZWM_STORE_IROD_GANDOLA_TAG);
-            args.put("IM_USER", USER);
-            args.put("IM_WERKS", WERKS);
-            args.put("IM_GANDOLA", UIFuncs.toUpperTrim(txt_bin));
-            args.put("IM_IROD", UIFuncs.toUpperTrim(txt_scanned_irod));
-            showProcessingAndSubmit(Vars.ZWM_STORE_IROD_GANDOLA_TAG, REQUEST_SAVE, args);
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-            UIFuncs.errorSound(con);
-            if(dialog!=null) {
-                dialog.dismiss();
-                dialog = null;
-            }
-            AlertBox box = new AlertBox(getContext());
-            box.getErrBox(e);
-        }
+    private void printHu(JSONObject huObj) {
+        TSPLPrinter printer = new TSPLPrinter(getContext());
+        printer.sendPrintCommandToBluetoothPrinter(this.tvsprinter, huObj);
+        txt_hu.setText("");
+        txt_hu.requestFocus();
     }
 
     public void showProcessingAndSubmit(String rfc, int request, JSONObject args) {
@@ -389,23 +339,13 @@ public class FragmentStoreDisplayInternalIRODToIRODTransfer extends Fragment imp
                                         UIFuncs.errorSound(getContext());
                                         AlertBox box = new AlertBox(getContext());
                                         box.getBox("Err", returnobj.getString("MESSAGE"));
-                                        if (request == REQUEST_VALIDATE_IROD) {
-                                            step2();
-                                        }
                                         if (request == REQUEST_SAVE) {
-                                            txt_bin.setText("");
-                                            txt_bin.requestFocus();
+                                            txt_hu.setText("");
+                                            txt_hu.requestFocus();
                                         }
                                     } else {
-                                        if (request == REQUEST_VALIDATE_IROD) {
-                                            setData(responsebody);
-                                        }
                                         if (request == REQUEST_SAVE) {
-                                            txt_scanned_bin.setText(UIFuncs.toUpperTrim(txt_bin));
-                                            txt_bin.setText("");
-                                            txt_irod.requestFocus();
-                                            AlertBox box = new AlertBox(getContext());
-                                            box.getBox("Success", returnobj.getString("MESSAGE"));
+                                            printHu(responsebody.getJSONObject("EX_HUDATA"));
                                         }
                                     }
                                 }
