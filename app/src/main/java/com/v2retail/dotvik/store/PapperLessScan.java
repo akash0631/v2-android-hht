@@ -152,7 +152,41 @@ public class PapperLessScan extends Fragment implements IBarcodeResult  {
 
         }
     }
-
+    void resetFields(){
+        clear();
+        scanMap = new HashMap<String, Integer>();
+        scannedDataForSubmit = new JSONArray();
+        emptyBinMap = new HashMap<String, String>();
+        tsqCount = 0;
+        tqCount = 0;
+        trQCount = 0;
+        tqEditTextFiled.setText("" + tqCount);
+        sqEditTextField.setText("0");
+        rqEditTextFiled.setText("");
+        currentScanBin.setText("");
+        currentScanArticle.setText("");
+        currentScanQuantity.setText("");
+        currentScanOpenQuantity.setText("");
+        binEditText.setText("");
+        crateEditText.setText("");
+        artNoEditText.setText("");
+        sqtyEditText.setText("");
+        storeIdText.setText("");
+        checkBoxEmptyBin.setChecked(false);
+        secondScanItemNo.setText("");
+        secondItemBin.setText("");
+        secondItemCrate.setText("");
+        secondItemEan.setText("");
+        secondItemMatnr.setText("");
+        secondItemRemainQty.setText("");
+        thirdScanItemNo.setText("");
+        thirdItemBin.setText("");
+        thirdItemCrate.setText("");
+        thirdItemMatnr.setText("");
+        thirdItemRemainQty.setText("");
+        currentIndex = 1;
+        validateDelivery(mDeliveryNumber);
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_papper_less_scan, container, false);
@@ -295,8 +329,10 @@ public class PapperLessScan extends Fragment implements IBarcodeResult  {
         scanMap = new HashMap<String, Integer>();
         scannedDataForSubmit = new JSONArray();
         emptyBinMap = new HashMap<String, String>();
+        tvPrinter.setVisibility(View.GONE);
         if(Vars.TVS_PAPER_LESS.equalsIgnoreCase(mode)) {
             tvPrinter.setText(this.tvsprinter);
+            tvPrinter.setVisibility(View.VISIBLE);
         }
         return view;
     }
@@ -378,6 +414,7 @@ public class PapperLessScan extends Fragment implements IBarcodeResult  {
 
                                         }
                                         setDataInView(currentIndex);
+                                        binEditText.requestFocus();
                                         return;
                                     }
                             }
@@ -811,48 +848,49 @@ public class PapperLessScan extends Fragment implements IBarcodeResult  {
     }
 
     // no longer passing delivery details from previous screen fragment
-    void initializeDeliveryDetails(Bundle bundle) {
-        String tVar = bundle.getString("ex_likp", "");
-        if (tVar != null && tVar.length() > 0) {
-            try {
-                this.mExLikp = new JSONObject(tVar);
-            } catch (JSONException jsone) {
-
-            }
-        }
-        tVar = bundle.getString("et_lips", "");
-        if (tVar != null && tVar.length() > 0) {
-            try {
-                this.mEtLips = new JSONArray(tVar);
-            } catch (JSONException jsone) {
-
-            }
-        }
-        tVar = bundle.getString("et_bin_mc", "");
-        if (tVar != null && tVar.length() > 0) {
-            try {
-                this.mEtBinMc = new JSONArray(tVar);
-                for (int i = 1; i < this.mEtBinMc.length(); i++) {
-                    JSONObject etBin = this.mEtBinMc.getJSONObject(i);
-                    int lineQty = sapNumberToInt("VISTM", etBin);
-                    int remainQty = sapNumberToInt("REMAIN_QTY", etBin);
-                    tqCount = tqCount + lineQty;
-                    trQCount = trQCount + remainQty;
-                }
-            } catch (JSONException jsone) {
-
-            }
-        }
-        tVar = bundle.getString("et_ean_data", "");
-        if (tVar != null && tVar.length() > 0) {
-            try {
-                this.mEtEanData = new JSONArray(tVar);
-            } catch (JSONException jsone) {
-
-            }
-        }
-
-    }
+    //Since below function has no usage, commented below function in release 11.81 by Narayanan
+//    void initializeDeliveryDetails(Bundle bundle) {
+//        String tVar = bundle.getString("ex_likp", "");
+//        if (tVar != null && tVar.length() > 0) {
+//            try {
+//                this.mExLikp = new JSONObject(tVar);
+//            } catch (JSONException jsone) {
+//
+//            }
+//        }
+//        tVar = bundle.getString("et_lips", "");
+//        if (tVar != null && tVar.length() > 0) {
+//            try {
+//                this.mEtLips = new JSONArray(tVar);
+//            } catch (JSONException jsone) {
+//
+//            }
+//        }
+//        tVar = bundle.getString("et_bin_mc", "");
+//        if (tVar != null && tVar.length() > 0) {
+//            try {
+//                this.mEtBinMc = new JSONArray(tVar);
+//                for (int i = 1; i < this.mEtBinMc.length(); i++) {
+//                    JSONObject etBin = this.mEtBinMc.getJSONObject(i);
+//                    int lineQty = sapNumberToInt("VISTM", etBin);
+//                    int remainQty = sapNumberToInt("REMAIN_QTY", etBin);
+//                    tqCount = tqCount + lineQty;
+//                    trQCount = trQCount + remainQty;
+//                }
+//            } catch (JSONException jsone) {
+//
+//            }
+//        }
+//        tVar = bundle.getString("et_ean_data", "");
+//        if (tVar != null && tVar.length() > 0) {
+//            try {
+//                this.mEtEanData = new JSONArray(tVar);
+//            } catch (JSONException jsone) {
+//
+//            }
+//        }
+//
+//    }
 
     int sapNumberToInt(String key, JSONObject expJson) {
         int retVal = 0;
@@ -911,29 +949,26 @@ public class PapperLessScan extends Fragment implements IBarcodeResult  {
         };
     }
 
-    // position is from 1 to size-1 of mEtBinMc
     private void setDataInView(int position) {
         try {
             if (position >= 1 && position < mEtBinMc.length()) {
-                JSONObject json_2 = mEtBinMc.getJSONObject(position);  // for line 2
+                JSONObject json_2 = mEtBinMc.getJSONObject(position);
                 String binVLPlA = json_2.getString("VLPLA");
                 String crate = json_2.getString("CRATE");
                 String matnr = json_2.getString("MATNR");
                 String catDesc = json_2.getString("WGBEZ");
                 String ean11 = json_2.getString("EAN11");
 
-
                 secondScanItemNo.setText(catDesc);
                 secondItemBin.setText(binVLPlA);
                 secondItemCrate.setText(crate);
                 secondItemEan.setText(ean11);
-                //yahan
-                // matnr = matnr.replaceFirst("^0+(?!$)", "");
+
                 secondItemMatnr.setText(matnr);
                 secondItemRemainQty.setText("" + sapNumberToInt("REMAIN_QTY", json_2));
 
                 if (position + 1 < mEtBinMc.length()) {
-                    JSONObject json_3 = mEtBinMc.getJSONObject(position + 1);  // for line 3
+                    JSONObject json_3 = mEtBinMc.getJSONObject(position + 1);
                     binVLPlA = json_3.getString("VLPLA");
                     crate = json_3.getString("CRATE");
                     matnr = json_3.getString("MATNR");
@@ -942,7 +977,7 @@ public class PapperLessScan extends Fragment implements IBarcodeResult  {
                     thirdScanItemNo.setText(catDesc);
                     thirdItemBin.setText(binVLPlA);
                     thirdItemCrate.setText(crate);
-                    // matnr = matnr.replaceFirst("^0+(?!$)", "");
+
                     thirdItemMatnr.setText(matnr);
                     thirdItemRemainQty.setText("" + sapNumberToInt("REMAIN_QTY", json_3));
                 } else {
@@ -996,17 +1031,13 @@ public class PapperLessScan extends Fragment implements IBarcodeResult  {
         }
         else
             {
-
-            // need to some validations
             JSONObject eanObject = findArticleFromBarcode(scannedArticle);
             if (eanObject != null) {
-                // need to match matnr
                 try {
                     String matnr = eanObject.getString("MATNR");
                     String articleCount = eanObject.getString("UMREZ");
                     String toBeScan = secondItemRemainQty.getText().toString();
 
-                    // matnr = matnr.replaceFirst("^0+(?!$)", "");
                     if (matnr.equals(secondItemMatnr.getText().toString()) && secondItemBin.getText().toString().toUpperCase(Locale.ROOT).trim().equals(binEditText.getText().toString().toUpperCase(Locale.ROOT).trim())) {
                         String binMatnrKey = currentScanBin.getText().toString() + "," + secondItemMatnr.getText().toString();
 
@@ -1427,8 +1458,9 @@ public class PapperLessScan extends Fragment implements IBarcodeResult  {
                                             box.getBox("", returnobj.getString("MESSAGE"), new DialogInterface.OnClickListener() {
                                                 @Override
                                                 public void onClick(DialogInterface dialog, int which) {
-                                                    clear();
-                                                    fm.popBackStack();
+//                                                    clear();
+//                                                    fm.popBackStack();
+                                                    resetFields();
                                                 }
                                             });
                                         }else{
@@ -1500,6 +1532,7 @@ public class PapperLessScan extends Fragment implements IBarcodeResult  {
         TSPLPrinter printer = new TSPLPrinter(getContext());
         //4B-2033PA-BFA4
         printer.sendPrintCommandToBluetoothPrinter(this.tvsprinter, huObj);
+        resetFields();
     }
 
     @Override

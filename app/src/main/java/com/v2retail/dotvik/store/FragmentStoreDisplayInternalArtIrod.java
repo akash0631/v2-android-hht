@@ -67,7 +67,7 @@ public class FragmentStoreDisplayInternalArtIrod extends Fragment  implements Vi
     String USER;
     private static String parent;
     Button btn_back, btn_reset, btn_next, btn_exit;
-    EditText txt_store, txt_sloc, txt_mccode, txt_irod, txt_bin, txt_ean, txt_article, txt_description;
+    EditText txt_store, txt_sloc, txt_mccode, txt_irod, txt_bin, txt_ean, txt_article, txt_description, txt_totqty;
     LinearLayout ll_screen2;
     String title;
     Map<String, Map<String, ETDataStorePutway>> etData = new HashMap<>();
@@ -117,6 +117,7 @@ public class FragmentStoreDisplayInternalArtIrod extends Fragment  implements Vi
         txt_article = view.findViewById(R.id.txt_disp_art_irod_articleno);
         txt_mccode = view.findViewById(R.id.txt_disp_art_irod_mccode);
         txt_description = view.findViewById(R.id.txt_disp_art_irod_description);
+        txt_totqty = view.findViewById(R.id.txt_disp_art_irod_tot_qty);
 
         btn_back = view.findViewById(R.id.btn_disp_art_irod_back);
         btn_reset = view.findViewById(R.id.btn_disp_art_irod_reset);
@@ -225,6 +226,7 @@ public class FragmentStoreDisplayInternalArtIrod extends Fragment  implements Vi
         txt_ean.setText("");
         txt_article.setText("");
         txt_description.setText("");
+        txt_totqty.setText("");
         UIFuncs.enableInput(con, txt_ean);
     }
 
@@ -264,6 +266,7 @@ public class FragmentStoreDisplayInternalArtIrod extends Fragment  implements Vi
             txt_article.setText(UIFuncs.removeLeadingZeros(exData.getString("MATNR")));
             txt_description.setText(exData.getString("MAKTX"));
             txt_bin.setText(exData.getString("VLPLA"));
+            txt_totqty.setText(exData.getString("VERME"));
         } catch (Exception exce) {
             box.getErrBox(exce);
         }

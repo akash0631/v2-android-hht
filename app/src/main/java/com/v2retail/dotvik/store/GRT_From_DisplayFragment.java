@@ -372,7 +372,6 @@ public class GRT_From_DisplayFragment extends Fragment implements View.OnClickLi
             return;
         }
 
-
         if (!dest_bin_table.contains(dest)) {
             box.getBox("Alert", "Invalid Destination!");
             return;
@@ -386,7 +385,9 @@ public class GRT_From_DisplayFragment extends Fragment implements View.OnClickLi
             box.getBox("Alert", "Please Scan/Fill destination");
             return;
         }
-        if (dest.equals("0002") || dest.equals("0005")) {
+        //Version 11.81
+        //if (dest.equals("0002") || dest.equals("0005")) {
+        if (dest.equals("0002")) {
             box.getBox("Alert", "Invalid destination");
             dest_sloc_et.setText("");
             return;

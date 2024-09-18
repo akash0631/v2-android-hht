@@ -83,12 +83,14 @@ public class Scan_GRT_Display_Fragment extends Fragment implements View.OnClickL
     Button save;
     Button back;
     String[] arrBarQty;
-    Button barcode_scan;
+    //version 11.81
+    //Button barcode_scan;
     String URL = "";
     String WERKS = "";
     String USER = "";
 
-    TextView mResponseView;
+    //version 11.81
+    //TextView mResponseView;
     Spinner pack_mat_spinner;
     EditText total_sq_et;
     EditText bin_et;
@@ -277,7 +279,8 @@ public class Scan_GRT_Display_Fragment extends Fragment implements View.OnClickL
             Log.d(TAG, "USER->" + USER);
 
         back = (Button) view.findViewById(R.id.back);
-        barcode_scan = (Button) view.findViewById(R.id.barcode_scan);
+        //version 11.81
+        //barcode_scan = (Button) view.findViewById(R.id.barcode_scan); commented as view not present in layout xml
         save = (Button) view.findViewById(R.id.save);
 
         total_sq_et = (EditText) view.findViewById(R.id.total_scan_qty);
@@ -287,7 +290,8 @@ public class Scan_GRT_Display_Fragment extends Fragment implements View.OnClickL
         pack_mat_spinner = (Spinner) view.findViewById(R.id.pack_mat_spinner);
         barcode_art_et = (EditText) view.findViewById(R.id.barcode_no);
         article_available_stock_et = (EditText) view.findViewById(R.id.article_available_stock);
-        mResponseView = (TextView) view.findViewById(R.id.response);
+        //version 11.81
+        //mResponseView = (TextView) view.findViewById(R.id.response); commented as view not present in layout xml
 
         pack_mat_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -302,7 +306,8 @@ public class Scan_GRT_Display_Fragment extends Fragment implements View.OnClickL
         });
         ;
         back.setOnClickListener(this);
-        barcode_scan.setOnClickListener(this);
+        //version 11.81
+        //barcode_scan.setOnClickListener(this);
         save.setOnClickListener(this);
         barcode_art_et.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override

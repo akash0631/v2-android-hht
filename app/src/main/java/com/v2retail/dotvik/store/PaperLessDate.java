@@ -193,7 +193,8 @@ public class PaperLessDate extends Fragment {
                             inputPrinter.setText("");
                             inputPrinter.requestFocus();
                             return;
-                        }else{
+                        }
+                        else{
                             TSPLPrinter printerHelper = new TSPLPrinter(con);
                             if(!printerHelper.findBluetoothPrinter(printerName, false)){
                                 box.getBox("Not Paired", "Scanned printer ( "+ printerName +" ) is not paired with this device.");
