@@ -28,6 +28,7 @@ android {
             minifyEnabled false
             shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
 
@@ -42,10 +43,7 @@ android {
 
 android {
     signingConfigs {
-        debug {
-            // storeFile file('H:\\keystore\\V2Retail_at_456_keystore')
-
-            // Set V2_KEYSTORE env var or place keystore in project root
+        release {
             storeFile rootProject.file('V2Retail_at_456_keystore')
             storePassword 'V2Retail@456'
             keyAlias 'v2retail'

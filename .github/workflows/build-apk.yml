@@ -45,14 +45,17 @@ jobs:
         env:
           ANDROID_HOME: ${{ env.ANDROID_SDK_ROOT }}
 
-      - name: Rename and verify APK
+      - name: Locate and verify APK
         run: |
-          ls -lh app/release/
-          # AGP signing config in build.gradle already produces a signed APK
-          cp app/release/app-release.apk app/release/V2_HHT_Azure_Release.apk
-          echo "✅ APK ready: $(du -sh app/release/V2_HHT_Azure_Release.apk)"
+          echo "=== Release output ==="
+          find app -name "*.apk" | sort
+          # Copy signed APK (release build with signingConfig)
+          APK=$(find app -name "*.apk" ! -name "*unsigned*" | head -1)
+          echo "Found: $APK"
+          cp "$APK" app/release/V2_HHT_Azure_Release.apk
+          echo "✅ APK: $(du -sh app/release/V2_HHT_Azure_Release.apk)"
           $ANDROID_SDK_ROOT/build-tools/$(ls $ANDROID_SDK_ROOT/build-tools | sort -V | tail -1)/apksigner verify \
-            app/release/V2_HHT_Azure_Release.apk && echo "✅ APK signature verified"
+            app/release/V2_HHT_Azure_Release.apk && echo "✅ Signature verified"
 
       - name: Upload APK as artifact
         uses: actions/upload-artifact@v4
