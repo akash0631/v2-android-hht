@@ -1,18 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Default screen margins, per the Android Design guidelines. -->
+    <!-- V2 WMS Spacing System v3.0 -->
+    <dimen name="pagePadding">16dp</dimen>
+    <dimen name="pagePaddingHorizontal">16dp</dimen>
+    <dimen name="sectionSpacing">20dp</dimen>
+    <dimen name="cardRadius">16dp</dimen>
+    <dimen name="cardPadding">14dp</dimen>
+    <dimen name="cardSpacing">8dp</dimen>
+    <dimen name="cardElevation">2dp</dimen>
+    <dimen name="contextCardRadius">14dp</dimen>
+    <dimen name="inputHeight">48dp</dimen>
+    <dimen name="inputRadius">10dp</dimen>
+    <dimen name="inputPaddingHorizontal">14dp</dimen>
+    <dimen name="scanFieldHeight">52dp</dimen>
+    <dimen name="scanFieldRadius">12dp</dimen>
+    <dimen name="btnHeight">48dp</dimen>
+    <dimen name="btnRadius">12dp</dimen>
+    <dimen name="btnHeightSmall">40dp</dimen>
+    <dimen name="touchTarget">48dp</dimen>
+    <dimen name="minTouchTarget">44dp</dimen>
+    <dimen name="textPageTitle">24sp</dimen>
+    <dimen name="textSectionTitle">18sp</dimen>
+    <dimen name="textCardTitle">14sp</dimen>
+    <dimen name="textBody">13sp</dimen>
+    <dimen name="textLabel">10sp</dimen>
+    <dimen name="textCaption">9sp</dimen>
+    <dimen name="textStatNumber">24sp</dimen>
+    <dimen name="bottomNavHeight">56dp</dimen>
+    <dimen name="headerPadding">16dp</dimen>
+    <dimen name="statIconSize">32dp</dimen>
+    <dimen name="statNumberSize">22sp</dimen>
+    <!-- LEGACY — required by existing layouts -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
-    <dimen name="nav_header_vertical_spacing">8dp</dimen>
-    <dimen name="nav_header_height">185dp</dimen>
-    <dimen name="fab_margin">16dp</dimen>
-    <dimen name="left_mar">10dp</dimen>
-    <dimen name="right_mar">10dp</dimen>
-    <dimen name="right_mar_but">5dp</dimen>
-    <dimen name="top_mar">5dp</dimen>
-    <dimen name="down_mar">5dp</dimen>
-    <dimen name="laebltext">8sp</dimen>
-    <dimen name="label_text_size">13sp</dimen>
+    <dimen name="header_text_size">16sp</dimen>
+    <dimen name="label_text_size">12sp</dimen>
     <dimen name="text_size">13sp</dimen>
-    <dimen name="header_text_size">20sp</dimen>
-
+    <dimen name="right_mar">8dp</dimen>
+    <dimen name="right_mar_but">4dp</dimen>
+    <dimen name="nav_header_height">176dp</dimen>
+    <dimen name="nav_header_vertical_spacing">8dp</dimen>
 </resources>
