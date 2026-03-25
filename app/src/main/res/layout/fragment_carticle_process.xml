@@ -283,7 +283,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
-                android:background="@color/white"
+                android:background="@color/bgCard"
                 android:orientation="vertical">
 
                 <RadioButton
@@ -292,7 +292,7 @@
                     android:layout_height="wrap_content"
                     android:padding="3dp"
                     android:textColor="@color/black"
-                    android:background="@color/white"
+                    android:background="@color/bgCard"
                     android:textSize="16sp"
                     android:text="0001 To 0006" />
 
@@ -302,7 +302,7 @@
                     android:layout_height="wrap_content"
                     android:padding="3dp"
                     android:textColor="@color/black"
-                    android:background="@color/white"
+                    android:background="@color/bgCard"
                     android:textSize="16sp"
                     android:text="0006 To 0001" />
             </RadioGroup>
