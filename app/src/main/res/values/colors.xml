@@ -1,68 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- ============================================ -->
-    <!-- NEW V2 WMS DESIGN SYSTEM                    -->
-    <!-- ============================================ -->
+    <!-- V2 WMS Design System v3.0 — Green/White reference -->
 
-    <!-- Brand / Primary -->
-    <color name="colorPrimary">#111111</color>
+    <!-- Brand -->
+    <color name="colorPrimary">#1A1A1A</color>
     <color name="colorPrimaryDark">#000000</color>
-    <color name="colorAccent">#16a34a</color>
+    <color name="colorAccent">#4CAF50</color>
 
-    <!-- Page backgrounds -->
-    <color name="bgPage">#FAFAF8</color>
+    <!-- Backgrounds -->
+    <color name="bgPage">#F7F8F3</color>
     <color name="bgCard">#FFFFFF</color>
-    <color name="bgInput">#F5F5F5</color>
+    <color name="bgInput">#F5F5F3</color>
     <color name="bgNavBar">#FFFFFF</color>
+    <color name="bgBottomNav">#FFFFFF</color>
+    <color name="bgScanActive">#F0FDF4</color>
 
-    <!-- Stat card fills (pastel, matching reference design) -->
-    <color name="statGreenBg">#E8F5E9</color>
-    <color name="statGreenIcon">#C8E6C9</color>
-    <color name="statOrangeBg">#FFF3E0</color>
-    <color name="statOrangeIcon">#FFE0B2</color>
-    <color name="statRedBg">#FCE4EC</color>
-    <color name="statRedIcon">#F8BBD9</color>
-    <color name="statBlueBg">#E3F2FD</color>
+    <!-- Stat card fills -->
+    <color name="statGreenBg">#EEF6EC</color>
+    <color name="statGreenIcon">#C8E6C4</color>
+    <color name="statTealBg">#EAF5F2</color>
+    <color name="statTealIcon">#B8E0D8</color>
+    <color name="statOrangeBg">#FEF3EA</color>
+    <color name="statOrangeIcon">#FADDC0</color>
+    <color name="statRedBg">#FEECEC</color>
+    <color name="statRedIcon">#FAC8C8</color>
+    <color name="statBlueBg">#EAF0FE</color>
     <color name="statBlueIcon">#BBDEFB</color>
+    <color name="statPurpleBg">#F3EEFE</color>
+    <color name="statPurpleIcon">#E9D5FF</color>
 
     <!-- Text -->
-    <color name="textPrimary">#111111</color>
+    <color name="textPrimary">#1A1A1A</color>
     <color name="textSecondary">#888888</color>
-    <color name="textHint">#AAAAAA</color>
+    <color name="textHint">#BBBBBB</color>
     <color name="textLabel">#AAAAAA</color>
+    <color name="textOnDark">#FFFFFF</color>
 
-    <!-- Status / Semantic -->
-    <color name="colorSuccess">#16a34a</color>
-    <color name="colorSuccessBg">#E8F5E9</color>
+    <!-- Status -->
+    <color name="colorSuccess">#4CAF50</color>
+    <color name="colorSuccessBg">#EEF6EC</color>
     <color name="colorSuccessLight">#66BB6A</color>
-    <color name="colorError">#C62828</color>
-    <color name="colorErrorBg">#FCE4EC</color>
-    <color name="colorErrorLight">#F87171</color>
-    <color name="colorWarning">#E65100</color>
-    <color name="colorWarningBg">#FFF3E0</color>
-    <color name="colorInfo">#1565C0</color>
-    <color name="colorInfoBg">#E3F2FD</color>
-
-    <!-- Zone selection -->
-    <color name="zoneSelectedBg">#F0FDF4</color>
-    <color name="zoneSelectedBorder">#86EFAC</color>
-    <color name="zoneSelectedText">#16a34a</color>
+    <color name="colorError">#E53935</color>
+    <color name="colorErrorBg">#FEECEC</color>
+    <color name="colorErrorLight">#EF9A9A</color>
+    <color name="colorWarning">#F57C00</color>
+    <color name="colorWarningBg">#FEF3EA</color>
+    <color name="colorInfo">#2563EB</color>
+    <color name="colorInfoBg">#EAF0FE</color>
+    <color name="colorPurple">#7C3AED</color>
+    <color name="colorPurpleBg">#F3EEFE</color>
+    <color name="colorTeal">#0F9D8E</color>
+    <color name="colorTealBg">#EAF5F2</color>
 
     <!-- Borders -->
-    <color name="borderLight">#F0F0F0</color>
-    <color name="borderMedium">#E0E0E0</color>
+    <color name="borderLight">#F0F0EE</color>
+    <color name="borderMedium">#E0E0DC</color>
+    <color name="borderScan">#1A1A1A</color>
+    <color name="borderContext">#C8E6C4</color>
 
-    <!-- ============================================ -->
-    <!-- LEGACY COLORS — DO NOT REMOVE               -->
-    <!-- Required by existing layouts and drawables  -->
-    <!-- ============================================ -->
+    <!-- Zone states -->
+    <color name="zoneSelectedBg">#EEF6EC</color>
+    <color name="zoneActiveBg">#1A1A1A</color>
+    <color name="zoneErrorBg">#FEECEC</color>
+    <color name="zoneWaitBg">#F7F8F3</color>
+
+    <!-- LEGACY — DO NOT REMOVE -->
     <color name="white">#FFFFFF</color>
     <color name="black">#CB000000</color>
     <color name="lightGrey">#DCDCDC</color>
     <color name="redAccent">#fffaea</color>
-    <color name="buttonColor">#111111</color>
+    <color name="buttonColor">#1A1A1A</color>
     <color name="buttonColortext">#FFFFFF</color>
-    <color name="viewBg">#FAFAF8</color>
+    <color name="viewBg">#F7F8F3</color>
     <color name="album_title">#4c4c4c</color>
     <color name="sales">#d5abea</color>
     <color name="stock">#ec4169</color>
@@ -71,9 +80,9 @@
     <color name="stock_gen">#f18054</color>
     <color name="merchandise">#f77edf</color>
     <color name="dc">#FFEB3B</color>
-    <color name="enabled_color">#111111</color>
+    <color name="enabled_color">#1A1A1A</color>
     <color name="disabled_color">#AAAAAA</color>
     <color name="toggle_false">#DDDDDD</color>
-    <color name="tv_enabled_color">#111111</color>
+    <color name="tv_enabled_color">#1A1A1A</color>
     <color name="tv_disabled_color">#AAAAAA</color>
 </resources>
