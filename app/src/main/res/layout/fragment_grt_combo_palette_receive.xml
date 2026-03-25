@@ -1,94 +1,345 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/bgPage">
 
-    <LinearLayout
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:orientation="vertical"
-        android:clickable="true">
-        <!--text_picked_list_no-->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:layout_marginTop="15dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="5dp"
-            android:weightSum="5"
-            android:padding="2dp">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:padding="7dp"
-                android:textColor="@color/black"
-                android:textSize="18sp"
-                android:text="Palette"/>
-
-            <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="3">
-
-                <EditText
-                    android:id="@+id/text_grt_combo_palette_receive_palette"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/white"
-                    android:imeOptions="actionDone"
-                    android:hint=""
-                    android:maxLines="1"
-                    android:padding="7dp"
-                    android:singleLine="true"
-                    android:textColor="@color/black"
-                    android:textSize="18sp" />
-
-
-            </RelativeLayout>
-
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:layout_marginTop="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_marginBottom="65dp"
-            android:padding="2dp">
-            <ScrollView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <TableLayout
-                    android:id="@+id/table_grt_combo_palette_receive_scanned_items"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:stretchColumns="1,2">
-                </TableLayout>
-            </ScrollView>
-
-        </LinearLayout>
-    </LinearLayout>
+    <!-- Page Header -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:orientation="horizontal"
-        android:padding="5dp">
-        <Button
-            android:id="@+id/btn_grt_combo_palette_receive_back"
+        android:gravity="center_vertical"
+        android:padding="16dp"
+        android:background="@color/bgCard">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Receive at zone"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/textPrimary" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="PTL 4.0"
+                android:textSize="11sp"
+                android:textColor="@color/textLabel" />
+        </LinearLayout>
+
+        <!-- Error badge - visible on error -->
+        <TextView
+            android:id="@+id/tv_error_badge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Error"
+            android:textSize="10sp"
+            android:textStyle="bold"
+            android:textColor="@color/colorError"
+            android:background="@color/colorErrorBg"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <!-- Scrollable content -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- Error banner - visible on error -->
+            <LinearLayout
+                android:id="@+id/layout_error_banner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="@color/colorErrorBg"
+                android:padding="12dp"
+                android:layout_marginBottom="12dp"
+                android:gravity="center_vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:id="@+id/tv_error_message"
+                    android:textSize="11sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorError" />
+            </LinearLayout>
+
+            <!-- SCAN FIELD CARD -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@color/bgCard"
+                android:padding="14dp"
+                android:layout_marginBottom="10dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="SCAN PALLET"
+                    android:textSize="10sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/textLabel"
+                    android:letterSpacing="0.08"
+                    android:layout_marginBottom="10dp" />
+
+                <!-- Scan input field - styled -->
+                <LinearLayout
+                    android:id="@+id/layout_scan_field"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:orientation="horizontal"
+                    android:background="@color/bgInput"
+                    android:gravity="center_vertical"
+                    android:padding="14dp">
+
+                    <EditText
+                        android:id="@+id/text_grt_combo_palette_receive_palette"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:hint="Scan pallet barcode..."
+                        android:textColorHint="@color/textHint"
+                        android:textColor="@color/textPrimary"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        android:imeOptions="actionDone"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:inputType="text" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="|||"
+                        android:textColor="@color/textSecondary"
+                        android:textSize="18sp"
+                        android:letterSpacing="0.1" />
+                </LinearLayout>
+
+                <!-- Success strip - visible on valid scan -->
+                <LinearLayout
+                    android:id="@+id/layout_scan_success"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:background="@color/colorSuccessBg"
+                    android:padding="10dp"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center_vertical"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:id="@+id/tv_scan_success_text"
+                        android:text="Pallet validated successfully"
+                        android:textSize="11sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/colorSuccess" />
+                </LinearLayout>
+
+                <!-- Error strip - visible on invalid scan -->
+                <LinearLayout
+                    android:id="@+id/layout_scan_error"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:background="@color/colorErrorBg"
+                    android:padding="10dp"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center_vertical"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:id="@+id/tv_scan_error_text"
+                        android:text="Pallet not valid for this zone"
+                        android:textSize="11sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/colorError" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- STATS CARD -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="10dp">
+
+                <!-- Pallets scanned -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:background="#F0F9F4"
+                    android:padding="14dp"
+                    android:layout_marginEnd="4dp">
+
+                    <TextView
+                        android:id="@+id/tv_pallets_scanned"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textSize="30sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/colorSuccess"
+                        android:letterSpacing="-0.04" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="SCANNED"
+                        android:textSize="9sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/textLabel"
+                        android:letterSpacing="0.08"
+                        android:layout_marginTop="4dp" />
+                </LinearLayout>
+
+                <!-- Crates in pallet -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:background="#F0F4FF"
+                    android:padding="14dp"
+                    android:layout_marginStart="4dp">
+
+                    <TextView
+                        android:id="@+id/tv_crates_count"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textSize="30sp"
+                        android:textStyle="bold"
+                        android:textColor="#1565C0"
+                        android:letterSpacing="-0.04" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="CRATES"
+                        android:textSize="9sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/textLabel"
+                        android:letterSpacing="0.08"
+                        android:layout_marginTop="4dp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- SCAN LOG CARD -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@color/bgCard"
+                android:padding="14dp"
+                android:layout_marginBottom="10dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="12dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Scan log"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/textPrimary" />
+
+                    <TextView
+                        android:id="@+id/tv_scan_count_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0 TOTAL"
+                        android:textSize="10sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/textLabel"
+                        android:letterSpacing="0.05" />
+                </LinearLayout>
+
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp">
+
+                    <TableLayout
+                        android:id="@+id/table_grt_combo_palette_receive_scanned_items"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:stretchColumns="1,2" />
+                </ScrollView>
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Bottom action bar -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="14dp"
+        android:background="@color/bgCard">
+
+        <Button
+            android:id="@+id/btn_grt_combo_palette_receive_back"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:layout_marginEnd="6dp"
             android:text="Back"
-            android:layout_margin="5dp"
+            android:textColor="@color/textPrimary"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:background="@color/bgInput" />
+
+        <Button
+            android:id="@+id/btn_scan_next"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="2"
+            android:layout_marginStart="6dp"
+            android:text="Scan next pallet"
             android:textColor="@color/white"
-            android:background="@color/colorPrimary" />
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:background="@color/textPrimary" />
     </LinearLayout>
-</RelativeLayout>
+
+</LinearLayout>
