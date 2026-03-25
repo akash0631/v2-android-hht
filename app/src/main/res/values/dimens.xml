@@ -1,47 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="activity_horizontal_margin">16dp</dimen>
-    <dimen name="activity_vertical_margin">16dp</dimen>
-    <dimen name="nav_header_vertical_spacing">8dp</dimen>
-    <dimen name="nav_header_height">185dp</dimen>
-    <dimen name="fab_margin">16dp</dimen>
+    <!-- V2 WMS Spacing System -->
 
-    <!-- Spacing -->
-    <dimen name="spacing_xs">4dp</dimen>
-    <dimen name="spacing_sm">8dp</dimen>
-    <dimen name="spacing_md">12dp</dimen>
-    <dimen name="spacing_lg">16dp</dimen>
-    <dimen name="spacing_xl">24dp</dimen>
+    <!-- Page -->
+    <dimen name="pagePadding">16dp</dimen>
+    <dimen name="pagePaddingHorizontal">16dp</dimen>
+    <dimen name="sectionSpacing">20dp</dimen>
 
-    <!-- Corner radius -->
-    <dimen name="radius_sm">8dp</dimen>
-    <dimen name="radius_md">12dp</dimen>
-    <dimen name="radius_lg">16dp</dimen>
-    <dimen name="radius_xl">20dp</dimen>
+    <!-- Cards -->
+    <dimen name="cardRadius">16dp</dimen>
+    <dimen name="cardPadding">14dp</dimen>
+    <dimen name="cardSpacing">8dp</dimen>
+    <dimen name="cardElevation">2dp</dimen>
 
-    <!-- Text sizes -->
-    <dimen name="text_page_title">24sp</dimen>
-    <dimen name="text_stat_number">26sp</dimen>
-    <dimen name="text_scan_value">18sp</dimen>
-    <dimen name="text_body">14sp</dimen>
-    <dimen name="text_caption">11sp</dimen>
-    <dimen name="text_label">10sp</dimen>
-    <dimen name="text_button">13sp</dimen>
+    <!-- Context card -->
+    <dimen name="contextCardRadius">14dp</dimen>
+    <dimen name="contextCardBorder">1.5dp</dimen>
 
-    <!-- Legacy -->
-    <dimen name="left_mar">10dp</dimen>
-    <dimen name="right_mar">10dp</dimen>
-    <dimen name="right_mar_but">5dp</dimen>
-    <dimen name="top_mar">5dp</dimen>
-    <dimen name="down_mar">5dp</dimen>
-    <dimen name="laebltext">8sp</dimen>
-    <dimen name="label_text_size">13sp</dimen>
-    <dimen name="text_size">13sp</dimen>
-    <dimen name="header_text_size">20sp</dimen>
+    <!-- Inputs -->
+    <dimen name="inputHeight">48dp</dimen>
+    <dimen name="inputRadius">10dp</dimen>
+    <dimen name="inputPaddingHorizontal">14dp</dimen>
+    <dimen name="scanFieldHeight">52dp</dimen>
+    <dimen name="scanFieldRadius">12dp</dimen>
+    <dimen name="scanFieldBorder">2dp</dimen>
 
-    <!-- Touch targets (min 48dp for accessibility) -->
-    <dimen name="touch_target_min">48dp</dimen>
-    <dimen name="zone_card_height">64dp</dimen>
-    <dimen name="nav_height">56dp</dimen>
-    <dimen name="stat_icon_size">32dp</dimen>
-    <dimen name="stat_icon_radius">10dp</dimen>
+    <!-- Buttons -->
+    <dimen name="btnHeight">48dp</dimen>
+    <dimen name="btnRadius">12dp</dimen>
+    <dimen name="btnHeightSmall">40dp</dimen>
+    <dimen name="btnRadiusSmall">10dp</dimen>
+
+    <!-- Touch targets -->
+    <dimen name="touchTarget">48dp</dimen>
+    <dimen name="minTouchTarget">44dp</dimen>
+
+    <!-- Typography -->
+    <dimen name="textPageTitle">24sp</dimen>
+    <dimen name="textSectionTitle">18sp</dimen>
+    <dimen name="textCardTitle">14sp</dimen>
+    <dimen name="textBody">13sp</dimen>
+    <dimen name="textLabel">10sp</dimen>
+    <dimen name="textCaption">9sp</dimen>
+    <dimen name="textStatNumber">24sp</dimen>
+
+    <!-- Bottom nav -->
+    <dimen name="bottomNavHeight">56dp</dimen>
+    <dimen name="bottomNavIconSize">20dp</dimen>
+
+    <!-- Header -->
+    <dimen name="headerPadding">16dp</dimen>
+
+    <!-- Stat card icon -->
+    <dimen name="statIconSize">32dp</dimen>
+    <dimen name="statIconRadius">10dp</dimen>
+    <dimen name="statNumberSize">22sp</dimen>
 </resources>
