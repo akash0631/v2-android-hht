@@ -1,64 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <!-- TODO: Update blank fragment layout -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_margin="2dp"
-        android:background="#000"
-        android:padding="5dp">
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Crate Picking"
-            android:id="@+id/grt_single_pick_crate_picking"
-            android:layout_margin="5dp"
-            android:textColor="#fff"
-            android:background="#e71821" />
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Crate Sorting"
-            android:id="@+id/btn_grt_single_crate_sorting"
-            android:layout_margin="5dp"
-            android:textColor="#fff"
-            android:background="#e71821" />
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Tag HU with Store Zone"
-            android:id="@+id/btn_hu_zone_store"
-            android:layout_margin="5dp"
-            android:textColor="#fff"
-            android:background="#e71821" />
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Scan Crate"
-            android:id="@+id/btn_crate_scan"
-            android:layout_margin="5dp"
-            android:textColor="#fff"
-            android:background="#e71821" />
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="DE TAG HUS"
-            android:id="@+id/btn_grt_single_pick_de_tag_hu"
-            android:layout_margin="5dp"
-            android:textColor="#fff"
-            android:background="#e71821" />
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="HU PICKING"
-            android:id="@+id/btn_grt_single_hu_pick"
-            android:layout_margin="5dp"
-            android:textColor="#fff"
-            android:background="#e71821" />
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent" android:layout_height="match_parent" android:background="@color/bgPage">
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:layout_margin="2dp" android:background="#000" android:padding="5dp">
+        <Button android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Crate Picking" android:id="@+id/grt_single_pick_crate_picking" android:layout_margin="5dp" android:textColor="@color/white" android:background="@drawable/bg_btn_primary" android:textSize="13sp" />
+        <Button android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Crate Sorting" android:id="@+id/btn_grt_single_crate_sorting" android:layout_margin="5dp" android:textColor="@color/white" android:background="@drawable/bg_btn_primary" android:textSize="13sp" />
+        <Button android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Tag HU with Store Zone" android:id="@+id/btn_hu_zone_store" android:layout_margin="5dp" android:textColor="@color/white" android:background="@drawable/bg_btn_primary" android:textSize="13sp" />
+        <Button android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Scan Crate" android:id="@+id/btn_crate_scan" android:layout_margin="5dp" android:textColor="@color/white" android:background="@drawable/bg_btn_primary" android:textSize="13sp" />
+        <Button android:layout_width="match_parent" android:layout_height="wrap_content" android:text="DE TAG HUS" android:id="@+id/btn_grt_single_pick_de_tag_hu" android:layout_margin="5dp" android:textColor="@color/white" android:background="@drawable/bg_btn_primary" android:textSize="13sp" />
+        <Button android:layout_width="match_parent" android:layout_height="wrap_content" android:text="HU PICKING" android:id="@+id/btn_grt_single_hu_pick" android:layout_margin="5dp" android:textColor="@color/white" android:background="@drawable/bg_btn_primary" android:textSize="13sp" />
     </LinearLayout>
-
 </FrameLayout>
