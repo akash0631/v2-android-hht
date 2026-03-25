@@ -1,10 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent" android:layout_height="match_parent" tools:context="com.v2retail.dotvik.ecomm.Ecomm_Process_Selection" android:background="@color/bgPage">
-    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:layout_margin="2dp" android:background="#000" android:padding="5dp">
-        <Button android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_margin="5dp" android:textColor="@color/white" android:id="@+id/scan_crate_in_ecom_palette" android:background="@drawable/bg_btn_primary" android:text="Scan Crate In Ecom Palette" android:textSize="13sp" />
-        <Button android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Tag Palette With Ecom CLA Bin" android:layout_margin="5dp" android:textColor="@color/white" android:id="@+id/tag_palette_with_ecom_cla_bin" android:background="@drawable/bg_btn_primary" android:textSize="13sp" />
-        <Button android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Un-Tag Palette With Ecom CLA Bin" android:id="@+id/untag_palette_with_ecom_cla_bin" android:layout_margin="5dp" android:textColor="@color/white" android:background="@drawable/bg_btn_primary" android:textSize="13sp" />
-        <Button android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Handover To Courier Partner" android:id="@+id/handover_to_courier_partner" android:layout_margin="5dp" android:textColor="@color/white" android:background="@drawable/bg_btn_primary" android:textSize="13sp" />
-        <Button android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Rejected Courier Scanning" android:id="@+id/rejected_courier_scanning" android:layout_margin="5dp" android:textColor="@color/white" android:background="@drawable/bg_btn_primary" android:textSize="13sp" />
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.v2retail.dotvik.ecomm.Ecomm_Process_Selection">
+
+    <!-- TODO: Update blank fragment layout -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="2dp"
+        android:background="#000"
+        android:padding="5dp">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:textColor="#fff"
+
+            android:id="@+id/scan_crate_in_ecom_palette"
+            android:background="#e71821"
+            android:text="Scan Crate In Ecom Palette" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tag Palette With Ecom CLA Bin"
+            android:layout_margin="5dp"
+            android:textColor="#fff"
+
+            android:id="@+id/tag_palette_with_ecom_cla_bin"
+            android:background="#e71821" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Un-Tag Palette With Ecom CLA Bin"
+
+            android:id="@+id/untag_palette_with_ecom_cla_bin"
+            android:layout_margin="5dp"
+            android:textColor="#fff"
+            android:background="#e71821" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Handover To Courier Partner"
+
+            android:id="@+id/handover_to_courier_partner"
+            android:layout_margin="5dp"
+            android:textColor="#fff"
+            android:background="#e71821" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Rejected Courier Scanning"
+
+            android:id="@+id/rejected_courier_scanning"
+            android:layout_margin="5dp"
+            android:textColor="#fff"
+            android:background="#e71821" />
+
     </LinearLayout>
+
 </FrameLayout>

@@ -124,7 +124,7 @@ public class PaperLessDate extends Fragment {
             inputUser.setText(loginUser);
         }
 
-        if(Vars.TVS_PAPER_LESS.equalsIgnoreCase(this.mode)){
+        if(Vars.TVS_PAPER_LESS.equalsIgnoreCase(this.mode) || Vars.TVS_PAPER_LESS_LHU.equalsIgnoreCase(this.mode)){
             ll_printer.setVisibility(View.VISIBLE);
             TSPLPrinter printerHelper = new TSPLPrinter(con);
             String defaultrPrinter = data.read(Vars.TVS_PRINTER);
@@ -185,7 +185,7 @@ public class PaperLessDate extends Fragment {
             nextV2.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if(mode.equalsIgnoreCase(Vars.TVS_PAPER_LESS)){
+                    if(mode.equalsIgnoreCase(Vars.TVS_PAPER_LESS) || mode.equalsIgnoreCase(Vars.TVS_PAPER_LESS_LHU)){
                         AlertBox box = new AlertBox(getContext());
                         String printerName = UIFuncs.toUpperTrim(inputPrinter);
                         if(printerName.length() == 0){
@@ -271,7 +271,7 @@ public class PaperLessDate extends Fragment {
             });
 
             ((Process_Selection_Activity) getActivity())
-                    .setActionBarTitle(Vars.PAPER_LESS.equals(mode) ? "Paperless Picking" : "TVS Paperless Picking");
+                    .setActionBarTitle(Vars.PAPER_LESS.equals(mode) ? "Paperless Picking" : (Vars.TVS_PAPER_LESS.equals(mode) ? "TVS Paperless Picking" : "Live HU TVS Paperless Picking"));
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -303,7 +303,7 @@ public class PaperLessDate extends Fragment {
     public void onResume() {
         super.onResume();
         ((Process_Selection_Activity) getActivity())
-                .setActionBarTitle(Vars.PAPER_LESS.equals(mode) ? "Paperless Picking" : "TVS Paperless Picking");
+                .setActionBarTitle(Vars.PAPER_LESS.equals(mode) ? "Paperless Picking" : (Vars.TVS_PAPER_LESS.equals(mode) ? "TVS Paperless Picking" : "Live HU TVS Paperless Picking"));
     }
 
     private void onSubmit() {

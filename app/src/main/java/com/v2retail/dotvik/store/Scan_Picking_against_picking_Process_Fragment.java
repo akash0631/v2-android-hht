@@ -8,6 +8,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -38,6 +41,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.v2retail.ApplicationController;
+import com.v2retail.commons.UIFuncs;
 import com.v2retail.dotvik.R;
 import com.v2retail.util.AlertBox;
 import com.v2retail.util.CameraCheck;
@@ -200,10 +204,12 @@ public class Scan_Picking_against_picking_Process_Fragment extends Fragment impl
 
         total_sq_et = (EditText) view.findViewById(R.id.total_scan_qty);
         bin_et = (EditText) view.findViewById(R.id.bin_no);
+        UIFuncs.disableKeyInput(bin_et, view, con);
         article_no_et = (EditText) view.findViewById(R.id.article_no);
         tsq_et = (EditText) view.findViewById(R.id.tsq);
         asq_et = (EditText) view.findViewById(R.id.asq);
         barcode_art_et = (EditText) view.findViewById(R.id.barcode_no);
+        UIFuncs.disableKeyInput(barcode_art_et, view, con);
         article_available_stock_et = (EditText) view.findViewById(R.id.article_available_stock);
         mResponseView = (TextView) view.findViewById(R.id.response);
         barcode_art_et.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -214,12 +220,36 @@ public class Scan_Picking_against_picking_Process_Fragment extends Fragment impl
                         InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                         imm.hideSoftInputFromWindow(barcode_art_et.getWindowToken(), 0);
                         setFormData();
+                        barcode_art_et.requestFocus();
                     } catch (Exception e) {
 
                         box.getErrBox(e);
                     }
                 }
                 return false;
+            }
+        });
+        barcode_art_et.addTextChangedListener(new TextWatcher() {
+            boolean scannerReading = false;
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if( (before==0 && start ==0) && count > 6) {
+                    scannerReading = true;
+                } else {
+                    scannerReading = false;
+                }
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+                String barcode = s.toString().toUpperCase();
+                if(barcode.length()>0 && scannerReading) {
+                    setFormData();
+                    barcode_art_et.requestFocus();
+                }
             }
         });
         bin_et.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -242,6 +272,28 @@ public class Scan_Picking_against_picking_Process_Fragment extends Fragment impl
                     }
                 }
                 return false;
+            }
+        });
+        bin_et.addTextChangedListener(new TextWatcher() {
+            boolean scannerReading = false;
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if( (before==0 && start ==0) && count > 6) {
+                    scannerReading = true;
+                } else {
+                    scannerReading = false;
+                }
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+                String bin = s.toString().toUpperCase();
+                if(bin.length()>0 && scannerReading) {
+                    barcode_art_et.requestFocus();
+                }
             }
         });
 
@@ -537,7 +589,7 @@ public class Scan_Picking_against_picking_Process_Fragment extends Fragment impl
 
                             setFormData();
 
-
+                            barcode_art_et.requestFocus();
                         } else {
 
                             box.getBox("Alert!!", "First Scan Bar Number");
@@ -585,9 +637,8 @@ public class Scan_Picking_against_picking_Process_Fragment extends Fragment impl
             }
         } else {
             box.getBox("Alert", "Incorrect Article!");
-            return;
-
-
+            barcode_art_et.setText("");
+            barcode_art_et.requestFocus();
         }
 
 
@@ -605,7 +656,8 @@ public class Scan_Picking_against_picking_Process_Fragment extends Fragment impl
         rows1 = getEANTableData(arrBarQty);
         if (rows1.get(2).size() == 0) {
             Log.d(TAG, "No data found");
-
+            barcode_art_et.setText("");
+            barcode_art_et.requestFocus();
             return;
         }
         //  rows1=dtEAN;
@@ -623,7 +675,8 @@ public class Scan_Picking_against_picking_Process_Fragment extends Fragment impl
             article_available_stock_et.setText(rowsPO.get(1).get(0));
         } else {
             box.getBox("Err", "Incorrect Article");
-
+            barcode_art_et.setText("");
+            barcode_art_et.requestFocus();
             Log.d(TAG, "NO data found for dtpo(matnr == eammaterial)");
             return;
         }
@@ -689,7 +742,6 @@ public class Scan_Picking_against_picking_Process_Fragment extends Fragment impl
             box.getBox("Alert", "Scanned Qty can't be greater than Open Qty");
             barcode_art_et.setText("");
             barcode_art_et.requestFocus();
-
         }
     }
 

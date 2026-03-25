@@ -17,6 +17,19 @@ public class EtPoDataModel implements Serializable {
     String MATNR;
     String VEMNG;
     String BDMNG;
+
+    public void setVEMNG(String VEMNG) {
+        this.VEMNG = VEMNG;
+    }
+
+    public void setMATNR(String MATNR) {
+        this.MATNR = MATNR;
+    }
+
+    public void setBDMNG(String BDMNG) {
+        this.BDMNG = BDMNG;
+    }
+
     String MXALOW;
 
     public EtPoDataModel(String MAT_DESC, String SCAN_QTY, String UNIT, String OPEN_QTY, String GR_QTY, String MATERIAL, String PO_QTY, String CRATE, String MIX_ALLOW) {

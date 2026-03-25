@@ -1,8 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent" android:layout_height="match_parent" tools:context=".dc.CLAProcessFragment" android:background="@color/bgPage">
-    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:layout_margin="2dp" android:background="#000" android:padding="5dp">
-        <Button android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_margin="5dp" android:textColor="@color/white" android:layout_weight="1" android:id="@+id/hu_scan_in_pallete" android:background="@drawable/bg_btn_primary" android:text="HU Scan in Pallete" android:textSize="13sp" />
-        <Button android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Pallete Putaway " android:id="@+id/pallete_putway" android:layout_margin="5dp" android:textColor="@color/white" android:background="@drawable/bg_btn_primary" android:textSize="13sp" />
-        <Button android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Pallete Picking" android:id="@+id/pallete_picking" android:layout_margin="5dp" android:layout_weight="1" android:textColor="@color/white" android:background="@drawable/bg_btn_primary" android:textSize="13sp" />
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".dc.CLAProcessFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="2dp"
+        android:background="#000"
+        android:padding="5dp">
+
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:textColor="#fff"
+                android:layout_weight="1"
+                android:id="@+id/hu_scan_in_pallete"
+                android:background="#e71821"
+                android:text="HU Scan in Pallete" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Pallete Putaway "
+            android:id="@+id/pallete_putway"
+            android:layout_margin="5dp"
+            android:textColor="#fff"
+            android:background="#e71821" />
+
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Pallete Picking"
+                android:id="@+id/pallete_picking"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:textColor="#fff"
+                android:background="#e71821" />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="HU Putway In MSA"
+            android:id="@+id/hu_putway_in_msa"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:textColor="#fff"
+            android:background="#e71821" />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="HU Picking From MSA"
+            android:id="@+id/hu_picking_from_msa"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:textColor="#fff"
+            android:background="#e71821" />
+
     </LinearLayout>
+
+
 </FrameLayout>

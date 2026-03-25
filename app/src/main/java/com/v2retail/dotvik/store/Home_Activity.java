@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.v2retail.dotvik.R;
+import com.v2retail.dotvik.store.directpicking.MenuDirectPickingV01To0001;
 import com.v2retail.util.AlertBox;
 
 
@@ -70,7 +71,8 @@ public class Home_Activity extends AppCompatActivity
         DisplayAreaProcessFragment.OnFragmentInteractionListener,
         EcommFragmentProcess.OnFragmentInteractionListener,
         MenuFragmentStoreDisplayInernalIRODToIROD.OnFragmentInteractionListener,
-        MenuFragmentStoreDisplayReports.OnFragmentInteractionListener {
+        MenuFragmentStoreDisplayReports.OnFragmentInteractionListener,
+        MenuDirectPickingV01To0001.OnFragmentInteractionListener {
 
     String werks;
     String user;

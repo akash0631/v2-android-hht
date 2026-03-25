@@ -1,17 +1,134 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent" android:layout_height="match_parent" android:background="@color/bgPage">
-    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:layout_margin="2dp" android:background="#000" android:padding="5dp">
-        <Button android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_margin="5dp" android:textColor="@color/white" android:id="@+id/create_scan" android:background="@drawable/bg_btn_primary" android:text="Crate Scan" android:textSize="13sp" />
-        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content">
-            <Button android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Putway" android:layout_weight="1" android:layout_margin="5dp" android:textColor="@color/white" android:id="@+id/putway" android:background="@drawable/bg_btn_primary" android:textSize="13sp" />
-            <Button android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Ecom Putway" android:layout_weight="1" android:layout_margin="5dp" android:textColor="@color/white" android:textAllCaps="false" android:id="@+id/ecom_putway" android:background="@drawable/bg_btn_primary" android:textSize="13sp" />
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- TODO: Update blank fragment layout -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="2dp"
+        android:background="#000"
+        android:padding="5dp">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:textColor="#fff"
+            android:id="@+id/create_scan"
+            android:background="#e71821"
+            android:text="Crate Scan" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            >
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Putway"
+                android:layout_weight="1"
+                android:layout_margin="5dp"
+                android:textColor="#fff"
+                android:id="@+id/putway"
+                android:background="#e71821" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Ecom Putway"
+                android:layout_weight="1"
+                android:layout_margin="5dp"
+                android:textColor="#fff"
+                android:textAllCaps="false"
+                android:id="@+id/ecom_putway"
+                android:background="#e71821" />
+
         </LinearLayout>
-        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content">
-            <Button android:layout_width="0dp" android:layout_height="wrap_content" android:text="GRC Putway" android:layout_margin="5dp" android:textColor="@color/white" android:visibility="visible" android:id="@+id/grc_putway" android:layout_weight="1" android:background="@drawable/bg_btn_primary" android:textSize="13sp" />
-            <Button android:layout_width="0dp" android:layout_height="wrap_content" android:text="Stored Stock" android:textAllCaps="false" android:layout_margin="5dp" android:textColor="@color/white" android:layout_weight="1" android:id="@+id/stored_stock" android:background="@drawable/bg_btn_primary" android:textSize="13sp" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="GRC Putway"
+                android:layout_margin="5dp"
+                android:textColor="#fff"
+                android:visibility="visible"
+                android:id="@+id/grc_putway"
+                android:layout_weight="1"
+                android:background="#e71821" />
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Stored Stock"
+                android:textAllCaps="false"
+                android:layout_margin="5dp"
+                android:textColor="#fff"
+                android:layout_weight="1"
+                android:id="@+id/stored_stock"
+                android:background="#e71821" />
+
+
         </LinearLayout>
-        <Button android:layout_width="match_parent" android:layout_height="match_parent" android:text="GRT Scanning (01)" android:textAllCaps="false" android:layout_margin="5dp" android:textColor="@color/white" android:id="@+id/grt_scanning01" android:background="@drawable/bg_btn_primary" android:textSize="13sp" />
-        <Button android:layout_width="match_parent" android:layout_height="match_parent" android:text="GRT Putway (03)" android:textAllCaps="false" android:layout_margin="5dp" android:textColor="@color/white" android:id="@+id/grt_putway03" android:background="@drawable/bg_btn_primary" android:textSize="13sp" />
-        <Button android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Bin Consolidation" android:id="@+id/bin_consolidation" android:layout_margin="5dp" android:textColor="@color/white" android:background="@drawable/bg_btn_primary" android:textSize="13sp" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="GRT Scanning (01)"
+            android:textAllCaps="false"
+            android:layout_margin="5dp"
+            android:textColor="#fff"
+            android:id="@+id/grt_scanning01"
+            android:background="#e71821" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="GRT Putway (03)"
+            android:textAllCaps="false"
+            android:layout_margin="5dp"
+            android:textColor="#fff"
+            android:id="@+id/grt_putway03"
+            android:background="#e71821" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="GRT HU Putway in Bin"
+            android:textAllCaps="false"
+            android:layout_margin="5dp"
+            android:textColor="#fff"
+            android:id="@+id/grt_putway_hu_in_bin"
+            android:background="#e71821" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="HU Tag EXT"
+            android:textAllCaps="false"
+            android:layout_margin="5dp"
+            android:textColor="#fff"
+            android:id="@+id/inward_hu_tag_ext"
+            android:background="#e71821" />
+
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Bin Consolidation"
+            android:id="@+id/bin_consolidation"
+            android:layout_margin="5dp"
+            android:textColor="#fff"
+            android:background="@color/colorAccent" />
+
     </LinearLayout>
+
 </FrameLayout>

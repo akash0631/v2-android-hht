@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -40,8 +41,13 @@ import com.v2retail.util.AlertBox;
 import com.v2retail.util.EditTextDate;
 import com.v2retail.util.SharedPreferencesData;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -258,7 +264,7 @@ public class HU_GRC_Process_Fragment extends Fragment {
         next.requestFocus();
     }
     private void networkCall() {
-
+        dialog = new ProgressDialog(con);
 
         date_string = date.getText().toString();
         invoice_no_string = invoice_number.getText().toString();
@@ -314,9 +320,6 @@ public class HU_GRC_Process_Fragment extends Fragment {
             }
         }, 1000);
     }
-
-
-
 
     private void sendAndRequestResponse(String date_string, String invoice_no_string , String store_number_string) {
 
@@ -379,7 +382,24 @@ public class HU_GRC_Process_Fragment extends Fragment {
                                             invoice_number.requestFocus();
                                             return;
                                         } else {
-
+                                            JSONArray arrHu = responsebody.getJSONArray("ET_HUS");
+                                            if(arrHu.length() > 1){
+                                                List<String> hus = new ArrayList<>();
+                                                for(int i=1; i < arrHu.length(); i++){
+                                                    hus.add(arrHu.getJSONObject(i).getString("HU_NO"));
+                                                }
+                                                Bundle args=new Bundle();
+                                                args.putString("TTL_HU", (arrHu.length() - 1)+"");
+                                                args.putString("store_name",WERKS);
+                                                args.putSerializable("hu_list", (Serializable) hus);
+                                                Fragment fragment = new Scan_HU_GRC_Fragment();
+                                                fragment.setArguments(args);
+                                                FragmentTransaction ft = getParentFragmentManager().beginTransaction();
+                                                ft.replace(R.id.home, fragment, "HU_GRC");
+                                                ft.addToBackStack("HU_GRC");
+                                                invoice_number.setText("");
+                                                ft.commit();
+                                            }
                                         }
                                 }
                             }

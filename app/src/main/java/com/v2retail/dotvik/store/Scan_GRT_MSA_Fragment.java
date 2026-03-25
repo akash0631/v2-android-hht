@@ -74,8 +74,8 @@ public class Scan_GRT_MSA_Fragment extends Fragment implements View.OnClickListe
     FragmentManager fm;
     Button save;
     Button back;
-    Button barcode_scan;
-    Button bin_scan;
+    //Button barcode_scan;
+    //Button bin_scan;
     String URL = "";
     String WERKS = "";
     String USER = "";
@@ -197,9 +197,9 @@ public class Scan_GRT_MSA_Fragment extends Fragment implements View.OnClickListe
             Log.d(TAG, "USER->" + USER);
 
         back = (Button) view.findViewById(R.id.back);
-        barcode_scan = (Button) view.findViewById(R.id.barcode_scan);
+        //barcode_scan = (Button) view.findViewById(R.id.barcode_scan);
         save = (Button) view.findViewById(R.id.save);
-        bin_scan = (Button) view.findViewById(R.id.bin_scan);
+        //bin_scan = (Button) view.findViewById(R.id.bin_scan);
 
         total_sq_et = (EditText) view.findViewById(R.id.total_scan_qty);
         bin_et = (EditText) view.findViewById(R.id.bin_no);
@@ -225,8 +225,8 @@ public class Scan_GRT_MSA_Fragment extends Fragment implements View.OnClickListe
         });
         ;
         back.setOnClickListener(this);
-        barcode_scan.setOnClickListener(this);
-        bin_scan.setOnClickListener(this);
+        //barcode_scan.setOnClickListener(this);
+        //bin_scan.setOnClickListener(this);
         save.setOnClickListener(this);
         barcode_art_et.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override

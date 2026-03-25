@@ -37,6 +37,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.v2retail.ApplicationController;
 import com.v2retail.commons.Vars;
+import com.v2retail.db.V2RDB;
+import com.v2retail.db.V2RDBClient;
+import com.v2retail.db.dao.ETStateDao;
+import com.v2retail.db.entities.ETState;
 import com.v2retail.dotvik.R;
 
 import com.v2retail.dotvik.dc.Process_Selection_Activity;
@@ -46,17 +50,21 @@ import com.v2retail.util.Barcode2D;
 import com.v2retail.util.IBarcodeResult;
 import com.v2retail.util.SharedPreferencesData;
 import com.v2retail.util.TSPLPrinter;
+import com.v2retail.util.Util;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Locale;
 
 public class PapperLessScan extends Fragment implements IBarcodeResult  {
 
     private final String TAG = PapperLessScan.class.getName();
+    private final String DB_MODULE_NAME_TVS = "TVS_PAPERLESS_SCAN_LIVE_HU";
 
     FragmentManager fm;
 
@@ -65,6 +73,7 @@ public class PapperLessScan extends Fragment implements IBarcodeResult  {
 
     private TextView back;
     private int currentIndex = 1;
+    private boolean isContinueScan;
 
     private TextView pickingNo;
 
@@ -107,6 +116,9 @@ public class PapperLessScan extends Fragment implements IBarcodeResult  {
     // ChainwayBarCode
     private Barcode2D barcode2D;
     private EditText chainwayContextEditText = null;
+    V2RDB db;
+    private String startdate;
+    private String starttime;
 
     public PapperLessScan() {
     }
@@ -131,62 +143,28 @@ public class PapperLessScan extends Fragment implements IBarcodeResult  {
         this.requestUrl = data.read("URL");
         this.loginUser = data.read("USER");
 
-        if(Vars.TVS_PAPER_LESS.equalsIgnoreCase(mode)) {
+        if(Vars.TVS_PAPER_LESS.equalsIgnoreCase(mode) || Vars.TVS_PAPER_LESS_LHU.equalsIgnoreCase(mode)) {
             this.tvsprinter = data.read(Vars.TVS_PRINTER);
         }
        //  initializeChainway();
 
     }
-
-    void clear() {
-        try {
-             storeIdText.setText("");
-             if(mExLikp != null) mExLikp = null;
-             if(mEtLips != null) mEtLips = null;
-             if(mEtBinMc != null) mExLikp = null;
-             if( mEtEanData != null) mEtEanData = null;
-             if(scannedDataForSubmit !=null) scannedDataForSubmit = null;
-             scanMap = new HashMap<String, Integer>();
-             if(emptyBinMap!=null) { emptyBinMap.clear(); emptyBinMap = null; }
-        } catch(Exception e) {
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((Process_Selection_Activity) getActivity())
+                .setActionBarTitle(Vars.PAPER_LESS.equals(mode) ? "Paperless - Scanning" : (Vars.TVS_PAPER_LESS.equals(mode) ? "TVS Paperless - Scanning" : "Live HU TVS Paperless - Scanning"));
+    }
+    void initializeFromBundle(Bundle bundle) {
+        mPackingNo = bundle.getString("packing_no"); // mPackingNo);
+        mDeliveryNumber = bundle.getString("delivery_number");
+        mExternalHu = bundle.getString("external_hu");
+        isContinueScan = bundle.getBoolean("continue_scan");
+        if(!isContinueScan){
+            validateDelivery(mDeliveryNumber);
         }
     }
-    void resetFields(){
-        clear();
-        scanMap = new HashMap<String, Integer>();
-        scannedDataForSubmit = new JSONArray();
-        emptyBinMap = new HashMap<String, String>();
-        tsqCount = 0;
-        tqCount = 0;
-        trQCount = 0;
-        tqEditTextFiled.setText("" + tqCount);
-        sqEditTextField.setText("0");
-        rqEditTextFiled.setText("");
-        currentScanBin.setText("");
-        currentScanArticle.setText("");
-        currentScanQuantity.setText("");
-        currentScanOpenQuantity.setText("");
-        binEditText.setText("");
-        crateEditText.setText("");
-        artNoEditText.setText("");
-        sqtyEditText.setText("");
-        storeIdText.setText("");
-        checkBoxEmptyBin.setChecked(false);
-        secondScanItemNo.setText("");
-        secondItemBin.setText("");
-        secondItemCrate.setText("");
-        secondItemEan.setText("");
-        secondItemMatnr.setText("");
-        secondItemRemainQty.setText("");
-        thirdScanItemNo.setText("");
-        thirdItemBin.setText("");
-        thirdItemCrate.setText("");
-        thirdItemMatnr.setText("");
-        thirdItemRemainQty.setText("");
-        currentIndex = 1;
-        validateDelivery(mDeliveryNumber);
-    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_papper_less_scan, container, false);
@@ -277,7 +255,7 @@ public class PapperLessScan extends Fragment implements IBarcodeResult  {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         clear();
-                         fm.popBackStack();
+                        fm.popBackStack();
 
                     }
                 }, new DialogInterface.OnClickListener() {
@@ -302,11 +280,11 @@ public class PapperLessScan extends Fragment implements IBarcodeResult  {
         configureTextChangeListners();
 
         ((Process_Selection_Activity) getActivity())
-                .setActionBarTitle(Vars.PAPER_LESS.equals(mode) ?  "Paperless - Scanning" : "TVS Paperless - Scanning");
+                .setActionBarTitle(Vars.PAPER_LESS.equals(mode) ? "Paperless - Scanning" : (Vars.TVS_PAPER_LESS.equals(mode) ? "TVS Paperless - Scanning" : "Live HU TVS Paperless - Scanning"));
 
         // Validate_zmw_DELIVERY_GET_DETAILS_PLP2("packingNo","editDeliverySelection","inputExternalHu");
         // from first position
-        setDataInView(currentIndex);
+
 
         if(checkBoxEmptyBin!=null) {
             checkBoxEmptyBin.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -330,146 +308,15 @@ public class PapperLessScan extends Fragment implements IBarcodeResult  {
         scannedDataForSubmit = new JSONArray();
         emptyBinMap = new HashMap<String, String>();
         tvPrinter.setVisibility(View.GONE);
-        if(Vars.TVS_PAPER_LESS.equalsIgnoreCase(mode)) {
+        if(Vars.TVS_PAPER_LESS_LHU.equalsIgnoreCase(mode)) {
+            db = V2RDBClient.getInstance(getContext()).getV2ROfflineDB();
+            checkState();
             tvPrinter.setText(this.tvsprinter);
             tvPrinter.setVisibility(View.VISIBLE);
+        }else{
+            setDataInView(currentIndex);
         }
         return view;
-    }
-
-
-    // zwm_delivery_get_details_plp2
-    private void validateDelivery(String deliveryNumber) {
-        final RequestQueue mRequestQueue;
-        JsonObjectRequest mJsonRequest = null;
-        String rfc = "ZWM_DELIVERY_GET_DETAILS_PLP2";
-        String url = this.requestUrl.substring(0, this.requestUrl.lastIndexOf("/"));
-        url += "/noacljsonrfcadaptor?bapiname=" + rfc + "&aclclientid=android";
-
-        final JSONObject params = new JSONObject();
-        try {
-            params.put("bapiname", rfc);
-            params.put("IM_READ_DELV_ALL","X");
-            params.put("IM_READ_EAN","X");
-            params.put("IM_VBELN",deliveryNumber);
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-
-
-            AlertBox box = new AlertBox(getContext());
-            box.getErrBox(e);
-
-        }
-        Log.d(TAG, "payload ->" + params.toString());
-
-        mRequestQueue = ApplicationController.getInstance().getRequestQueue();
-
-        mJsonRequest = new JsonObjectRequest(Request.Method.POST, url, params, new Response.Listener<JSONObject>() {
-
-            @Override
-            public void onResponse(JSONObject responsebody) {
-                try{
-                    Log.d(TAG, " ZWM_DELIVERY_GET_DETAILS_PLP2(): "+  responsebody.toString());
-
-                    if (responsebody == null) {
-                        AlertBox box = new AlertBox(getContext());
-                        box.getBox("Err", "No response from Server");
-                    } else if (responsebody.equals("") || responsebody.equals("null") || responsebody.equals("{}")) {
-                        AlertBox box = new AlertBox(getContext());
-                        box.getBox("Err", "Unable to Connect Server/ Empty Response");
-                        return;
-                    } else {
-                        if (responsebody.has("EX_RETURN") && responsebody.get("EX_RETURN") instanceof JSONObject) {
-                            JSONObject returnobj = responsebody.getJSONObject("EX_RETURN");
-                            if (returnobj != null) {
-                                String type = returnobj.getString("TYPE");
-                                if (type != null)
-                                    if (type.equals("E")) {
-                                        AlertBox box = new AlertBox(getContext());
-                                        if(returnobj.has("MESSAGE")) {
-                                            box.getBox("Err", returnobj.getString("MESSAGE"));
-                                        }
-                                        return;
-                                    } else {
-                                        PapperLessScan.this.mExLikp = responsebody.getJSONObject("EX_LIKP");
-                                        PapperLessScan.this.mEtLips = responsebody.getJSONArray("ET_LIPS");
-                                        PapperLessScan.this.mEtEanData =   responsebody.getJSONArray("ET_EAN_DATA");
-                                        try {
-                                            PapperLessScan.this.mEtBinMc = responsebody.getJSONArray("ET_BIN_MC");
-                                            for (int i = 1; i < PapperLessScan.this.mEtBinMc.length(); i++) {
-                                                JSONObject etBin = PapperLessScan.this.mEtBinMc.getJSONObject(i);
-                                                int lineQty = sapNumberToInt("VISTM", etBin);
-                                                int remainQty = sapNumberToInt("REMAIN_QTY", etBin);
-                                                tqCount = tqCount + lineQty;
-                                                trQCount = trQCount + remainQty;
-                                                tqEditTextFiled.setText("" + tqCount);
-                                                rqEditTextFiled.setText("" + trQCount);
-                                                PapperLessScan.this.mEtBinMc.getJSONObject(i).put("UMREZ","1");
-                                            }
-                                            if(mEtBinMc.getJSONObject(1).has("STORE")) {
-                                                storeIdText.setText(mEtBinMc.getJSONObject(1).getString("STORE"));
-                                            }
-                                        } catch (JSONException jsone) {
-
-                                        }
-                                        setDataInView(currentIndex);
-                                        binEditText.requestFocus();
-                                        return;
-                                    }
-                            }
-                        }
-                    }
-                } catch (JSONException e){
-                    e.printStackTrace();
-                }
-
-            }
-        }, volleyErrorListener()) {
-            @Override
-            public String getBodyContentType() {
-                return "application/json";
-            }
-
-            @Override
-            public byte[] getBody() {
-                return params.toString().getBytes();
-            }
-
-
-            @Override
-            protected Response<JSONObject> parseNetworkResponse(NetworkResponse response) {
-
-                Response<JSONObject> res = super.parseNetworkResponse(response);
-                Log.d(TAG, "Network response -> " + res.toString());
-
-                return res;
-            }
-
-
-        };
-        mJsonRequest.setRetryPolicy(new DefaultRetryPolicy( AppConstants.VOLLEY_TIMEOUT, 0,  DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        mRequestQueue.add(mJsonRequest);
-        Log.d(TAG, "jsonRequest getUrl ->" + mJsonRequest.getUrl());
-        Log.d(TAG, "jsonRequest getBodyContentType->" + mJsonRequest.getBodyContentType());
-        Log.d(TAG, "jsonRequest getBody->" + mJsonRequest.getBody().toString());
-        Log.d(TAG, "jsonRequest getMethod->" + mJsonRequest.getMethod());
-        try {
-            Log.d(TAG, "jsonRequest getHeaders->" + mJsonRequest.getHeaders());
-        } catch (AuthFailureError authFailureError) {
-            authFailureError.printStackTrace();
-
-            AlertBox box = new AlertBox(getContext());
-            box.getErrBox(authFailureError);
-
-        }
-    }
-
-
-    public void onResume() {
-        super.onResume();
-        ((Process_Selection_Activity) getActivity())
-                .setActionBarTitle(Vars.PAPER_LESS.equals(mode) ?  "Paperless - Scanning" : "TVS Paperless - Scanning");
     }
 
     void configureTextChangeListners() {
@@ -580,47 +427,11 @@ public class PapperLessScan extends Fragment implements IBarcodeResult  {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent keyEvent) {
                 Log.d(TAG, "binEditText.setOnKeyListener().onKey()");
-                /*
-                Zebra Code
-                if (keyEvent.getAction() == KeyEvent.ACTION_UP) {
-                    // keyCode = 10036, scan code receiving is 310
-                    if (keyEvent.getKeyCode() == KeyEvent.KEYCODE_BUTTON_R1
-                            || keyEvent.getKeyCode() == 10036
-                            || keyEvent.getScanCode() == 310  ) {
-                        // we need to validate the bin
-                        if(binEditText.getText().toString().length()>0) {
-                            if (handleBinScannning(binEditText.getText().toString())) {
-                                getActivity().runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        artNoEditText.requestFocus();
-                                    }
-                                });
-                                return true;
-                            } else {
-                                // show popup message
-                                new AlertBox(getContext()).getBox("Bin Validation", "Incorrect Bin", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        binEditText.setText("");
-                                        checkBoxEmptyBin.setChecked(false);
-                                        binEditText.requestFocus();
-                                    }
-                                });
-                            }
-                        }
-                    }
-                }
-
-                 */
-                // chainway code for key trigger
                 if (keyEvent.getAction() == keyEvent.ACTION_DOWN) {
                     if (keyEvent.getKeyCode() == KeyEvent.KEYCODE_BUTTON_R1
                             || keyEvent.getKeyCode() == 294
                             || keyEvent.getScanCode() == 253) {
-
-                        // trigerring scanning on bin
-                        startBarcodeScan();
+                        //startBarcodeScan();
                         chainwayContextEditText = binEditText;
                         return true;
                     }
@@ -634,46 +445,7 @@ public class PapperLessScan extends Fragment implements IBarcodeResult  {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if(hasFocus) {
-                    /*
-                    if(scannerActivity!=null) {
-                        scannerActivity.startScan(new ScannerActivity.ScanningFieldResultListener() {
-                            @Override
-                            public void onScannedResult(View view, String scannedValue) {
-                                if(scannedValue!=null && scannedValue.length()>0) {
-                                    binEditText.setText(scannedValue);
-                                    if (handleBinScannning(binEditText.getText().toString())) {
-                                        getActivity().runOnUiThread(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                artNoEditText.requestFocus();
-                                            }
-                                        });
-                                    } else {
-                                        // show popup message
-                                        new AlertBox(getContext()).getBox("Bin Validation", "Incorrect Bin", new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialog, int which) {
-                                                binEditText.setText("");
-                                                checkBoxEmptyBin.setChecked(false);
-                                                binEditText.requestFocus();
-                                            }
-                                        });
-                                    }
-                                }
-
-                            }
-                        });
-                    }
-                    */
-
                     chainwayContextEditText = binEditText;
-
-                } else {
-                    /*
-                    if(scannerActivity!=null) {
-                        scannerActivity.stopScan(null);
-                    }*/
-
                 }
             }
         });
@@ -766,38 +538,14 @@ public class PapperLessScan extends Fragment implements IBarcodeResult  {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent keyEvent) {
                 Log.d(TAG, "artNoEditText.setOnKeyListener().onKey()");
-                /*
-                 Zebra
-                if (keyEvent.getAction() == KeyEvent.ACTION_UP) {
-                    // keyCode = 10036, scan code receiving is 310
-                    if (keyEvent.getKeyCode() == KeyEvent.KEYCODE_BUTTON_R1
-                            || keyEvent.getKeyCode() == 10036
-                            || keyEvent.getScanCode() == 310  ) {
-                        // we need to validate the bin
-                        if(artNoEditText.getText().toString().length()>0) {
-                            if (handleArticleScanning(artNoEditText.getText().toString())) {
-                                return true;
-                            } else {
-                                artNoEditText.setText("");
-                                return false;
-                            }
-                        }
-                    }
-                }
-                 */
-                // chainway code for key trigger
                 if (keyEvent.getAction() == keyEvent.ACTION_DOWN) {
                     if (keyEvent.getKeyCode() == KeyEvent.KEYCODE_BUTTON_R1
                             || keyEvent.getKeyCode() == 294
                             || keyEvent.getScanCode() == 253) {
-
-                        //
-                        // startBarcodeScan();
                         chainwayContextEditText = artNoEditText;
                         return true;
                     }
                 }
-
                 return false;
             }
         });
@@ -806,31 +554,7 @@ public class PapperLessScan extends Fragment implements IBarcodeResult  {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if(hasFocus) {
-                    /*
-                    if(scannerActivity!=null) {
-                        scannerActivity.startScan(new ScannerActivity.ScanningFieldResultListener() {
-                            @Override
-                            public void onScannedResult(View view, String scannedValue) {
-                                if(scannedValue!=null && scannedValue.length()>0) {
-                                    artNoEditText.setText(scannedValue);
-                                    if(handleArticleScanning(artNoEditText.getText().toString())) {
-
-                                    } else {
-                                        artNoEditText.setText("");
-                                    }
-                                }
-                            }
-                        });
-                    }*/
                     chainwayContextEditText = artNoEditText;
-
-                } else {
-                    /*
-                    if(scannerActivity!=null) {
-                        scannerActivity.stopScan(null);
-                    }
-
-                     */
                 }
             }
         });
@@ -838,115 +562,145 @@ public class PapperLessScan extends Fragment implements IBarcodeResult  {
         binEditText.requestFocus();
     }
 
-    void initializeFromBundle(Bundle bundle) {
-        mPackingNo = bundle.getString("packing_no"); // mPackingNo);
-        mDeliveryNumber = bundle.getString("delivery_number");
-        mExternalHu = bundle.getString("external_hu");
+    void clear() {
+        try {
+             storeIdText.setText("");
+             if(mExLikp != null) mExLikp = null;
+             if(mEtLips != null) mEtLips = null;
+             if(mEtBinMc != null) mExLikp = null;
+             if( mEtEanData != null) mEtEanData = null;
+             if(scannedDataForSubmit !=null) scannedDataForSubmit = null;
+             scanMap = new HashMap<String, Integer>();
+             if(emptyBinMap!=null) { emptyBinMap.clear(); emptyBinMap = null; }
+        } catch(Exception e) {
 
-        // initializeDeliveryDetails(bundle);
+        }
+    }
+
+    void resetFields(){
+        clear();
+        scanMap = new HashMap<String, Integer>();
+        scannedDataForSubmit = new JSONArray();
+        startdate = "";
+        starttime = "";
+        emptyBinMap = new HashMap<String, String>();
+        tsqCount = 0;
+        tqCount = 0;
+        trQCount = 0;
+        tqEditTextFiled.setText("" + tqCount);
+        sqEditTextField.setText("0");
+        rqEditTextFiled.setText("");
+        currentScanBin.setText("");
+        currentScanArticle.setText("");
+        currentScanQuantity.setText("");
+        currentScanOpenQuantity.setText("");
+        binEditText.setText("");
+        crateEditText.setText("");
+        artNoEditText.setText("");
+        sqtyEditText.setText("");
+        storeIdText.setText("");
+        checkBoxEmptyBin.setChecked(false);
+        secondScanItemNo.setText("");
+        secondItemBin.setText("");
+        secondItemCrate.setText("");
+        secondItemEan.setText("");
+        secondItemMatnr.setText("");
+        secondItemRemainQty.setText("");
+        thirdScanItemNo.setText("");
+        thirdItemBin.setText("");
+        thirdItemCrate.setText("");
+        thirdItemMatnr.setText("");
+        thirdItemRemainQty.setText("");
+        currentIndex = 1;
         validateDelivery(mDeliveryNumber);
     }
 
-    // no longer passing delivery details from previous screen fragment
-    //Since below function has no usage, commented below function in release 11.81 by Narayanan
-//    void initializeDeliveryDetails(Bundle bundle) {
-//        String tVar = bundle.getString("ex_likp", "");
-//        if (tVar != null && tVar.length() > 0) {
-//            try {
-//                this.mExLikp = new JSONObject(tVar);
-//            } catch (JSONException jsone) {
-//
-//            }
-//        }
-//        tVar = bundle.getString("et_lips", "");
-//        if (tVar != null && tVar.length() > 0) {
-//            try {
-//                this.mEtLips = new JSONArray(tVar);
-//            } catch (JSONException jsone) {
-//
-//            }
-//        }
-//        tVar = bundle.getString("et_bin_mc", "");
-//        if (tVar != null && tVar.length() > 0) {
-//            try {
-//                this.mEtBinMc = new JSONArray(tVar);
-//                for (int i = 1; i < this.mEtBinMc.length(); i++) {
-//                    JSONObject etBin = this.mEtBinMc.getJSONObject(i);
-//                    int lineQty = sapNumberToInt("VISTM", etBin);
-//                    int remainQty = sapNumberToInt("REMAIN_QTY", etBin);
-//                    tqCount = tqCount + lineQty;
-//                    trQCount = trQCount + remainQty;
-//                }
-//            } catch (JSONException jsone) {
-//
-//            }
-//        }
-//        tVar = bundle.getString("et_ean_data", "");
-//        if (tVar != null && tVar.length() > 0) {
-//            try {
-//                this.mEtEanData = new JSONArray(tVar);
-//            } catch (JSONException jsone) {
-//
-//            }
-//        }
-//
-//    }
+    void updateState(){
+        ETStateDao stateDao = db.etStateDao();
+        String savedOn = Util.DateTime("yyyy-MM-dd HH:mm:ss", new Date());
+        String stateData = scannedDataForSubmit.toString();
+        ETState state = new ETState();
+        state.module = DB_MODULE_NAME_TVS;
+        state.data = stateData;
+        state.param1 = mDeliveryNumber;
+        state.param2 = loginUser;
+        state.param3 = mExternalHu;
+        state.param4 = mPackingNo;
+        state.param5 = mExLikp.toString();
+        state.param6 = mEtLips.toString();
+        state.param7 = mEtBinMc.toString();
+        state.param8 = mEtEanData.toString();
+        state.param9 = tsqCount+"";
+        state.param10 = tqCount+"";
+        state.param11 = trQCount+"";
+        state.param12 = new JSONObject(scanMap).toString();
+        state.param13 = new JSONObject(emptyBinMap).toString();
+        state.param14 = currentScanBin.getText().toString();
+        state.param15 = currentScanArticle.getText().toString();
+        state.param16 = currentScanQuantity.getText().toString();
+        state.param17 = currentScanOpenQuantity.getText().toString();
+        state.param18 = currentIndex + "";
+        state.param19 = startdate;
+        state.param20 = starttime;
 
-    int sapNumberToInt(String key, JSONObject expJson) {
-        int retVal = 0;
-        try {
-            String numValue = expJson.getString(key);
-            if (numValue != null && numValue.length() > 0) {
-                int decIndex = numValue.indexOf('.');
-                if (decIndex > 0) {
-                    numValue = numValue.substring(0, decIndex);
+        state.savedon = savedOn;
+        stateDao.saveState(state);
+    }
+
+    void checkState(){
+        ETStateDao stateDao = db.etStateDao();
+        ETState state = stateDao.getSateByModule(DB_MODULE_NAME_TVS);
+        AlertBox box = new AlertBox(getContext());
+        if(state != null){
+            try{
+                scannedDataForSubmit = new JSONArray(state.data);
+                if(scannedDataForSubmit.length() > 0){
+                    mDeliveryNumber = state.param1;
+                    loginUser = state.param2;
+                    mExternalHu = state.param3;
+                    mPackingNo = state.param4;
+                    mExLikp = new JSONObject(state.param5);
+                    mEtLips = new JSONArray(state.param6);
+                    mEtBinMc = new JSONArray(state.param7);
+                    mEtEanData = new JSONArray(state.param8);
+                    tsqCount = Integer.parseInt(state.param9);
+                    tqCount = Integer.parseInt(state.param10);
+                    trQCount = Integer.parseInt(state.param11);
+                    scanMap = new HashMap<>();
+                    tqEditTextFiled.setText("" + tqCount);
+                    rqEditTextFiled.setText("" + trQCount);
+                    sqEditTextField.setText("" + tsqCount);
+
+                    JSONObject scanMapJson = new JSONObject(state.param12);
+                    Iterator<String> scanMapKeys = scanMapJson.keys();
+                    while (scanMapKeys.hasNext()) {
+                        String key = scanMapKeys.next();
+                        scanMap.put(key, scanMapJson.getInt(key));
+                    }
+                    emptyBinMap = new HashMap<>();
+                    JSONObject emptyBinMapJson = new JSONObject(state.param13);
+                    Iterator<String> emptyBinMapKeys = emptyBinMapJson.keys();
+                    while (emptyBinMapKeys.hasNext()) {
+                        String key = emptyBinMapKeys.next();
+                        emptyBinMap.put(key, emptyBinMapJson.getString(key));
+                    }
+                    if(mEtBinMc.getJSONObject(1).has("STORE")) {
+                        storeIdText.setText(mEtBinMc.getJSONObject(1).getString("STORE"));
+                    }
+                    currentIndex = Integer.parseInt(state.param18);
+                    setDataInView(currentIndex);
+                    currentScanBin.setText(state.param14);
+                    currentScanArticle.setText(state.param15);
+                    currentScanQuantity.setText(state.param16);
+                    currentScanOpenQuantity.setText(state.param17);
+                    startdate = state.param19;
+                    starttime = state.param20;
+                    binEditText.requestFocus();
                 }
-                retVal = Integer.parseInt(numValue);
+            }catch (Exception exce){
+                box.getErrBox(exce);
             }
-        } catch (Exception e) {
-
         }
-        return retVal;
-    }
-
-    void nextBin() {
-        if (currentIndex != -1 && currentIndex < mEtBinMc.length() - 1) {
-            currentIndex++;
-            Log.d("realtimevalue", currentIndex + "");
-
-            setDataInView(currentIndex);
-            binEditText.requestFocus();
-        } else {
-            Toast.makeText(getContext(), " list is limit is over", Toast.LENGTH_SHORT).show();
-
-        }
-    }
-
-    Response.ErrorListener volleyErrorListener() {
-        return new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-                Log.i(TAG, "Error :" + error.toString());
-                String err = "";
-
-                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
-                    err = "Communication Error!";
-
-                } else if (error instanceof AuthFailureError) {
-                    err = "Authentication Error!";
-                } else if (error instanceof ServerError) {
-                    err = "Server Side Error!";
-                } else if (error instanceof NetworkError) {
-                    err = "Network Error!";
-                } else if (error instanceof ParseError) {
-                    err = "Parse Error!";
-                } else err = error.toString();
-
-                AlertBox box = new AlertBox(getContext());
-                box.getBox("Err", err);
-            }
-        };
     }
 
     private void setDataInView(int position) {
@@ -1006,7 +760,6 @@ public class PapperLessScan extends Fragment implements IBarcodeResult  {
         }
     }
 
-    // Processing functions are here
     boolean handleBinScannning(String scannedBin) {
         boolean retVal = true;
 
@@ -1019,8 +772,6 @@ public class PapperLessScan extends Fragment implements IBarcodeResult  {
 
         return retVal;
     }
-
-
     boolean handleArticleScanning(String scannedArticle) {
         boolean retVal = false;
 
@@ -1030,7 +781,7 @@ public class PapperLessScan extends Fragment implements IBarcodeResult  {
             retVal = false;
         }
         else
-            {
+        {
             JSONObject eanObject = findArticleFromBarcode(scannedArticle);
             if (eanObject != null) {
                 try {
@@ -1109,60 +860,29 @@ public class PapperLessScan extends Fragment implements IBarcodeResult  {
         }
         return retVal;
     }
+    void nextBin() {
+        if (currentIndex != -1 && currentIndex < mEtBinMc.length() - 1) {
+            currentIndex++;
+            if(Vars.TVS_PAPER_LESS_LHU.equalsIgnoreCase(mode)) {
+                db.etStateDao().updateParam18ByModule(DB_MODULE_NAME_TVS, currentIndex+ "");
+            }
+            Log.d("realtimevalue", currentIndex + "");
+
+            setDataInView(currentIndex);
+            binEditText.requestFocus();
+        } else {
+            Toast.makeText(getContext(), " list is limit is over", Toast.LENGTH_SHORT).show();
+
+        }
+    }
 
     JSONObject findArticleFromBarcode(String scannedArticle) {
         JSONObject jsonObject = null;
-        /*boolean found = false;
-        if(mEtBinMc != null){
-            for (int i = 0; i < mEtBinMc.length(); i++) {
-                try {
-                    JSONObject tempObject = mEtBinMc.getJSONObject(i);
-                    String mcBarcode = tempObject.getString("EAN11"); // MATNR, UMREZ
-                    String mcMatnr = tempObject.getString("MATNR");
-                    if(mcMatnr.equals(secondItemMatnr.getText().toString().trim())){
-
-                    }
-                    if (mcBarcode.trim().length() > 0 && mcBarcode.equals(scannedArticle.trim())
-                            && mcBarcode.equals(secondItemEan.getText().toString().trim())) {
-                        jsonObject = tempObject;
-                        found = true;
-                        break;
-                    }
-                } catch (JSONException jsone) {
-                    UIFuncs.errorSound(getContext());
-                    new AlertBox(getContext()).getBox("Barcode Validation",
-                        "ET MC Records are not in expected format"
-                        , new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                artNoEditText.setText("");
-                                artNoEditText.requestFocus();
-                            }
-                        });
-                }
-            }
-            if(found){
-                return jsonObject;
-            }else{
-                UIFuncs.errorSound(getContext());
-                new AlertBox(getContext()).getBox("Barcode Validation",
-                        "Only "+secondItemEan.getText().toString().trim()+" is allowed to scan"
-                        , new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                artNoEditText.setText("");
-                                artNoEditText.requestFocus();
-                            }
-                        });
-                return null;
-            }
-        }
-        else {*/
         if (mEtEanData != null) {
             for (int i = 0; i < mEtEanData.length(); i++) {
                 try {
                     JSONObject tempObject = mEtEanData.getJSONObject(i);
-                    String matchBarcode = tempObject.getString("EAN11"); // MATNR, UMREZ
+                    String matchBarcode = tempObject.getString("EAN11");
                     if (matchBarcode.equals(scannedArticle.trim())) {
                         jsonObject = tempObject;
                         break;
@@ -1180,22 +900,8 @@ public class PapperLessScan extends Fragment implements IBarcodeResult  {
                 }
             }
         }
-            /*if(jsonObject == null){
-                UIFuncs.errorSound(getContext());
-                new AlertBox(getContext()).getBox("Barcode Validation",
-                        "Incorrect Barcode or Article not found."
-                        , new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                artNoEditText.setText("");
-                                artNoEditText.requestFocus();
-                            }
-                        });
-            }
-        }*/
         return jsonObject;
     }
-
     JSONObject findDeliveryLine(String matnr) {
         JSONObject jsonObject = null;
 
@@ -1257,7 +963,6 @@ public class PapperLessScan extends Fragment implements IBarcodeResult  {
             Log.d(TAG, "processingFirstTimeData(): deliveryLine  for "  + matnr + ", not found." );
         }
     }
-
     void processingContainData(int articleCount, String binMatnrKey, String matnr, JSONObject eanJson) {
 
         JSONObject deliveryLine = findDeliveryLine(matnr);
@@ -1306,66 +1011,168 @@ public class PapperLessScan extends Fragment implements IBarcodeResult  {
         }
 
     }
-
     void addDataForUpdateInSAP(String matnr, String charg, String werks, String lgort, String material, String tmeng, String vrkme, String bin) {
         JSONObject itJson = new JSONObject();
-
         try {
             itJson.put("MATNR", matnr);
-        } catch(JSONException jsone) {
-
-        }
-        try {
             itJson.put("CHARG", charg);
-        } catch(JSONException jsone) {
-
-        }
-
-        try {
             itJson.put("WERKS", werks);
-        } catch(JSONException jsone) {
-
-        }
-
-        try {
             itJson.put("LGORT",  lgort);
-        } catch(JSONException jsone) {
-
-        }
-
-        try {
             itJson.put("P_MATERIAL", material);
-        } catch(JSONException jsone) {
-
-        }
-
-        try {
             itJson.put("TMENG", tmeng);
-        } catch(JSONException jsone) {
-
-        }
-
-        try {
             itJson.put("VRKME", vrkme);
-        } catch(JSONException jsone) {
-
-        }
-
-        try {
             itJson.put("RFBEL", bin);
-        } catch(JSONException jsone) {
-            return;
-        }
 
-        scannedDataForSubmit.put(itJson);
+            if(Vars.TVS_PAPER_LESS_LHU.equalsIgnoreCase(mode)){
+                if(starttime == null || starttime.isEmpty()){
+                    startdate = Util.DateTime("yyyyMMdd", new Date());
+                    starttime = Util.DateTime("HHmmss", new Date());
+                }
+                itJson.put("CHARG", startdate);
+                itJson.put("RFPOS", starttime);
+            }
+
+            scannedDataForSubmit.put(itJson);
+        } catch(JSONException jsone) {
+
+        }
+        if(Vars.TVS_PAPER_LESS_LHU.equalsIgnoreCase(mode)){
+            updateState();
+        }
     }
 
+    private void validateDelivery(String deliveryNumber) {
+        final RequestQueue mRequestQueue;
+        JsonObjectRequest mJsonRequest = null;
+        String rfc = "ZWM_DELIVERY_GET_DETAILS_PLP2";
+        String url = this.requestUrl.substring(0, this.requestUrl.lastIndexOf("/"));
+        url += "/noacljsonrfcadaptor?bapiname=" + rfc + "&aclclientid=android";
 
+        final JSONObject params = new JSONObject();
+        try {
+            params.put("bapiname", rfc);
+            params.put("IM_READ_DELV_ALL","X");
+            params.put("IM_READ_EAN","X");
+            params.put("IM_VBELN",deliveryNumber);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+
+
+            AlertBox box = new AlertBox(getContext());
+            box.getErrBox(e);
+
+        }
+        Log.d(TAG, "payload ->" + params.toString());
+
+        mRequestQueue = ApplicationController.getInstance().getRequestQueue();
+
+        mJsonRequest = new JsonObjectRequest(Request.Method.POST, url, params, new Response.Listener<JSONObject>() {
+
+            @Override
+            public void onResponse(JSONObject responsebody) {
+                try{
+                    Log.d(TAG, " ZWM_DELIVERY_GET_DETAILS_PLP2(): "+  responsebody.toString());
+
+                    if (responsebody == null) {
+                        AlertBox box = new AlertBox(getContext());
+                        box.getBox("Err", "No response from Server");
+                    } else if (responsebody.equals("") || responsebody.equals("null") || responsebody.equals("{}")) {
+                        AlertBox box = new AlertBox(getContext());
+                        box.getBox("Err", "Unable to Connect Server/ Empty Response");
+                        return;
+                    } else {
+                        if (responsebody.has("EX_RETURN") && responsebody.get("EX_RETURN") instanceof JSONObject) {
+                            JSONObject returnobj = responsebody.getJSONObject("EX_RETURN");
+                            if (returnobj != null) {
+                                String type = returnobj.getString("TYPE");
+                                if (type != null)
+                                    if (type.equals("E")) {
+                                        AlertBox box = new AlertBox(getContext());
+                                        if(returnobj.has("MESSAGE")) {
+                                            box.getBox("Err", returnobj.getString("MESSAGE"));
+                                        }
+                                        return;
+                                    } else {
+                                        mExLikp = responsebody.getJSONObject("EX_LIKP");
+                                        mEtLips = responsebody.getJSONArray("ET_LIPS");
+                                        mEtEanData =   responsebody.getJSONArray("ET_EAN_DATA");
+                                        try {
+                                            mEtBinMc = responsebody.getJSONArray("ET_BIN_MC");
+                                            for (int i = 1; i < PapperLessScan.this.mEtBinMc.length(); i++) {
+                                                JSONObject etBin = PapperLessScan.this.mEtBinMc.getJSONObject(i);
+                                                int lineQty = sapNumberToInt("VISTM", etBin);
+                                                int remainQty = sapNumberToInt("REMAIN_QTY", etBin);
+                                                tqCount = tqCount + lineQty;
+                                                trQCount = trQCount + remainQty;
+                                                tqEditTextFiled.setText("" + tqCount);
+                                                rqEditTextFiled.setText("" + trQCount);
+                                                PapperLessScan.this.mEtBinMc.getJSONObject(i).put("UMREZ","1");
+                                            }
+                                            if(mEtBinMc.getJSONObject(1).has("STORE")) {
+                                                storeIdText.setText(mEtBinMc.getJSONObject(1).getString("STORE"));
+                                            }
+                                            String binMcJson = mEtBinMc.toString();
+                                            mEtBinMc = new JSONArray(binMcJson);
+                                        } catch (JSONException jsone) {
+
+                                        }
+                                        setDataInView(currentIndex);
+                                        binEditText.requestFocus();
+                                        return;
+                                    }
+                            }
+                        }
+                    }
+                } catch (JSONException e){
+                    e.printStackTrace();
+                }
+
+            }
+        }, volleyErrorListener()) {
+            @Override
+            public String getBodyContentType() {
+                return "application/json";
+            }
+
+            @Override
+            public byte[] getBody() {
+                return params.toString().getBytes();
+            }
+
+
+            @Override
+            protected Response<JSONObject> parseNetworkResponse(NetworkResponse response) {
+
+                Response<JSONObject> res = super.parseNetworkResponse(response);
+                Log.d(TAG, "Network response -> " + res.toString());
+
+                return res;
+            }
+
+
+        };
+        mJsonRequest.setRetryPolicy(new DefaultRetryPolicy( AppConstants.VOLLEY_TIMEOUT, 0,  DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        mRequestQueue.add(mJsonRequest);
+        Log.d(TAG, "jsonRequest getUrl ->" + mJsonRequest.getUrl());
+        Log.d(TAG, "jsonRequest getBodyContentType->" + mJsonRequest.getBodyContentType());
+        Log.d(TAG, "jsonRequest getBody->" + mJsonRequest.getBody().toString());
+        Log.d(TAG, "jsonRequest getMethod->" + mJsonRequest.getMethod());
+        try {
+            Log.d(TAG, "jsonRequest getHeaders->" + mJsonRequest.getHeaders());
+        } catch (AuthFailureError authFailureError) {
+            authFailureError.printStackTrace();
+
+            AlertBox box = new AlertBox(getContext());
+            box.getErrBox(authFailureError);
+
+        }
+    }
     void saveScannedData() {
 
         final RequestQueue mRequestQueue;
 
-        String rfc = this.mode.equals(Vars.TVS_PAPER_LESS) ? "ZWM_CREATE_HU_AND_ASSIGN_TVS" : "ZWM_CREATE_HU_AND_ASSIGN";
+        String rfc = this.mode.equals(Vars.PAPER_LESS) ? "ZWM_CREATE_HU_AND_ASSIGN" : "ZWM_CREATE_HU_AND_ASSIGN_TVS";
         String url = this.requestUrl.substring(0, this.requestUrl.lastIndexOf("/"));
         url += "/noacljsonrfcadaptor?bapiname=" + rfc + "&aclclientid=android";
 
@@ -1468,6 +1275,12 @@ public class PapperLessScan extends Fragment implements IBarcodeResult  {
                                             box.getBox("Success", returnobj.getString("MESSAGE"), new DialogInterface.OnClickListener() {
                                                 @Override
                                                 public void onClick(DialogInterface dialog, int which) {
+                                                    SharedPreferencesData data = new SharedPreferencesData(getContext());
+                                                    try {
+                                                        data.write(Vars.LAST_HU, huObj.getString("SAP_HU"));
+                                                    }catch (Exception exce){
+
+                                                    }
                                                     printHu(huObj);
                                                 }
                                             });
@@ -1531,83 +1344,13 @@ public class PapperLessScan extends Fragment implements IBarcodeResult  {
     private void printHu(JSONObject huObj) {
         TSPLPrinter printer = new TSPLPrinter(getContext());
         //4B-2033PA-BFA4
-        printer.sendPrintCommandToBluetoothPrinter(this.tvsprinter, huObj);
+        printer.sendPrintCommandToBluetoothPrinter(this.tvsprinter, huObj, Vars.TVS_PAPER_LESS_LHU.equals(mode) ? "1":"2");
         resetFields();
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-    }
-
-    @Override
-    public void onStop() {
-
-        // closeBarcodeReader();
-
-        super.onStop();
-    }
-
-
-    // chainway coding
-    public void initializeChainway() {
-        barcode2D=new Barcode2D(getActivity());
-
-        new ChainwayBarcodeReader().execute();
-    }
-
-    public class ChainwayBarcodeReader extends AsyncTask<String, Integer, Boolean> {
-        ProgressDialog mypDialog;
-        @Override
-        protected Boolean doInBackground(String... params) {
-            // TODO Auto-generated method stub
-            // openBarcodeReader();
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            return true;
-        }
-        @Override
-        protected void onPostExecute(Boolean result) {
-            super.onPostExecute(result);
-            mypDialog.cancel();
-        }
-        @Override
-        protected void onPreExecute() {
-            // TODO Auto-generated method stub
-            super.onPreExecute();
-            mypDialog = new ProgressDialog(getActivity());
-            mypDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            mypDialog.setMessage("init...");
-            mypDialog.setCanceledOnTouchOutside(false);
-            mypDialog.setCancelable(false);
-            mypDialog.show();
+        V2RDBClient.getInstance(getContext()).getV2ROfflineDB().etStateDao().clearStateByModule(DB_MODULE_NAME_TVS);
+        if(Vars.TVS_PAPER_LESS_LHU.equals(mode)){
+            fm.popBackStack();
         }
     }
-
-
-    private void startBarcodeScan(){
-       // barcode2D.startScan(getContext());
-    }
-
-    private void stopBarcodeScan(){
-        barcode2D.stopScan(getContext());
-    }
-
-    private void openBarcodeReader(){
-        Log.d(TAG, "openBarcodeReader()" );
-       // barcode2D.open(getContext(),this);
-    }
-
-    private void closeBarcodeReader(){
-        Log.d(TAG, "closeBarcodeReader()" );
-
-        // barcode2D.stopScan(getContext());
-        // barcode2D.close(getContext());
-    }
-
     public void getBarcode(String barcode) {
         Log.d(TAG, barcode);
 
@@ -1649,5 +1392,59 @@ public class PapperLessScan extends Fragment implements IBarcodeResult  {
             }
         }
 
+    }
+    int sapNumberToInt(String key, JSONObject expJson) {
+        int retVal = 0;
+        try {
+            String numValue = expJson.getString(key);
+            if (numValue != null && numValue.length() > 0) {
+                int decIndex = numValue.indexOf('.');
+                if (decIndex > 0) {
+                    numValue = numValue.substring(0, decIndex);
+                }
+                retVal = Integer.parseInt(numValue);
+            }
+        } catch (Exception e) {
+
+        }
+        return retVal;
+    }
+    @Override
+    public void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    public void onStop() {
+
+        // closeBarcodeReader();
+
+        super.onStop();
+    }
+    Response.ErrorListener volleyErrorListener() {
+        return new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                Log.i(TAG, "Error :" + error.toString());
+                String err = "";
+
+                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+                    err = "Communication Error!";
+
+                } else if (error instanceof AuthFailureError) {
+                    err = "Authentication Error!";
+                } else if (error instanceof ServerError) {
+                    err = "Server Side Error!";
+                } else if (error instanceof NetworkError) {
+                    err = "Network Error!";
+                } else if (error instanceof ParseError) {
+                    err = "Parse Error!";
+                } else err = error.toString();
+
+                AlertBox box = new AlertBox(getContext());
+                box.getBox("Err", err);
+            }
+        };
     }
 }

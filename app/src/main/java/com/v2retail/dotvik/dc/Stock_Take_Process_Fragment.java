@@ -161,7 +161,7 @@ public class Stock_Take_Process_Fragment extends Fragment implements View.OnClic
         site = (EditText) view.findViewById(R.id.site);
         warehouse_no = (EditText) view.findViewById(R.id.warehouse_no);
 
-        mResponseView = (TextView) view.findViewById(R.id.response);
+       // mResponseView = (TextView) view.findViewById(R.id.response);
 
         init();
 
@@ -203,7 +203,7 @@ public class Stock_Take_Process_Fragment extends Fragment implements View.OnClic
         stock_take_id.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
-                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
                     String stockTakeId = stock_take_id.getText().toString();
                     if (stockTakeId == null || stockTakeId.length() < 0 || stockTakeId.equals("")) {
                         box.getBox("Alert", "Scan stock Take Id !");

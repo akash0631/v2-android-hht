@@ -20,6 +20,7 @@ import android.util.Log;
 import androidx.core.app.ActivityCompat;
 
 import com.v2retail.commons.UIFuncs;
+import com.v2retail.commons.Vars;
 
 import org.json.JSONObject;
 
@@ -42,15 +43,23 @@ public class TSPLPrinter {
     private String printerName;
     // UUID for serial port connection (SPP)
     private static final UUID SERIAL_PORT_SERVICE_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
+    private String process;
 
     // Constructor to initialize Bluetooth adapter
     public TSPLPrinter(Context con) {
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        this.process = "";
+        this.con = con;
+    }
+
+    public TSPLPrinter(Context con, String process) {
+        bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        this.process = process;
         this.con = con;
     }
 
     // Function to send print command via Bluetooth
-    public void sendPrintCommandToBluetoothPrinter(String printerName, JSONObject huObj) {
+    public void sendPrintCommandToBluetoothPrinter(String printerName, JSONObject huObj, String copies) {
         try {
             // Find the Bluetooth printer by name
             findBluetoothPrinter(printerName, false);
@@ -60,7 +69,7 @@ public class TSPLPrinter {
                 connectToBluetoothPrinter();
 
                 // Build the TSPL command
-                String tsplCommand = buildHuPrintCommand(huObj);
+                String tsplCommand = buildHuPrintCommand(huObj, copies);
 
                 // Send TSPL command to the printer
                 if (bluetoothSocket != null && bluetoothSocket.isConnected()) {
@@ -116,23 +125,29 @@ public class TSPLPrinter {
         }
     }
 
-    private String buildHuPrintCommand(JSONObject huObj) {
+    private String buildHuPrintCommand(JSONObject huObj, String copies) {
+
         String werks = "HDXX";
         String warehouse = "WH NAME";
         String qty = "Qty XXX";
         String hhtid = "HHT ID XXX";
         String date = "Date:- 01 Jan 1990";
-        String weight = "HU Weight:- XXKg";
+        String weight = "HU Weight:- XXKg P1";
         String tvstext = "XXXXXX";
         String huno = "1234567890";
+        String hubName = "X-ABC";
+        String hub = "HBXX";
         if(huObj != null){
             try{
                 werks = huObj.getString("DWERKS");
                 warehouse = huObj.getString("DWERKS_NAME1");
+                hubName = huObj.getString("HUB_NAME");
+                hub = huObj.getString("HUB");
+                hub = String.format("HUB:- %s / %s", hub, hubName);
                 qty = String.format("Qty %s", Util.convertToDoubleString(huObj.getString("VEMNG")));
                 hhtid = String.format("HHT ID %s", UIFuncs.removeLeadingZeros(huObj.getString("HHT_ID")));
                 date = String.format("Date:- %s", huObj.getString("DATUM"));
-                weight = String.format("HU Weight:- %s", huObj.getString("WEIGHT")+huObj.getString("GEWEI"));
+                weight = String.format("HU Weight:- %s %s", huObj.getString("WEIGHT")+huObj.getString("GEWEI"),huObj.getString("PRIORITY"));
                 tvstext = huObj.getString("TVS_TEXT");
                 huno = huObj.getString("SAP_HU");
             }catch (Exception exce){
@@ -140,19 +155,37 @@ public class TSPLPrinter {
             }
         }
         double labelWidthInDots = (70 / 25.4) * 203;
-        return "SIZE 70 mm, 40 mm\n" +
-                "GAP 3 mm, 0 mm\n" +
-                "DIRECTION 0\n" +
-                "CLS\n" +
-                "TEXT 20, 40, \"3\", 0, 1, 1, \"" + werks + " " + warehouse + "\"\n" +
-                generateRTLTextCommand(qty, labelWidthInDots, 12, 40, 40) +
-                "TEXT 20, 100, \"3\", 0, 1, 1, \"" + hhtid + "\"\n" +
-                generateRTLTextCommand(date, labelWidthInDots, 12, 100, 80) +
-                "TEXT 20, 160, \"3\", 0, 1, 1, \"" + weight + "\"\n" +
-                generateRTLTextCommand(tvstext, labelWidthInDots, 12, 160, 30) +
-                "BARCODE 110, 210, \"128\", 100, 0, 0, 4, 8, \"" + huno + "\"\n" +
-                "TEXT 210, 320, \"3\", 0, 1, 1, \"" + huno + "\"\n" +
-                "PRINT 1, 2\n";
+        if(Vars.PTL_NEW_MODULE_HU_CLOSE.equalsIgnoreCase(this.process)){
+            return "SIZE 70 mm, 40 mm\n" +
+                    "GAP 3 mm, 0 mm\n" +
+                    "DIRECTION 0\n" +
+                    "CLS\n" +
+                    generateRTLTextCommand(qty, labelWidthInDots, 12, 40, 40) +
+                    "TEXT 20, 40, \"3\", 0, 1, 1, \"" + hub + "\"\n" +
+                    "TEXT 20, 80, \"3\", 0, 1, 1, \"" + werks + " " + warehouse + "\"\n" +
+                    "TEXT 20, 120, \"3\", 0, 1, 1, \"" + hhtid + "\"\n" +
+                    generateRTLTextCommand(date, labelWidthInDots, 12, 120, 80) +
+                    "TEXT 20, 160, \"3\", 0, 1, 1, \"" + weight + "\"\n" +
+                    generateRTLTextCommand(tvstext, labelWidthInDots, 12, 160, 30) +
+                    "BARCODE 110, 210, \"128\", 100, 0, 0, 4, 8, \"" + huno + "\"\n" +
+                    "TEXT 210, 320, \"3\", 0, 1, 1, \"" + huno + "\"\n" +
+                    "PRINT 1, "+copies+"\n";
+        }else {
+            return "SIZE 70 mm, 40 mm\n" +
+                    "GAP 3 mm, 0 mm\n" +
+                    "DIRECTION 0\n" +
+                    "CLS\n" +
+                    "TEXT 20, 40, \"3\", 0, 1, 1, \"" + werks + " " + warehouse + "\"\n" +
+                    generateRTLTextCommand(qty, labelWidthInDots, 12, 80, 40) +
+                    "TEXT 20, 80, \"3\", 0, 1, 1, \"" + hub + "\"\n" +
+                    "TEXT 20, 120, \"3\", 0, 1, 1, \"" + hhtid + "\"\n" +
+                    generateRTLTextCommand(date, labelWidthInDots, 12, 120, 80) +
+                    "TEXT 20, 160, \"3\", 0, 1, 1, \"" + weight + "\"\n" +
+                    generateRTLTextCommand(tvstext, labelWidthInDots, 12, 160, 30) +
+                    "BARCODE 110, 210, \"128\", 100, 0, 0, 4, 8, \"" + huno + "\"\n" +
+                    "TEXT 210, 320, \"3\", 0, 1, 1, \"" + huno + "\"\n" +
+                    "PRINT 1, "+copies+"\n";
+        }
     }
 
     public void requestBluetoothPermission(Context con) {

@@ -20,7 +20,7 @@ import com.v2retail.dotvik.R;
  */
 public class CLAProcessFragment extends Fragment implements View.OnClickListener {
 
-    Button hu_scan_in_pallete,pallete_putway,pallete_picking;
+    Button hu_scan_in_pallete,pallete_putway,pallete_picking,hu_putway_in_msa,hu_picking_from_msa;
     FragmentManager fm;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -71,10 +71,15 @@ public class CLAProcessFragment extends Fragment implements View.OnClickListener
         hu_scan_in_pallete = view.findViewById(R.id.hu_scan_in_pallete);
         pallete_picking = view.findViewById(R.id.pallete_picking);
         pallete_putway = view.findViewById(R.id.pallete_putway);
+        hu_putway_in_msa = view.findViewById(R.id.hu_putway_in_msa);
+        hu_picking_from_msa = view.findViewById(R.id.hu_picking_from_msa);
+
         fm=getFragmentManager();
         hu_scan_in_pallete.setOnClickListener(this);
         pallete_picking.setOnClickListener(this);
         pallete_putway.setOnClickListener(this);
+        hu_putway_in_msa.setOnClickListener(this);
+        hu_picking_from_msa.setOnClickListener(this);
         return view;
     }
 
@@ -104,7 +109,12 @@ public class CLAProcessFragment extends Fragment implements View.OnClickListener
             case R.id.pallete_picking:
                 fragment = new PalletePickingFragment();
                 break;
-
+            case R.id.hu_putway_in_msa:
+                fragment = new FragmentHUPutwayInMSA();
+                break;
+            case R.id.hu_picking_from_msa:
+                fragment = new FragmentHuPickingFromMSA();
+                break;
         }
 
         if (fragment != null) {

@@ -1,5 +1,7 @@
 package com.v2retail.commons;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
@@ -10,6 +12,7 @@ import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.text.Html;
+import android.text.InputType;
 import android.text.Spanned;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -24,17 +27,33 @@ import java.util.Locale;
 public class UIFuncs {
 
     public static void blinkEffectOnError(Context context, EditText view,boolean errorBeep) {
+        ObjectAnimator anim = ObjectAnimator.ofInt(view, "backgroundColor", Color.WHITE, Color.RED,Color.WHITE);
+        blinkEffectOnError(context, view, errorBeep, anim);
+    }
+
+    public static void blinkEffectOnErrorBordered(Context context, EditText view,boolean errorBeep) {
+        ObjectAnimator anim = ObjectAnimator.ofInt(view, "backgroundColor", Color.WHITE, Color.RED,Color.WHITE);
+        anim.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                view.setBackgroundResource(R.drawable.border);
+            }
+        });
+        blinkEffectOnError(context, view, errorBeep, anim);
+    }
+
+    private static void blinkEffectOnError(Context context, EditText view,boolean errorBeep,ObjectAnimator anim) {
         if(errorBeep){
             errorSound(context);
         }
-        ObjectAnimator anim = ObjectAnimator.ofInt(view, "backgroundColor", Color.WHITE, Color.RED,Color.WHITE);
         anim.setDuration(500);
         anim.setEvaluator(new ArgbEvaluator());
         anim.setRepeatMode(ValueAnimator.REVERSE);
         anim.setRepeatCount(4);
         anim.start();
-
     }
+
     public static void errorSound(Context context){
         MediaPlayer mp = MediaPlayer.create(context, R.raw.error_beep);
         mp.start();
@@ -105,5 +124,24 @@ public class UIFuncs {
                 imm.hideSoftInputFromWindow(activity.getWindow().getDecorView().getWindowToken(), 0);
             }
         }catch (Exception e) {}
+    }
+
+    public static void disableKeyInput(EditText targetEditText, View view, Context con){
+        //targetEditText.setKeyListener(null);
+        targetEditText.setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus) {
+                InputMethodManager imm = (InputMethodManager) con.getSystemService(Context.INPUT_METHOD_SERVICE);
+                if (imm != null) {
+                    imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                }
+            }
+        });
+        targetEditText.setFocusable(true);
+        targetEditText.setFocusableInTouchMode(true);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            targetEditText.setShowSoftInputOnFocus(false);
+        } else {
+            targetEditText.setInputType(InputType.TYPE_NULL);
+        }
     }
 }

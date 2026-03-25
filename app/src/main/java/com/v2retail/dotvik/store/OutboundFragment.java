@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.v2retail.dotvik.R;
+import com.v2retail.dotvik.store.directpicking.MenuDirectPickingV01To0001;
 
 
 /**
@@ -22,7 +23,8 @@ import com.v2retail.dotvik.R;
  * Use the {@link OutboundFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class OutboundFragment extends Fragment implements View.OnClickListener
+public class OutboundFragment extends Fragment implements View.OnClickListener,
+        MenuDirectPickingV01To0001.OnFragmentInteractionListener
 
 {
     // TODO: Rename parameter arguments, choose names that match
@@ -39,6 +41,7 @@ public class OutboundFragment extends Fragment implements View.OnClickListener
     Button grt_from_msa;
     Button baseStock;
     Button picking_with_consolidation;
+    Button carticle_process, direct_picking_v01_0001;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -98,6 +101,8 @@ public class OutboundFragment extends Fragment implements View.OnClickListener
         grt_from_display = (Button) view.findViewById(R.id.grt_from_Display);
         grt_from_msa = (Button) view.findViewById(R.id.grt_from_msa);
         picking_with_consolidation = (Button) view.findViewById(R.id.button_picking_with_consolidation);
+        carticle_process = view.findViewById(R.id.carticle_process);
+        direct_picking_v01_0001 = view.findViewById(R.id.direct_picking_v01_0001);
 
         direct_picking.setOnClickListener(this);
         picking_against_picking.setOnClickListener(this);
@@ -108,6 +113,8 @@ public class OutboundFragment extends Fragment implements View.OnClickListener
         grt_from_msa.setOnClickListener(this);
         baseStock.setOnClickListener(this);
         picking_with_consolidation.setOnClickListener(this);
+        carticle_process.setOnClickListener(this);
+        direct_picking_v01_0001.setOnClickListener(this);
 
         return view;
     }
@@ -136,6 +143,11 @@ public class OutboundFragment extends Fragment implements View.OnClickListener
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 
     @Override
@@ -173,11 +185,12 @@ public class OutboundFragment extends Fragment implements View.OnClickListener
             case R.id.button_picking_with_consolidation:
                 fragment = new PickingWithConsolidationFragment();
                 break;
-        /*    case R.id.gandolatodc:
-                fragment=new TRFDispToProc();
-                bundle.putString("TYPE","3");
-                fragment.setArguments(bundle);
-                break;*/
+            case R.id.carticle_process:
+                fragment = new FragmentCArticleProcess();
+                break;
+            case R.id.direct_picking_v01_0001:
+                fragment = new MenuDirectPickingV01To0001();
+                break;
         }
         if (fragment != null) {
             FragmentTransaction ft = getFragmentManager().beginTransaction();

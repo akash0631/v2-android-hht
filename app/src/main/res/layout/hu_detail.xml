@@ -1,37 +1,251 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="match_parent" android:layout_height="match_parent">
-    <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="vertical">
-        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="5dp" android:layout_margin="2dp">
-            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:padding="5dp">
-                <TextView android:layout_weight=".5" android:layout_width="0dp" android:layout_height="wrap_content" android:text="HU No." android:textSize="15sp" />
-                <EditText android:layout_weight="1" android:textSize="15sp" android:id="@+id/hu_no" android:inputType="number" android:layout_width="0dp" android:imeOptions="actionSearch" android:singleLine="true" android:lines="1" android:layout_height="48dp" android:hint="Scan Barcode" android:background="@color/bgInput" android:textColor="@color/textPrimary" android:textColorHint="@color/textHint" android:paddingStart="14dp" android:paddingEnd="14dp" />
-                <Button android:layout_weight=".6" android:textSize="15sp" android:text="Scan" android:id="@+id/hu_scan" android:background="@drawable/bg_btn_primary" android:layout_margin="2dp" android:layout_width="0dp" android:layout_height="wrap_content" android:hint="" android:textColor="@color/white" />
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="5dp"
+            android:layout_margin="2dp">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="5dp">
+
+                <TextView
+                    android:layout_weight=".5"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="HU No."
+                    android:textSize="15sp" />
+
+                <EditText
+                    android:layout_weight="1"
+                    android:textSize="15sp"
+                    android:id="@+id/hu_no"
+                    android:inputType="number"
+                    android:layout_width="0dp"
+                    android:imeOptions="actionSearch"
+                    android:singleLine="true"
+                    android:lines="1"
+                    android:layout_height="wrap_content"
+                    android:hint="Scan Barcode" />
+
+                <Button
+                    android:layout_weight=".6"
+                    android:textSize="15sp"
+                    android:text="Scan"
+                    android:id="@+id/hu_scan"
+                    android:background="@drawable/shadow"
+                    android:layout_margin="2dp"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:hint="" />
             </LinearLayout>
-            <TextView android:id="@+id/response" android:layout_width="match_parent" android:layout_height="60dp" android:layout_margin="2dp" android:padding="5dp" android:text="status:" android:visibility="gone" android:textColor="@color/colorPrimary" />
-            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:padding="5dp">
-                <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight=".5" android:text="Del No" android:textSize="15sp" />
-                <EditText android:id="@+id/del_no" android:layout_width="0dp" android:layout_height="48dp" android:layout_weight="1.5" android:hint="Enter Del No" android:imeOptions="actionSearch" android:singleLine="true" android:inputType="text" android:lines="1" android:textSize="15sp" android:background="@color/bgInput" android:textColor="@color/textPrimary" android:textColorHint="@color/textHint" android:paddingStart="14dp" android:paddingEnd="14dp" />
+
+            <TextView
+                android:id="@+id/response"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_margin="2dp"
+                android:padding="5dp"
+                android:text="status:"
+                android:visibility="gone"
+                android:textColor="@color/colorPrimary" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".5"
+                    android:text="Del No"
+                    android:textSize="15sp" />
+
+                <EditText
+                    android:id="@+id/del_no"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.5"
+                    android:hint="Enter Del No"
+                    android:imeOptions="actionSearch"
+                    android:singleLine="true"
+                    android:inputType="text"
+                    android:lines="1"
+                    android:textSize="15sp" />
+
+
+
             </LinearLayout>
-            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:padding="5dp">
-                <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight=".5" android:text="MAT." android:textSize="15sp" />
-                <EditText android:id="@+id/mat" android:layout_width="0dp" android:layout_height="48dp" android:layout_weight="1.5" android:hint="Enter Mat." android:imeOptions="actionSearch" android:singleLine="true" android:inputType="text" android:lines="1" android:textSize="15sp" android:background="@color/bgInput" android:textColor="@color/textPrimary" android:textColorHint="@color/textHint" android:paddingStart="14dp" android:paddingEnd="14dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".5"
+                    android:text="MAT."
+                    android:textSize="15sp" />
+
+                <EditText
+                    android:id="@+id/mat"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.5"
+                    android:hint="Enter Mat."
+                    android:imeOptions="actionSearch"
+                    android:singleLine="true"
+                    android:inputType="text"
+                    android:lines="1"
+                    android:textSize="15sp" />
+
+
             </LinearLayout>
-            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:padding="5dp">
-                <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight=".5" android:text="SQ." android:textSize="15sp" />
-                <EditText android:id="@+id/sq" android:layout_width="0dp" android:layout_height="48dp" android:layout_weight="1" android:hint="Enter SQ." android:imeOptions="actionSearch" android:singleLine="true" android:inputType="text" android:lines="1" android:textSize="15sp" android:background="@color/bgInput" android:textColor="@color/textPrimary" android:textColorHint="@color/textHint" android:paddingStart="14dp" android:paddingEnd="14dp" />
-                <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight=".5" android:text="RQ." android:textSize="15sp" />
-                <EditText android:id="@+id/rq" android:layout_width="0dp" android:layout_height="48dp" android:layout_weight="1" android:hint="Enter RQ." android:imeOptions="actionSearch" android:singleLine="true" android:inputType="text" android:lines="1" android:textSize="15sp" android:background="@color/bgInput" android:textColor="@color/textPrimary" android:textColorHint="@color/textHint" android:paddingStart="14dp" android:paddingEnd="14dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".5"
+                    android:text="SQ."
+                    android:textSize="15sp" />
+
+                <EditText
+                    android:id="@+id/sq"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="Enter SQ."
+                    android:imeOptions="actionSearch"
+                    android:singleLine="true"
+                    android:inputType="text"
+                    android:lines="1"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".5"
+                    android:text="RQ."
+                    android:textSize="15sp" />
+
+                <EditText
+                    android:id="@+id/rq"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="Enter RQ."
+                    android:imeOptions="actionSearch"
+                    android:singleLine="true"
+                    android:inputType="text"
+                    android:lines="1"
+                    android:textSize="15sp" />
+
             </LinearLayout>
-            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:padding="5dp">
-                <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight=".5" android:text="TSQ." android:textSize="15sp" />
-                <EditText android:id="@+id/tsq" android:layout_width="0dp" android:layout_height="48dp" android:layout_weight="1" android:hint="Enter TSQ." android:imeOptions="actionSearch" android:singleLine="true" android:inputType="text" android:lines="1" android:textSize="15sp" android:background="@color/bgInput" android:textColor="@color/textPrimary" android:textColorHint="@color/textHint" android:paddingStart="14dp" android:paddingEnd="14dp" />
-                <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight=".5" android:text="TOQ." android:textSize="15sp" />
-                <EditText android:id="@+id/toq" android:layout_width="0dp" android:layout_height="48dp" android:layout_weight="1" android:hint="Enter TOQ." android:imeOptions="actionSearch" android:singleLine="true" android:inputType="text" android:lines="1" android:textSize="15sp" android:background="@color/bgInput" android:textColor="@color/textPrimary" android:textColorHint="@color/textHint" android:paddingStart="14dp" android:paddingEnd="14dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".5"
+                    android:text="TSQ."
+                    android:textSize="15sp" />
+
+                <EditText
+                    android:id="@+id/tsq"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="Enter TSQ."
+                    android:imeOptions="actionSearch"
+                    android:singleLine="true"
+                    android:inputType="text"
+                    android:lines="1"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".5"
+                    android:text="TOQ."
+                    android:textSize="15sp" />
+
+                <EditText
+                    android:id="@+id/toq"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="Enter TOQ."
+                    android:imeOptions="actionSearch"
+                    android:singleLine="true"
+                    android:inputType="text"
+                    android:lines="1"
+                    android:textSize="15sp" />
+
             </LinearLayout>
+
+
         </LinearLayout>
     </LinearLayout>
-    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:padding="5dp" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent">
-        <Button android:id="@+id/back" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_margin="8dp" android:layout_weight="0.6" android:background="@drawable/bg_btn_primary" android:text="Back" android:textSize="15sp" android:textColor="@color/white" />
-        <Button android:id="@+id/save" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_margin="8dp" android:layout_weight="0.6" android:background="@drawable/bg_btn_primary" android:hint="" android:text="Save" android:textSize="15sp" android:textColor="@color/white" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <Button
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_weight="0.6"
+            android:background="@drawable/shadow"
+            android:text="Back"
+            android:textSize="15sp" />
+
+        <Button
+            android:id="@+id/save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_weight="0.6"
+            android:background="@drawable/shadow"
+            android:hint=""
+            android:text="Save"
+            android:textSize="15sp" />
     </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

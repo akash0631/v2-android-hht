@@ -87,6 +87,7 @@ public class GRT_Pick_Crate_Bin extends Fragment implements View.OnClickListener
     EditText text_required_bin;
     EditText text_total_scanned_bin;
     EditText text_scan_bin_no;
+    EditText text_crate_no;
     TableLayout table_picked_bin_crate;
     Button button_save;
     private String mPicklistno;
@@ -138,6 +139,7 @@ public class GRT_Pick_Crate_Bin extends Fragment implements View.OnClickListener
         text_required_bin = view.findViewById(R.id.text_required_bin);
         text_total_scanned_bin = view.findViewById(R.id.text_scanned_bin_no);
         text_scan_bin_no = view.findViewById(R.id.text_scan_bin_no);
+        text_crate_no = view.findViewById(R.id.text_crate_no);
         text_scan_bin_no.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
@@ -146,7 +148,7 @@ public class GRT_Pick_Crate_Bin extends Fragment implements View.OnClickListener
                     String  binno = text_scan_bin_no.getText().toString().toUpperCase();
                     if(binno.length()>0) {
                         text_total_scanned_bin.selectAll();
-                        moveToSaveListAndRemoveRow(binno);
+                        moveToSaveListAndRemoveRow(binno, "BIN");
                         return true;
                     }
                 }
@@ -172,7 +174,43 @@ public class GRT_Pick_Crate_Bin extends Fragment implements View.OnClickListener
                 String binno = s.toString().toUpperCase();
                 if(binno.length()>0 && scannerReading) {
                     text_total_scanned_bin.selectAll();
-                    moveToSaveListAndRemoveRow(binno);
+                    moveToSaveListAndRemoveRow(binno, "BIN");
+                }
+            }
+        });
+        text_crate_no.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    CommonUtils.hideKeyboard(getActivity());
+                    String crate = text_crate_no.getText().toString().toUpperCase();
+                    if(crate.length()>0) {
+                        moveToSaveListAndRemoveRow(crate, "CRATE");
+                        return true;
+                    }
+                }
+                return false;
+            }
+        });
+        text_crate_no.addTextChangedListener(new TextWatcher() {
+            boolean scannerReading = false;
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if( (before==0 && start ==0) && count > 6) {
+                    scannerReading = true;
+                } else {
+                    scannerReading = false;
+                }
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+                String crate = s.toString().toUpperCase();
+                if(crate.length()>0 && scannerReading) {
+                    moveToSaveListAndRemoveRow(crate, "CRATE");
                 }
             }
         });
@@ -197,9 +235,9 @@ public class GRT_Pick_Crate_Bin extends Fragment implements View.OnClickListener
 
     //CUSTOM FUNCTIONS
     private void validateFormAndSave(){
-        if(ET_SCANNED_PICK_DATA.size() == 0){
+        if(ET_SCANNED_PICK_DATA.isEmpty()){
             AlertBox box = new AlertBox(getContext());
-            box.getBox("Invalid Input","Nothing to save. Invalid destination plant. Please try validating destination plant again");
+            box.getBox("Invalid Input","Nothing to save. Please scan Bin and Crate");
             return;
         }
         JSONObject args = new JSONObject();
@@ -555,33 +593,55 @@ public class GRT_Pick_Crate_Bin extends Fragment implements View.OnClickListener
         text_scan_bin_no.requestFocus();
     }
 
-    private void moveToSaveListAndRemoveRow(String binno){
+    private void moveToSaveListAndRemoveRow(String bincrate, String mode){
         int totalRows = table_picked_bin_crate.getChildCount();
         boolean matchFound = false;
         for(int rowIndex=1;rowIndex < totalRows; rowIndex++){
             TableRow row = (TableRow) table_picked_bin_crate.getChildAt(rowIndex);
             ETPickData data = (ETPickData) row.getTag();
-            if(data.getLgbin().equals(binno)){
-                ET_SCANNED_PICK_DATA.put(data.getLgbin(),data);
-                table_picked_bin_crate.removeView(row);
+            if(data.getLgbin().equals(UIFuncs.toUpperTrim(text_scan_bin_no))){
+                if(!mode.equalsIgnoreCase("BIN")){
+                    if(data.getLgcrate().equalsIgnoreCase(UIFuncs.toUpperTrim(text_crate_no))){
+                        ET_SCANNED_PICK_DATA.put(data.getLgbin(),data);
+                        table_picked_bin_crate.removeView(row);
+                    }else{
+                        break;
+                    }
+                }
                 matchFound = true;
                 break;
             }
         }
-        if(matchFound){
-            text_total_scanned_bin.setText(ET_SCANNED_PICK_DATA.size()+"");
-        }else{
-            UIFuncs.blinkEffectOnError(con,text_scan_bin_no,true);
+        if(!matchFound){
+            if(!mode.equalsIgnoreCase("BIN")) {
+                UIFuncs.blinkEffectOnError(con, text_crate_no, true);
+            }else{
+                UIFuncs.blinkEffectOnError(con, text_scan_bin_no, true);
+            }
             AlertBox box = new AlertBox(getContext());
-            box.getBox("Invalid Input", "Bin No ( "+binno+" ) is not in list.", new DialogInterface.OnClickListener() {
+            String message = mode.equals("BIN") ? "Bin No" : "Crate";
+            box.getBox("Invalid Input", message + " ( "+bincrate+" ) is not in list.", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    text_scan_bin_no.setText("");
+                    if(!mode.equalsIgnoreCase("BIN")) {
+                        text_crate_no.setText("");
+                        text_crate_no.requestFocus();
+                    }else{
+                        UIFuncs.disableInput(con, text_crate_no);
+                        text_scan_bin_no.setText("");
+                        text_scan_bin_no.requestFocus();
+                    }
                 }
             });
-            return;
+        }else{
+            text_crate_no.setText("");
+            UIFuncs.enableInput(con, text_crate_no);
+            if(!mode.equalsIgnoreCase("BIN")) {
+                text_total_scanned_bin.setText(ET_SCANNED_PICK_DATA.size()+"");
+                UIFuncs.disableInput(con, text_crate_no);
+                text_scan_bin_no.setText("");
+                text_scan_bin_no.requestFocus();
+            }
         }
-        text_scan_bin_no.setText("");
-        text_scan_bin_no.requestFocus();
     }
 }

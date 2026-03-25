@@ -86,9 +86,10 @@ public class IPActivity extends AppCompatActivity implements View.OnClickListene
         if(server!=null && server.length()>0) {
             serverIndex = Integer.parseInt(server);
         }
-
-        addressSpinner.setSelection(serverIndex);
-
+        int urlcount = addressSpinner.getAdapter().getCount();
+        if(serverIndex < urlcount){
+            addressSpinner.setSelection(serverIndex);
+        }
         addressSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
@@ -123,7 +124,11 @@ public class IPActivity extends AppCompatActivity implements View.OnClickListene
                 String Ip= addressSpinner.getSelectedItem().toString();
                 String iparr[]=Ip.split(" ");
                 Log.d(TAG,"IP-> "+iparr[0].trim());
-                URL=iparr[0].trim();  // +"/xmwgw/ValueXMW";
+                URL=iparr[0].trim();
+                if("https://app.v2axasync-prd.v2rtl.com:8443/xmwgw".equalsIgnoreCase(URL)){
+                    URL = URL.replace("https:","http:").replace(":8443",":8080");
+                    iparr[0] = URL;
+                }
                 Log.d(TAG,"URL -> "+URL);
                 getAppUpdate(iparr);
                 break;
@@ -195,9 +200,7 @@ public class IPActivity extends AppCompatActivity implements View.OnClickListene
 
                             }else {
                                 try{
-                                    // Use /health for Azure, /index.jsp for old servers
-                                    String healthPath = iparr[0].trim().contains("azurewebsites.net") ? "/health" : "/index.jsp";
-                                    checkIP(iparr[0].trim() + healthPath);
+                                    checkIP(iparr[0].trim() + "/index.jsp");
                                 }catch (Exception e)
                                 {
                                     box.getErrBox(e);
@@ -212,13 +215,6 @@ public class IPActivity extends AppCompatActivity implements View.OnClickListene
             @Override
             public void onErrorResponse(VolleyError e) {
                 e.printStackTrace();
-                // appversion endpoint not available (Azure) — proceed to login directly
-                try {
-                    String healthPath = iparr[0].trim().contains("azurewebsites.net") ? "/health" : "/index.jsp";
-                    checkIP(iparr[0].trim() + healthPath);
-                } catch (Exception ex) {
-                    box.getErrBox(ex);
-                }
             }
         });
         Volley.newRequestQueue(this).add(strreq);

@@ -8,7 +8,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -38,6 +41,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.v2retail.ApplicationController;
+import com.v2retail.commons.UIFuncs;
 import com.v2retail.dotvik.R;
 import com.v2retail.util.AlertBox;
 import com.v2retail.util.CameraCheck;
@@ -88,9 +92,9 @@ public class Scan_Stock_take_V2Fragment extends Fragment implements View.OnClick
     FragmentManager fm;
 
     Button back;
-    Button barcode_scan;
+    //Button barcode_scan;
     Button save;
-    Button bin_scan;
+    //Button bin_scan;
     EditText bin_et;
     EditText sq_et;
     EditText barcode_et;
@@ -167,9 +171,9 @@ public class Scan_Stock_take_V2Fragment extends Fragment implements View.OnClick
 
 
         back = (Button) view.findViewById(R.id.back);
-        barcode_scan = (Button) view.findViewById(R.id.barcode_scan);
+        //barcode_scan = (Button) view.findViewById(R.id.barcode_scan);
         save = (Button) view.findViewById(R.id.save);
-        bin_scan = (Button) view.findViewById(R.id.bin_scan);
+        //bin_scan = (Button) view.findViewById(R.id.bin_scan);
 
         totalsq_et = (EditText) view.findViewById(R.id.total_scan_qty);
         bin_et = (EditText) view.findViewById(R.id.bin_no);
@@ -180,8 +184,8 @@ public class Scan_Stock_take_V2Fragment extends Fragment implements View.OnClick
         barcode_et = (EditText) view.findViewById(R.id.barcode_no);
 
         back.setOnClickListener(this);
-        barcode_scan.setOnClickListener(this);
-        bin_scan.setOnClickListener(this);
+        //barcode_scan.setOnClickListener(this);
+        //bin_scan.setOnClickListener(this);
         save.setOnClickListener(this);
 
         barcode_et.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -195,6 +199,7 @@ public class Scan_Stock_take_V2Fragment extends Fragment implements View.OnClick
                         if (!barcode.equals("")) {
                             try {
                                 setFormData();
+                                barcode_et.requestFocus();
                             } catch (Exception e) {
 
                                 box.getErrBox(e);
@@ -218,6 +223,42 @@ public class Scan_Stock_take_V2Fragment extends Fragment implements View.OnClick
 
                 }
                 return false;
+            }
+        });
+
+        barcode_et.addTextChangedListener(new TextWatcher() {
+            boolean scannerReading = false;
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if ((before == 0 && start == 0) && count > 3) {
+                    scannerReading = true;
+                } else {
+                    scannerReading = false;
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String value = s.toString().toUpperCase().trim();
+                if (!value.isEmpty() && scannerReading) {
+                    if (!UIFuncs.toUpperTrim(bin_et).equals("")) {
+                        try {
+                            setFormData();
+                            barcode_et.requestFocus();
+                        } catch (Exception e) {
+                            box.getErrBox(e);
+                        }
+                    }else{
+                        box.getBox("Alert!!", "First Scan Bin Number");
+                        bin_et.requestFocus();
+                    }
+                }
             }
         });
 
@@ -260,6 +301,7 @@ public class Scan_Stock_take_V2Fragment extends Fragment implements View.OnClick
         dtEan=tables.getEANTAble("floor");
         dtMaterial=tables.getMATTAble();
 
+        bin_et.requestFocus();
     }
 
     
@@ -352,6 +394,7 @@ public class Scan_Stock_take_V2Fragment extends Fragment implements View.OnClick
                                      barcode_et.setText(scanContent);
                                   try {
                                       setFormData();
+                                      barcode_et.requestFocus();
                                   }catch (Exception e)
                                   {
                                       box.getErrBox(e);
@@ -372,9 +415,6 @@ public class Scan_Stock_take_V2Fragment extends Fragment implements View.OnClick
 
     }
 
-
-
-
     private void validateBarcode(final String barcode) {
         dialog.setMessage("Please wait...");
         dialog.setCancelable(false);
@@ -392,7 +432,7 @@ public class Scan_Stock_take_V2Fragment extends Fragment implements View.OnClick
                 Log.d(TAG, "payload to server -> " + valueRequestPayload);
                 try {
 
-                    sendAndRequestResponse(valueRequestPayload);
+                    sendAndRequestResponse(valueRequestPayload, barcode);
                 }catch (Exception e)
                 {    dialog.dismiss();
                     box.getErrBox(e);
@@ -403,7 +443,7 @@ public class Scan_Stock_take_V2Fragment extends Fragment implements View.OnClick
             }
         }, 2000);
     }
-    private void setBarcodeData(String response) {
+    private void setBarcodeData(String response, String barcode) {
 
         String[] arrayEanData=response.split("#");
 
@@ -421,7 +461,7 @@ public class Scan_Stock_take_V2Fragment extends Fragment implements View.OnClick
             i+=5;
         }
 
-       processData(barcode_et.getText().toString().split("-"));
+       processData(barcode.split("-"));
     }
 //uPDATES
 
@@ -442,11 +482,9 @@ public class Scan_Stock_take_V2Fragment extends Fragment implements View.OnClick
             } catch (Exception e) {
                 box.getErrBox(e);
             }
-
-
         }
-
-
+        barcode_et.setText("");
+        barcode_et.requestFocus();
     }
 
     private void processData( String[] arrBarQty) {
@@ -588,7 +626,7 @@ public class Scan_Stock_take_V2Fragment extends Fragment implements View.OnClick
 
                 Log.d(TAG, "payload to server -> " + valueRequestPayload);
                 try {
-                    sendAndRequestResponse(valueRequestPayload);
+                    sendAndRequestResponse(valueRequestPayload,null);
                 }catch (Exception e)
                 {   dialog.dismiss();
                     box.getErrBox(e);
@@ -601,7 +639,7 @@ public class Scan_Stock_take_V2Fragment extends Fragment implements View.OnClick
 
     }
 
-    private void sendAndRequestResponse(final String requestBody) {
+    private void sendAndRequestResponse(final String requestBody, String barcode) {
         final RequestQueue mRequestQueue;
         StringRequest mStringRequest;
 
@@ -661,7 +699,7 @@ public class Scan_Stock_take_V2Fragment extends Fragment implements View.OnClick
                     if(requester.equals("stockvalidatebarcode"))
                     {
                        try {
-                           setBarcodeData(response);
+                           setBarcodeData(response, barcode);
                        }catch (Exception e)
                        {
                            box.getErrBox(e);

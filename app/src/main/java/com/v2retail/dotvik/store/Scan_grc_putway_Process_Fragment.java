@@ -39,6 +39,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.v2retail.ApplicationController;
+import com.v2retail.commons.UIFuncs;
 import com.v2retail.dotvik.R;
 import com.v2retail.dotvik.modal.EtBinModel;
 import com.v2retail.dotvik.modal.EtEanDataModel;
@@ -46,6 +47,7 @@ import com.v2retail.dotvik.modal.EtPoDataModel;
 import com.v2retail.util.AlertBox;
 import com.v2retail.util.SharedPreferencesData;
 import com.v2retail.util.Tables;
+import com.v2retail.util.Util;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -155,7 +157,7 @@ public class Scan_grc_putway_Process_Fragment extends Fragment implements View.O
 
             bin = (ArrayList<EtBinModel>) getArguments().getSerializable("bin");
             ean = (ArrayList<EtEanDataModel>) getArguments().getSerializable("ean");
-            total_hu = getArguments().getString("TotalHuQty");
+            total_hu = Util.convertToDoubleString(getArguments().getString("TotalHuQty"));
             hu_no = getArguments().getString("huNumber");
             poData = (ArrayList<EtPoDataModel>) getArguments().getSerializable("poData");
             jsonArray = new JSONArray();
@@ -201,9 +203,9 @@ public class Scan_grc_putway_Process_Fragment extends Fragment implements View.O
 
 
 
-            if (!total_hu.equals("")) {
-                total_hu_et.setText(total_hu);
-            }
+//            if (!total_hu.equals("")) {
+//                total_hu_et.setText(total_hu);
+//            }
             if (!hu_no.equals("")) {
                 hu_no_et.setText(hu_no);
 
@@ -407,6 +409,51 @@ public class Scan_grc_putway_Process_Fragment extends Fragment implements View.O
         dialog.dismiss();
     }
 
+    private void addAndScanEan(JSONObject responsebody){
+        try{
+            box = new AlertBox(con);
+            EtEanDataModel eanModel = null;
+            JSONArray ET_EAN_DATA = responsebody.getJSONArray("ET_EAN_DATA");
+            if(ET_EAN_DATA.length() > 0){
+                JSONObject jsonObject = ET_EAN_DATA.getJSONObject(1);
+                String EAN11 = jsonObject.getString("EAN11");
+                String MATNR = jsonObject.getString("MATNR");
+                String UMREZ = jsonObject.getString("UMREZ");
+                for (EtEanDataModel existingEan: ean) {
+                    if(existingEan.getEAN11().equals(EAN11)){
+                        eanModel = existingEan;
+                        eanModel.setNewEan("Validate");
+                    }
+                }
+                if(eanModel == null){
+                    String MANDT = jsonObject.getString("MANDT");
+                    String EANNR = jsonObject.getString("EANNR");
+                    eanModel = new EtEanDataModel(MATNR,UMREZ,MANDT,EAN11,EANNR);
+                    eanModel.setNewEan("Validate");
+                    ean.add(eanModel);
+                }
+                EtPoDataModel model = null;
+                total_hu = String.valueOf((Integer.valueOf(total_hu) + Integer.valueOf(UMREZ)));
+//                total_hu_et.setText(total_hu);
+                for (int j = 0;j<poData.size();j++){
+                    if (poData.get(j).getMATNR().equals(MATNR)) {
+                        model = poData.get(j);
+                        model.setVEMNG(String.valueOf(Integer.valueOf(model.getVEMNG()) + Integer.valueOf(UMREZ)));
+                        model.setBDMNG(String.valueOf(Integer.valueOf(model.getBDMNG()) + Integer.valueOf(UMREZ)));
+                    }
+                }
+                if(model == null){
+                    poData.add(new EtPoDataModel(MATNR,UMREZ,UMREZ));
+                }
+                scanBarcodeData(UIFuncs.toUpperTrim(barcode_art_et));
+            }else{
+                box.getBox("No Data Found", "Do data returned by server matching this EAN");
+            }
+        }catch(Exception exce){
+            box.getErrBox(exce);
+        }
+    }
+
     private void scanBarcodeData(String barcodeStr){
 
         String EAMMAterial = "";
@@ -421,10 +468,18 @@ public class Scan_grc_putway_Process_Fragment extends Fragment implements View.O
         }
         for (int i = 0;i<ean.size();i++){
             if (ean.get(i).getEAN11().equals(barcodeStr)){
-                article_no_et.setText(ean.get(i).getMATNR());
-                UMREZ = ean.get(i).getUMREZ();
-                EAMMAterial = ean.get(i).getMATNR();
-
+                EtEanDataModel eanDataModel = ean.get(i);
+                article_no_et.setText(eanDataModel.getMATNR());
+                UMREZ = eanDataModel.getUMREZ();
+                EAMMAterial = eanDataModel.getMATNR();
+                if(eanDataModel.getNewEan() != null){
+                    if(eanDataModel.getNewEan().equals("New")){
+                        sendEanValidationRequest(barcodeStr);
+                        return;
+                    }else{
+                        eanDataModel.setNewEan("New");
+                    }
+                }
                 for (int j = 0;j<poData.size();j++){
                     if (poData.get(j).getMATNR().equals(EAMMAterial)){
                         VEMNG = poData.get(j).getVEMNG();
@@ -435,7 +490,8 @@ public class Scan_grc_putway_Process_Fragment extends Fragment implements View.O
 
                                 JSONObject jsonObject1 = jsonArray.getJSONObject(a);
                                 String m = jsonObject1.getString("MATNR");
-                                if (m.equals(EAMMAterial)){
+                                String bin = jsonObject1.getString("LGPLA");
+                                if (m.equals(EAMMAterial) && bin.equals(scanBin)){
                                     String sq = jsonObject1.getString("VEMNG");
                                     sum =  sum + Integer.valueOf(UMREZ);
                                     if (sum<=Double.valueOf(BDMNG).intValue()) {
@@ -488,11 +544,14 @@ public class Scan_grc_putway_Process_Fragment extends Fragment implements View.O
         }
 
         if (notFound){
-            box.getBox("Alert", "Article not found");
+            sendEanValidationRequest(barcodeStr);
+            return;
         }
         barcode_art_et.setText("");
         barcode_art_et.requestFocus();
-        dialog.dismiss();
+        if(dialog != null){
+            dialog.dismiss();
+        }
     }
 
     @Override
@@ -515,7 +574,6 @@ public class Scan_grc_putway_Process_Fragment extends Fragment implements View.O
 
         }
     }
-
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -580,7 +638,6 @@ public class Scan_grc_putway_Process_Fragment extends Fragment implements View.O
 
 
     }
-
 
     private void sendAndRequestResponse() {
 
@@ -716,6 +773,124 @@ public class Scan_grc_putway_Process_Fragment extends Fragment implements View.O
 
     }
 
+    private void sendEanValidationRequest(String ean) {
+
+
+        String rfc = "ZWM_RFC_STORE_EAN_DATA";
+        final RequestQueue mRequestQueue;
+        JsonObjectRequest mJsonRequest = null;
+        String url = this.URL.substring(0, this.URL.lastIndexOf("/"));
+        url += "/noacljsonrfcadaptor?bapiname=" + rfc + "&aclclientid=android";
+        Log.d(TAG, "URL_>" + url);
+        final JSONObject params = new JSONObject();
+
+        try {
+            params.put("bapiname", rfc);
+            params.put("IM_WERKS", WERKS);
+            params.put("IM_USER", USER);
+            params.put("IM_EAN11", ean);
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+            if(dialog!=null) {
+                dialog.dismiss();
+                dialog = null;
+            }
+            AlertBox box = new AlertBox(getContext());
+            box.getErrBox(e);
+        }
+
+        Log.d(TAG, "payload ->" + params.toString());
+        mRequestQueue = ApplicationController.getInstance().getRequestQueue();
+        mJsonRequest = new JsonObjectRequest(Request.Method.POST, url, params, new Response.Listener<JSONObject>() {
+
+            @Override
+            public void onResponse(JSONObject responsebody) {
+                if(dialog!=null) {
+                    dialog.dismiss();
+                    dialog = null;
+                }
+                Log.d(TAG, "response ->" + responsebody);
+
+                if (responsebody == null) {
+                    AlertBox box = new AlertBox(getContext());
+                    box.getBox("Err", "No response from Server");
+                } else if (responsebody.equals("") || responsebody.equals("null") || responsebody.equals("{}")) {
+                    AlertBox box = new AlertBox(getContext());
+                    box.getBox("Err", "Unable to Connect Server/ Empty Response");
+                    return;
+                } else {
+                    try {
+                        if (responsebody.has("EX_RETURN") && responsebody.get("EX_RETURN") instanceof JSONObject) {
+                            JSONObject returnobj = responsebody.getJSONObject("EX_RETURN");
+                            if (returnobj != null) {
+                                String type = returnobj.getString("TYPE");
+                                if (type != null)
+                                    if (type.equals("E")) {
+                                        AlertBox box = new AlertBox(getContext());
+                                        box.getBox("Err", returnobj.getString("MESSAGE"));
+                                        barcode_art_et.setText("");
+                                        barcode_art_et.requestFocus();
+                                        return;
+                                    } else {
+                                        addAndScanEan(responsebody);
+                                        return;
+                                    }
+                            }
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        AlertBox box = new AlertBox(getContext());
+                        box.getErrBox(e);
+                    }
+                }
+            }
+        }, volleyErrorListener()) {
+            @Override
+            public String getBodyContentType() {
+                return "application/json";
+            }
+
+            @Override
+            public byte[] getBody() {
+                return params.toString().getBytes();
+            }
+
+            @Override
+            protected Response<JSONObject> parseNetworkResponse(NetworkResponse response) {
+
+                Response<JSONObject> res = super.parseNetworkResponse(response);
+                Log.d(TAG, "Network response -> " + res.toString());
+
+                return res;
+            }
+        };
+
+        // no retry policy on save
+        mJsonRequest.setRetryPolicy(new DefaultRetryPolicy( 30000, 0,  DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        mRequestQueue.add(mJsonRequest);
+        Log.d(TAG, "jsonRequest getUrl ->" + mJsonRequest.getUrl());
+        Log.d(TAG, "jsonRequest getBodyContentType->" + mJsonRequest.getBodyContentType());
+        Log.d(TAG, "jsonRequest getBody->" + mJsonRequest.getBody().toString());
+        Log.d(TAG, "jsonRequest getMethod->" + mJsonRequest.getMethod());
+        try {
+            Log.d(TAG, "jsonRequest getHeaders->" + mJsonRequest.getHeaders());
+        } catch (AuthFailureError authFailureError) {
+            authFailureError.printStackTrace();
+            if(dialog!=null) {
+                dialog.dismiss();
+                dialog = null;
+            }
+            AlertBox box = new AlertBox(getContext());
+            box.getErrBox(authFailureError);
+        }
+
+
+
+    }
+
     Response.ErrorListener volleyErrorListener() {
         return new Response.ErrorListener() {
             @Override
@@ -747,7 +922,6 @@ public class Scan_grc_putway_Process_Fragment extends Fragment implements View.O
         };
     }
 
-
     void saveNetworkCall() {
         dialog = new ProgressDialog(getContext());
         dialog.setMessage("Please wait...");
@@ -774,10 +948,6 @@ public class Scan_grc_putway_Process_Fragment extends Fragment implements View.O
         }, 2000);
     }
 
-
-
-
-
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
@@ -802,46 +972,7 @@ public class Scan_grc_putway_Process_Fragment extends Fragment implements View.O
         super.onDetach();
         mListener = null;
     }
-/*
-    @Override
-    public boolean onKey(View view, int keyCode, KeyEvent keyEvent) {
-        int id =view.getId();
-        Log.i("KEY", Integer.toString(keyCode));
 
-        if ((keyCode == KeyEvent.KEYCODE_VOLUME_DOWN)){
-            //to do code goes in here
-
-            switch (id)
-            {
-                case R.id.bin_no:
-                    barcode_art_et.setFocusableInTouchMode(true);
-                    barcode_art_et.requestFocus();
-                    break;
-                case  R.id.barcode_et:
-                         try {
-                             setFormData();
-                         }catch (Exception e)
-                         {
-                             box.getErrBox(e);
-                         }
-                    break;
-            }
-            return true;
-        }
-
-        return false;
-    }*/
-
-
-    /*    * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);

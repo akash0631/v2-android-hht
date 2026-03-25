@@ -1,32 +1,173 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent" android:layout_height="match_parent">
-    <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="vertical">
-        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:layout_margin="2dp" android:padding="5dp">
-            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:padding="5dp">
-                <TextView android:layout_weight=".9" android:layout_width="0dp" android:layout_height="wrap_content" android:text="Name" android:textSize="15sp" />
-                <EditText android:layout_weight="1.5" android:textSize="15sp" android:id="@+id/name" android:layout_width="0dp" android:layout_height="48dp" android:hint="Enter Store Name" android:background="@color/bgInput" android:textColor="@color/textPrimary" android:textColorHint="@color/textHint" android:paddingStart="14dp" android:paddingEnd="14dp" />
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_margin="2dp"
+            android:padding="5dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="5dp">
+
+                <TextView
+                    android:layout_weight=".9"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Name"
+                    android:textSize="15sp" />
+
+                <EditText
+                    android:layout_weight="1.5"
+                    android:textSize="15sp"
+                    android:id="@+id/name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:hint="Enter Store Name" />
             </LinearLayout>
-            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:padding="5dp">
-                <TextView android:layout_weight=".9" android:layout_width="0dp" android:layout_height="wrap_content" android:text="Desg" android:textSize="15sp" />
-                <Spinner android:layout_weight="1.5" android:textSize="15sp" android:id="@+id/desg" android:layout_width="0dp" android:entries="@array/choose_store" android:layout_height="wrap_content" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="5dp">
+
+                <TextView
+                    android:layout_weight=".9"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Desg"
+                    android:textSize="15sp" />
+
+                <Spinner
+                    android:layout_weight="1.5"
+                    android:textSize="15sp"
+                    android:id="@+id/desg"
+                    android:layout_width="0dp"
+                    android:entries="@array/choose_store"
+                    android:layout_height="wrap_content" />
             </LinearLayout>
-            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:padding="5dp">
-                <TextView android:layout_weight=".9" android:layout_width="0dp" android:layout_height="wrap_content" android:text="Issue Type" android:textSize="15sp" />
-                <Spinner android:layout_weight="1.5" android:textSize="15sp" android:id="@+id/issue_type" android:layout_width="0dp" android:entries="@array/choose_store" android:layout_height="wrap_content" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="5dp">
+
+                <TextView
+                    android:layout_weight=".9"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Issue Type"
+                    android:textSize="15sp" />
+
+                <Spinner
+                    android:layout_weight="1.5"
+                    android:textSize="15sp"
+                    android:id="@+id/issue_type"
+                    android:layout_width="0dp"
+                    android:entries="@array/choose_store"
+                    android:layout_height="wrap_content" />
             </LinearLayout>
-            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:padding="5dp">
-                <TextView android:layout_weight=".9" android:layout_width="0dp" android:layout_height="wrap_content" android:text="Issue Desc" android:textSize="15sp" />
-                <EditText android:layout_weight="1.5" android:textSize="15sp" android:padding="2dp" android:id="@+id/issue_desc" android:inputType="text|textMultiLine" android:layout_width="0dp" android:layout_height="75dp" android:gravity="top" android:background="@color/bgInput" android:hint="Enter Issue Description " android:textColor="@color/textPrimary" android:textColorHint="@color/textHint" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="5dp">
+
+                <TextView
+                    android:layout_weight=".9"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Issue Desc"
+                    android:textSize="15sp" />
+
+                <EditText
+                    android:layout_weight="1.5"
+                    android:textSize="15sp"
+                    android:padding="2dp"
+                    android:id="@+id/issue_desc"
+                    android:inputType="text|textMultiLine"
+                    android:layout_width="0dp"
+                    android:layout_height="75dp"
+                    android:gravity="top"
+                    android:background="@drawable/border"
+                    android:hint="Enter Issue Description " />
             </LinearLayout>
-            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:padding="5dp">
-                <TextView android:layout_weight=".9" android:layout_width="0dp" android:layout_height="wrap_content" android:text="Attach Pic" android:textSize="15sp" />
-                <EditText android:layout_weight=".75" android:textSize="15sp" android:id="@+id/attached_file" android:layout_width="0dp" android:layout_height="48dp" android:background="@color/bgInput" android:textColor="@color/textPrimary" android:textColorHint="@color/textHint" android:paddingStart="14dp" android:paddingEnd="14dp" />
-                <Button android:layout_weight=".75" android:textSize="15sp" android:text="Browse" android:id="@+id/browse" android:background="@drawable/bg_btn_primary" android:layout_margin="2dp" android:layout_width="0dp" android:layout_height="wrap_content" android:hint="" android:textColor="@color/white" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="5dp">
+
+                <TextView
+                    android:layout_weight=".9"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Attach Pic"
+                    android:textSize="15sp" />
+
+                <EditText
+                    android:layout_weight=".75"
+                    android:textSize="15sp"
+                    android:id="@+id/attached_file"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content" />
+
+                <Button
+                    android:layout_weight=".75"
+                    android:textSize="15sp"
+                    android:text="Browse"
+                    android:id="@+id/browse"
+                    android:background="@drawable/shadow"
+                    android:layout_margin="2dp"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:hint="" />
             </LinearLayout>
         </LinearLayout>
-        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:padding="5dp">
-            <Button android:layout_weight="1.5" android:layout_width="0dp" android:layout_height="wrap_content" android:text="Submit" android:id="@+id/submit" android:background="@drawable/bg_btn_primary" android:layout_margin="2dp" android:textSize="15sp" android:textColor="@color/white" />
-            <Button android:layout_weight="1.5" android:textSize="15sp" android:text="Close" android:id="@+id/close" android:background="@drawable/bg_btn_primary" android:layout_margin="2dp" android:layout_width="0dp" android:layout_height="wrap_content" android:hint="" android:textColor="@color/white" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="5dp">
+
+            <Button
+                android:layout_weight="1.5"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Submit"
+                android:id="@+id/submit"
+                android:background="@drawable/shadow"
+                android:layout_margin="2dp"
+                android:textSize="15sp" />
+
+            <Button
+                android:layout_weight="1.5"
+                android:textSize="15sp"
+                android:text="Close"
+                android:id="@+id/close"
+                android:background="@drawable/shadow"
+                android:layout_margin="2dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="" />
         </LinearLayout>
+
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

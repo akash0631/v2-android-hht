@@ -47,6 +47,9 @@ import com.google.gson.Gson;
 
 import com.v2retail.ApplicationController;
 import com.v2retail.commons.Vars;
+import com.v2retail.db.V2RDBClient;
+import com.v2retail.db.dao.ETStateDao;
+import com.v2retail.db.entities.ETState;
 import com.v2retail.dotvik.R;
 
 import com.v2retail.dotvik.dc.Process_Selection_Activity;
@@ -68,14 +71,14 @@ import java.util.Observable;
 import java.util.Observer;
 
 public class PapperLessPicking extends Fragment implements IBarcodeResult, Observer {
-
+    private final String DB_MODULE_NAME_TVS = "TVS_PAPERLESS_SCAN_LIVE_HU";
     public PapperLessPicking() { }
     private String TAG=PapperLessPicking.class.getName();
     private Bin_To_Bin_Transfer_Fragment.OnFragmentInteractionListener mListener;
 
     final ArrayList<String> pickStringList=new ArrayList<>();
 
-    Button backV2, nextV2;
+    Button backV2, nextV2, btnClear;
     TextView title_h;
     EditText inputExternalHu;
 
@@ -139,6 +142,7 @@ public class PapperLessPicking extends Fragment implements IBarcodeResult, Obser
         optionDeliverySelection=view.findViewById(R.id.option_delivery_selection);
         inputExternalHu=view.findViewById(R.id.input_external_hu);
         ll_external_hu = view.findViewById(R.id.ll_paperless_picking_external_hu);
+        btnClear = view.findViewById(R.id.clear_scan);
 
         backV2=view.findViewById(R.id.back_v2);
         nextV2=view.findViewById(R.id.next_v2);
@@ -178,9 +182,37 @@ public class PapperLessPicking extends Fragment implements IBarcodeResult, Obser
         nextV2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                validationData();
+                if (Vars.TVS_PAPER_LESS_LHU.equalsIgnoreCase(mode)) {
+                    if(!isPendingScanAvailable()){
+                        validationData();
+                    }
+                }else{
+                    validationData();
+                }
             }
         });
+        btnClear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertBox box = new AlertBox(getContext());
+                box.getBox("Alert", "Are you sure you clear previously scanned data from this device?", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        ETStateDao stateDao = V2RDBClient.getInstance(getContext()).getV2ROfflineDB().etStateDao();
+                        stateDao.clearStateByModule(DB_MODULE_NAME_TVS);
+                        box.getBox("Cleared", "Previous scanned data removed successfully. Now tap on next");
+                        btnClear.setVisibility(View.GONE);
+                    }
+                }, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // negative
+
+                    }
+                });
+            }
+        });
+
 
         backV2.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -305,19 +337,21 @@ public class PapperLessPicking extends Fragment implements IBarcodeResult, Obser
 
 
         ((Process_Selection_Activity) getActivity())
-                .setActionBarTitle("Paperless - Validate HU");
+                .setActionBarTitle(Vars.PAPER_LESS.equals(mode) ? "Paperless-Validate HU" : (Vars.TVS_PAPER_LESS_LHU.equals(mode) ? "TVS Paperless-Validate Live HU" : "TVS Paperless"));
 
-        if(!Vars.PAPER_LESS.equalsIgnoreCase(mode)){
+        if(Vars.TVS_PAPER_LESS.equalsIgnoreCase(mode)){
             ll_external_hu.setVisibility(View.GONE);
         }
-
+        if(Vars.TVS_PAPER_LESS_LHU.equalsIgnoreCase(mode)){
+            isPendingScanAvailable();
+        }
         return view;
     }
 
     public void onResume() {
         super.onResume();
         ((Process_Selection_Activity) getActivity())
-                .setActionBarTitle(Vars.PAPER_LESS.equals(mode) ? "Paperless-Validate HU" : "TVS Paperless");
+                .setActionBarTitle(Vars.PAPER_LESS.equals(mode) ? "Paperless-Validate HU" : (Vars.TVS_PAPER_LESS_LHU.equals(mode) ? "TVS Paperless-Validate Live HU" : "TVS Paperless"));
         inputExternalHu.setText("");
         try {
             optionDeliverySelection.setSelection(0);
@@ -330,65 +364,65 @@ public class PapperLessPicking extends Fragment implements IBarcodeResult, Obser
         } catch(Exception e) {
 
         }
-
     }
 
     private void validationData(){
 
-        String mInputExternalHu = inputExternalHu.getText().toString().trim();
+            String mInputExternalHu = inputExternalHu.getText().toString().trim();
 
-        if (TextUtils.isEmpty(mPackingNumber)){
-            // packingNo.setError("Select the packing no");
-            Toast.makeText(this.getContext(), "Please Pick Packing", Toast.LENGTH_LONG).show();
-            return;
-        }
-
-        if (TextUtils.isEmpty(mDeliveryNumber)){
-           //  editDeliverySelection.setError("Select input external");
-            Toast.makeText(this.getContext(), "Please Pick Delivery", Toast.LENGTH_LONG).show();
-            return;
-        }
-
-        if(Vars.PAPER_LESS.equalsIgnoreCase(mode)){
-            if (TextUtils.isEmpty(mInputExternalHu)){
-                inputExternalHu.setError("Enter the Delivery selection");
-                Toast.makeText(this.getContext(), "Please Enter External HU", Toast.LENGTH_LONG).show();
+            if (TextUtils.isEmpty(mPackingNumber)){
+                // packingNo.setError("Select the packing no");
+                Toast.makeText(this.getContext(), "Please Pick Packing", Toast.LENGTH_LONG).show();
                 return;
             }
 
-            if(mInputExternalHu!=null && mInputExternalHu.trim().length()>0) {
+            if (TextUtils.isEmpty(mDeliveryNumber)){
+               //  editDeliverySelection.setError("Select input external");
+                Toast.makeText(this.getContext(), "Please Pick Delivery", Toast.LENGTH_LONG).show();
+                return;
+            }
 
-                if(dialog==null) {
-                    dialog = new ProgressDialog(getContext());
-                    dialog.setMessage("Please wait...");
-                    dialog.setCancelable(false);
-                    dialog.show();
+            if(Vars.PAPER_LESS.equalsIgnoreCase(mode) || Vars.TVS_PAPER_LESS_LHU.equalsIgnoreCase(mode)){
+                if (TextUtils.isEmpty(mInputExternalHu)){
+                    inputExternalHu.setError("Enter the Delivery selection");
+                    Toast.makeText(this.getContext(), "Please Enter External HU", Toast.LENGTH_LONG).show();
+                    return;
                 }
 
+                if(mInputExternalHu!=null && mInputExternalHu.trim().length()>0) {
 
-                Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            validateExternalHu(mPackingNumber, mDeliveryNumber, mInputExternalHu);
-                        } catch (Exception e) {
-                            if(dialog!=null) {
-                                dialog.dismiss();
-                                dialog = null;
-                            }
-                            AlertBox box = new AlertBox(getContext());
-                            box.getErrBox(e);
-                        }
+                    if(dialog==null) {
+                        dialog = new ProgressDialog(getContext());
+                        dialog.setMessage("Please wait...");
+                        dialog.setCancelable(false);
+                        dialog.show();
                     }
-                }, 1000);
-            } else {
-                Toast.makeText(getContext(), "Please Enter External HU", Toast.LENGTH_LONG).show();
-            }
+
+
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                validateExternalHu(mPackingNumber, mDeliveryNumber, mInputExternalHu);
+                            } catch (Exception e) {
+                                if(dialog!=null) {
+                                    dialog.dismiss();
+                                    dialog = null;
+                                }
+                                AlertBox box = new AlertBox(getContext());
+                                box.getErrBox(e);
+                            }
+                        }
+                    }, 1000);
+                } else {
+                    Toast.makeText(getContext(), "Please Enter External HU", Toast.LENGTH_LONG).show();
+                }
         }else{
             Bundle bundle = new Bundle();
             bundle.putString("packing_no", mPackingNumber);// mPackingNo);
             bundle.putString("delivery_number", mDeliveryNumber);
+            bundle.putBoolean("continue_scan", false);
             bundle.putString("external_hu", "");
 
             PapperLessScan papperLessScan = PapperLessScan.newInstance(Vars.TVS_PAPER_LESS);
@@ -400,6 +434,40 @@ public class PapperLessPicking extends Fragment implements IBarcodeResult, Obser
         }
     }
 
+    private boolean isPendingScanAvailable(){
+        ETStateDao stateDao = V2RDBClient.getInstance(getContext()).getV2ROfflineDB().etStateDao();
+        ETState state = stateDao.getSateByModule(DB_MODULE_NAME_TVS);
+        AlertBox box = new AlertBox(getContext());
+        if(state != null){
+            try{
+                JSONArray scannedDataForSubmit = new JSONArray(state.data);
+                if(scannedDataForSubmit.length() > 0){
+                    String hu = state.param3;
+                    Bundle bundle = new Bundle();
+                    bundle.putString("packing_no", state.param4);
+                    bundle.putString("delivery_number", state.param1);
+                    bundle.putString("external_hu", hu);
+                    box.getBox("Saved Data",
+                            String.format("There are unsaved data found for HU %s. Do you want to continue scanning?. \n\n Tap OK to continue scanning",hu), (dialogInterface, i) -> {
+                                bundle.putBoolean("continue_scan", true);
+                                btnClear.setVisibility(View.GONE);
+                                PapperLessScan papperLessScan = PapperLessScan.newInstance(this.mode);
+                                papperLessScan.setArguments(bundle);
+                                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                                ft.add(R.id.home, papperLessScan);
+                                ft.addToBackStack(null);
+                                ft.commit();
+                            }, (dialogInterface, i) -> {
+                                btnClear.setVisibility(View.VISIBLE);
+                            });
+                    return true;
+                }
+            }catch (Exception exce){
+                box.getErrBox(exce);
+            }
+        }
+        return false;
+    }
     private void fetchPackingMaterial() {
         final RequestQueue mRequestQueue;
         String rfc = "ZWM_GET_PACKING_MATERIAL";
@@ -528,14 +596,14 @@ public class PapperLessPicking extends Fragment implements IBarcodeResult, Obser
     private void validateExternalHu(final String mPackingNo, final String mEditDeliverySelection, final String mInputExternalHu) {
         final RequestQueue mRequestQueue;
 
-        String rfc = "ZWM_VALIDATE_EXTERNAL_HU";
+        String rfc = mode.equalsIgnoreCase(Vars.PAPER_LESS) ? "ZWM_VALIDATE_EXTERNAL_HU" : "ZWM_TVS_VAL_EXTERNAL_HU";
         String url = this.requestUrl.substring(0, this.requestUrl.lastIndexOf("/"));
         url += "/noacljsonrfcadaptor?bapiname=" + rfc + "&aclclientid=android";
 
 
         final JSONObject params = new JSONObject();
         try {
-            params.put("bapiname","ZWM_VALIDATE_EXTERNAL_HU");
+            params.put("bapiname",rfc);
             params.put("IM_WERKS", werks);
             params.put("IM_EXIDV", mInputExternalHu);
 
@@ -599,9 +667,10 @@ public class PapperLessPicking extends Fragment implements IBarcodeResult, Obser
                                                 Bundle bundle = new Bundle();
                                                 bundle.putString("packing_no", mPackingNo);// mPackingNo);
                                                 bundle.putString("delivery_number", mDeliveryNumber);
+                                                bundle.putBoolean("continue_scan", false);
                                                 bundle.putString("external_hu", mInputExternalHu);
 
-                                                PapperLessScan papperLessScan = PapperLessScan.newInstance(Vars.PAPER_LESS);
+                                                PapperLessScan papperLessScan = PapperLessScan.newInstance(mode);
                                                 papperLessScan.setArguments(bundle);
                                                 FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
                                                 ft.add(R.id.home, papperLessScan);

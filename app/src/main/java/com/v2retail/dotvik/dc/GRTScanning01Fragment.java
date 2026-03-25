@@ -594,8 +594,9 @@ public class GRTScanning01Fragment extends Fragment implements View.OnClickListe
     }
 
     private void crateGetData(String crateNumber ,String werks){
-
-        String rfc = "ZWM_RFC_VALIDATE_CRATE";
+        // Version 11.85
+        //String rfc = "ZWM_RFC_VALIDATE_CRATE";
+        String rfc = "ZWM_GRT_VALIDATE_CRATE";
         final RequestQueue mRequestQueue;
         JsonObjectRequest mJsonRequest = null;
         String url = this.URL.substring(0, this.URL.lastIndexOf("/"));

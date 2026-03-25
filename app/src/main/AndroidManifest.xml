@@ -22,7 +22,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:usesCleartextTraffic="false">
+        android:usesCleartextTraffic="true">
         <activity
             android:name="com.v2retail.dotvik.scanner.ScannerActivity"
             android:exported="false" />
@@ -44,6 +44,17 @@
         </activity>
         <activity
             android:name="com.v2retail.dotvik.dc.Process_Selection_Activity"
+            android:exported="false"
+            android:label="@string/app_name"
+            android:parentActivityName="com.v2retail.dotvik.LoginActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.v2retail.dotvik.LoginActivity" />
+        </activity>
+        <activity
+            android:name="com.v2retail.dotvik.hub.HubProcessSelectionActivity"
             android:exported="false"
             android:label="@string/app_name"
             android:parentActivityName="com.v2retail.dotvik.LoginActivity"

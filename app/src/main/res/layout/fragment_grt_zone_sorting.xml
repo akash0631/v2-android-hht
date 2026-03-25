@@ -1,47 +1,285 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="vertical" android:clickable="true" android:background="@color/bgPage">
-    <LinearLayout android:id="@+id/ll_grt_zone_sort_msa_form_container" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical" android:layout_marginTop="15dp" android:padding="2dp">
-        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:padding="7dp" android:text="Empty Crate" android:textColor="@color/black" android:textSize="18sp" android:textStyle="bold" />
-        <RelativeLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1">
-            <EditText android:id="@+id/text_grt_zone_msacrate_scan" android:layout_width="match_parent" android:layout_height="48dp" android:background="@color/bgInput" android:hint="" android:imeOptions="actionDone" android:maxLines="1" android:padding="7dp" android:singleLine="true" android:textColor="@color/black" android:textSize="18sp" android:textColorHint="@color/textHint" />
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:clickable="true">
+    <!--text_grt_zone_sort_MSA_crate-->
+    <LinearLayout
+        android:id="@+id/ll_grt_zone_sort_msa_form_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginTop="15dp"
+        android:padding="2dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="7dp"
+            android:text="Empty Crate"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <EditText
+                android:id="@+id/text_grt_zone_msacrate_scan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:hint=""
+                android:imeOptions="actionDone"
+                android:maxLines="1"
+                android:padding="7dp"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
         </RelativeLayout>
+
     </LinearLayout>
-    <LinearLayout android:id="@+id/ll_grt_zone_sort_form_container" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical" android:layout_marginTop="15dp" android:visibility="invisible" android:padding="2dp">
-        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:padding="7dp" android:text="MSA Picked" android:textColor="@color/black" android:textSize="18sp" android:textStyle="bold" />
-        <RelativeLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1">
-            <EditText android:id="@+id/text_grt_zone_crate_scan" android:layout_width="match_parent" android:layout_height="48dp" android:background="@color/bgInput" android:enabled="false" android:hint="" android:imeOptions="actionDone" android:maxLines="1" android:padding="7dp" android:singleLine="true" android:textColor="@color/black" android:textSize="18sp" android:textColorHint="@color/textHint" />
+    <!--text_grt_sort_scan_crate-->
+    <LinearLayout
+        android:id="@+id/ll_grt_zone_sort_form_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginTop="15dp"
+        android:visibility="invisible"
+        android:padding="2dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="7dp"
+            android:text="MSA Picked"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <EditText
+                android:id="@+id/text_grt_zone_crate_scan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:enabled="false"
+                android:hint=""
+                android:imeOptions="actionDone"
+                android:maxLines="1"
+                android:padding="7dp"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
         </RelativeLayout>
+
     </LinearLayout>
-    <LinearLayout android:id="@+id/ll_grt_zone_crate_sort_form" android:layout_width="match_parent" android:layout_height="wrap_content" android:visibility="invisible" android:orientation="vertical">
-        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical" android:layout_marginTop="15dp" android:padding="2dp">
-            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:padding="7dp" android:textColor="@color/black" android:textSize="18sp" android:textStyle="bold" android:text="Scan Barcode" />
-            <RelativeLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1">
-                <EditText android:id="@+id/text_grt_zone_scan_barcode" android:layout_width="match_parent" android:layout_height="48dp" android:background="@color/bgInput" android:hint="" android:imeOptions="actionDone" android:maxLines="1" android:padding="7dp" android:singleLine="true" android:textColor="@color/black" android:textSize="18sp" android:textColorHint="@color/textHint" />
+    <LinearLayout
+        android:id="@+id/ll_grt_zone_crate_sort_form"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="15dp"
+            android:padding="2dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="7dp"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:text="Scan Barcode"/>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <EditText
+                    android:id="@+id/text_grt_zone_scan_barcode"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:hint=""
+                    android:imeOptions="actionDone"
+                    android:maxLines="1"
+                    android:padding="7dp"
+                    android:singleLine="true"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
             </RelativeLayout>
+
         </LinearLayout>
-        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical" android:layout_marginTop="15dp" android:padding="2dp">
-            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:padding="7dp" android:textColor="@color/black" android:textSize="18sp" android:text="Article No" />
-            <RelativeLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="2">
-                <EditText android:id="@+id/text_grt_zone_article_no" android:layout_width="match_parent" android:layout_height="48dp" android:background="@color/bgInput" android:enabled="false" android:hint="" android:maxLines="1" android:padding="7dp" android:singleLine="true" android:textColor="@color/black" android:textSize="18sp" android:textColorHint="@color/textHint" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="15dp"
+            android:padding="2dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="7dp"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:text="Article No"/>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2">
+
+                <EditText
+                    android:id="@+id/text_grt_zone_article_no"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:enabled="false"
+                    android:hint=""
+                    android:maxLines="1"
+                    android:padding="7dp"
+                    android:singleLine="true"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
             </RelativeLayout>
+
         </LinearLayout>
-        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical" android:layout_marginTop="15dp" android:padding="2dp">
-            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:padding="7dp" android:textColor="@color/black" android:textSize="18sp" android:text="Store/Bin" />
-            <RelativeLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="2">
-                <EditText android:id="@+id/text_grt_zone_sugg_store_bin" android:layout_width="match_parent" android:layout_height="48dp" android:background="@color/bgInput" android:enabled="false" android:hint="" android:maxLines="1" android:padding="7dp" android:singleLine="true" android:textColor="@color/black" android:textSize="18sp" android:textColorHint="@color/textHint" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="15dp"
+            android:padding="2dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="7dp"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:text="Store/Bin"/>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2">
+
+                <EditText
+                    android:id="@+id/text_grt_zone_sugg_store_bin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:enabled="false"
+                    android:hint=""
+                    android:maxLines="1"
+                    android:padding="7dp"
+                    android:singleLine="true"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
             </RelativeLayout>
+
         </LinearLayout>
-        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical" android:layout_marginTop="15dp" android:padding="2dp">
-            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:padding="7dp" android:textColor="@color/black" android:textSize="18sp" android:text="Zone" />
-            <RelativeLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="2">
-                <EditText android:id="@+id/text_grt_zone_zone" android:layout_width="match_parent" android:layout_height="48dp" android:background="@color/bgInput" android:enabled="false" android:hint="" android:maxLines="1" android:padding="7dp" android:singleLine="true" android:textColor="@color/black" android:textSize="18sp" android:textColorHint="@color/textHint" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="15dp"
+            android:padding="2dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="7dp"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:text="Zone"/>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2">
+
+                <EditText
+                    android:id="@+id/text_grt_zone_zone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:enabled="false"
+                    android:hint=""
+                    android:maxLines="1"
+                    android:padding="7dp"
+                    android:singleLine="true"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
             </RelativeLayout>
+
         </LinearLayout>
     </LinearLayout>
-    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:visibility="gone" android:padding="5dp">
-        <Button android:id="@+id/button_reset_grt_zone_sort_form" android:layout_width="match_parent" android:layout_height="wrap_content" android:visibility="invisible" android:text="Reset" android:layout_margin="5dp" android:textColor="@color/white" android:background="@drawable/bg_btn_primary" android:textSize="13sp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        android:padding="5dp">
+        <Button
+            android:id="@+id/button_reset_grt_zone_sort_form"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            android:text="Reset"
+            android:layout_margin="5dp"
+            android:textColor="@color/white"
+            android:background="@color/colorPrimary" />
     </LinearLayout>
-    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:padding="5dp">
-        <Button android:id="@+id/button_empty_grt_zone_sort_form" android:layout_width="match_parent" android:layout_height="wrap_content" android:visibility="invisible" android:text="Empty Picked Crate" android:layout_margin="5dp" android:textColor="@color/white" android:background="@drawable/bg_btn_primary" android:textSize="13sp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="5dp">
+        <Button
+            android:id="@+id/button_empty_grt_zone_sort_form"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            android:text="Empty Picked Crate"
+            android:layout_margin="5dp"
+            android:textColor="@color/white"
+            android:background="@color/colorPrimary" />
     </LinearLayout>
 </LinearLayout>

@@ -2,6 +2,7 @@ package com.v2retail.dotvik;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -28,19 +29,25 @@ import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
 import com.android.volley.ServerError;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.v2retail.ApplicationController;
+import com.v2retail.commons.Vars;
 import com.v2retail.dotvik.dc.Process_Selection_Activity;
 import com.v2retail.dotvik.ecomm.Ecomm_Process_Selection;
+import com.v2retail.dotvik.hub.HubProcessSelectionActivity;
 import com.v2retail.dotvik.store.Home_Activity;
 import com.v2retail.util.AlertBox;
 import com.v2retail.util.SharedPreferencesData;
 
 
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 
@@ -52,6 +59,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private RequestQueue mRequestQueue;
     private StringRequest mStringRequest;
+    private static final int REQUEST_LOGIN = 101;
 
     ProgressDialog dialog;
     private static final String TAG = LoginActivity.class.getName();
@@ -230,7 +238,7 @@ public class LoginActivity extends AppCompatActivity {
             mAuthTask.execute((Void) null);*/
             try {
 
-                networkCall();
+                login();
             } catch (Exception e) {
                 box.getErrBox(e);
             }
@@ -281,8 +289,27 @@ public class LoginActivity extends AppCompatActivity {
         clear();
 
     }
+    void login() {
 
-    private void networkCall() {
+        InputMethodManager imm = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(mPasswordView.getWindowToken(), 0);
+        JSONObject args = new JSONObject();
+        try {
+            args.put("bapiname", Vars.ZWM_USER_AUTHORITY_CHECK);
+            args.put("IM_USERID",mUserName.getText().toString().trim());
+            args.put("IM_PASSWORD",mPasswordView.getText().toString().trim());
+            showProcessingAndSubmit(Vars.ZWM_USER_AUTHORITY_CHECK, REQUEST_LOGIN, args);
+        }catch (Exception e)
+        {   dialog.dismiss();
+            box.getErrBox(e);
+        }
+        //clear();
+    }
+
+    public void showProcessingAndSubmit(String rfc, int request, JSONObject args){
+
+        dialog = new ProgressDialog(LoginActivity.this);
+
         dialog.setMessage("Please wait...");
         dialog.setCancelable(false);
         dialog.show();
@@ -292,127 +319,149 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-                    login();
-                }catch (Exception e)
-                {
+                    submitRequest(rfc, request, args);
+                } catch (Exception e) {
                     dialog.dismiss();
-                   box.getErrBox(e);
+                    box.getErrBox(e);
                 }
             }
-        }, 2000);
+        }, 1000);
     }
 
-    void login() {
+    private void submitRequest(String rfc, int request, JSONObject args){
 
-        InputMethodManager imm = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(mPasswordView.getWindowToken(), 0);
-        String addrec = "scnrec#" + mUserName.getText().toString().trim() + "#" + mPasswordView.getText().toString().trim() + "#<eol>";
-        Log.d(TAG, "payload-> " + addrec);
+        final RequestQueue mRequestQueue;
+        JsonObjectRequest mJsonRequest = null;
+        String url = this.URL.substring(0, this.URL.lastIndexOf("/"));
+        url += "/noacljsonrfcadaptor?bapiname=" + rfc + "&aclclientid=android";
+
+        final JSONObject params = args;
+
+        mRequestQueue = ApplicationController.getInstance().getRequestQueue();
+        mJsonRequest = new JsonObjectRequest(Request.Method.POST, url, params, new Response.Listener<JSONObject>() {
+
+            @Override
+            public void onResponse(JSONObject responsebody) {
+                if(dialog!=null) {
+                    dialog.dismiss();
+                    dialog = null;
+                }
+
+                if (responsebody == null) {
+                    box.getBox("Err", "No response from Server");
+                } else if (responsebody.equals("") || responsebody.equals("null") || responsebody.equals("{}")) {
+                    box.getBox("Err", "Unable to Connect Server/ Empty Response");
+                    return;
+                } else {
+                    try {
+                        if (responsebody.has("EX_RETURN") && responsebody.get("EX_RETURN") instanceof JSONObject) {
+                            JSONObject returnobj = responsebody.getJSONObject("EX_RETURN");
+                            if (returnobj != null) {
+                                String type = returnobj.getString("TYPE");
+                                if (type != null) {
+                                    if (type.equals("E")) {
+                                        box.getBox("Err", returnobj.getString("MESSAGE"));
+                                        return;
+                                    }
+                                    else{
+                                        if (request == REQUEST_LOGIN) {
+                                            moveTaskToBack(true);
+                                            String group = responsebody.getString("EX_GROUP");
+                                            String werks = responsebody.getString("EX_WERKS");
+                                            int radioButtonID = locGrp.getCheckedRadioButtonId();
+                                            RadioButton radioButton = locGrp.findViewById(radioButtonID);
+                                            String loc = (String) radioButton.getText();
+                                            SharedPreferencesData data = new SharedPreferencesData(con);
+                                            data.write("USER", mUserName.getText().toString().trim().toUpperCase());
+                                            data.write("LOC",loc);
+                                            data.write("WERKS", werks);
+                                            data.write("USERNAME", mUserName.getText().toString().trim());
+                                            data.write("PASSWORD", mPasswordView.getText().toString().trim());
+                                            if(isDC_user(group)) {
+                                                startActivity(new Intent(LoginActivity.this, Process_Selection_Activity.class));
+                                            } else if(isEcomm_user(werks)) {
+                                                startActivity(new Intent(LoginActivity.this, Ecomm_Process_Selection.class));
+                                            } else {
+                                                Intent intent = null;
+                                                if(isHub_user(group)){
+                                                    intent = new Intent(LoginActivity.this, HubProcessSelectionActivity.class);
+                                                }else{
+                                                    intent = new Intent(LoginActivity.this, Home_Activity.class);
+                                                }
+                                                startActivity(intent);
+                                            }
+                                            clear();
+                                        }
+                                        return;
+                                    }
+                                }
+                            }
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        box.getErrBox(e);
+                    }
+                }
+            }
+        }, volleyErrorListener()) {
+            @Override
+            public String getBodyContentType() {
+                return "application/json";
+            }
+
+            @Override
+            public byte[] getBody() {
+                return params.toString().getBytes();
+            }
+
+            @Override
+            protected Response<JSONObject> parseNetworkResponse(NetworkResponse response) {
+
+                Response<JSONObject> res = super.parseNetworkResponse(response);
+                Log.d(TAG, "Network response -> " + res.toString());
+
+                return res;
+            }
+        };
+        mJsonRequest.setRetryPolicy(new RetryPolicy() {
+            @Override
+            public int getCurrentTimeout() {
+                return 50000;
+            }
+
+            @Override
+            public int getCurrentRetryCount() {
+                return 1;
+            }
+
+            @Override
+            public void retry(VolleyError error) throws VolleyError {
+
+            }
+        });
+        mRequestQueue.add(mJsonRequest);
 
         try {
-            sendAndRequestResponse(addrec.trim());
-        }catch (Exception e)
-        {   dialog.dismiss();
-            box.getErrBox(e);
+            Log.d(TAG, "jsonRequest getHeaders->" + mJsonRequest.getHeaders());
+        } catch (AuthFailureError authFailureError) {
+            authFailureError.printStackTrace();
+            if(dialog!=null) {
+                dialog.dismiss();
+                dialog = null;
+            }
+            box.getErrBox(authFailureError);
         }
-        //clear();
     }
 
-    private void sendAndRequestResponse(final String requestBody) {
-
-        //RequestQueue initialized
-        mRequestQueue = ApplicationController.getInstance().getRequestQueue();
-
-        mStringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
-
-
-            @Override
-            public void onResponse(String response) {
-
-                response = response.substring(9, response.length());
-                dialog.dismiss();
-                Log.d(TAG, "response :" + response);
-                if (response == null) {
-
-                    box.getBox("Error", "No response from Server");
-                    mUserName.requestFocus();
-
-                } else if (response.equals("")||response.equals("null")) {
-
-                    Log.d(TAG, " Response is unknown :" + response);
-                    box.getBox("Error", "Empty response from server /Unable to Connect To Server");
-                    mUserName.requestFocus();
-                    clear();
-
-                } else if (response.charAt(0) == '1') {
-                    Log.d(TAG, " Response : Logged in" + response);
-
-                    moveTaskToBack(true);
-
-                    String ar[] = response.split("#");
-                    Log.d(TAG, " login : " + ar[0]);
-
-                    int radioButtonID = locGrp.getCheckedRadioButtonId();
-                    RadioButton radioButton = (RadioButton)locGrp.findViewById(radioButtonID);
-                    String loc = (String) radioButton.getText();
-                    SharedPreferencesData data = new SharedPreferencesData(con);
-                    data.write("USER", mUserName.getText().toString().trim().toUpperCase());
-                    if(ar.length>1) {
-                        Log.d(TAG, " werks : " + ar[1]);
-                        data.write("WERKS", ar[1]);
-                    }
-
-                    data.write("LOC",loc);
-
-                    data.write("USERNAME", mUserName.getText().toString().trim());
-                    data.write("PASSWORD", mPasswordView.getText().toString().trim());
-
-
-                    if(isDC_user(ar[1])) {
-                        Intent intent = null;
-                        intent = new Intent(LoginActivity.this, Process_Selection_Activity.class);
-                        startActivity(intent);
-                    } else if(isEcomm_user(ar[1])) {
-                        Intent intent = null;
-                        intent = new Intent(LoginActivity.this, Ecomm_Process_Selection.class);
-                        startActivity(intent);
-                    } else {
-                        Intent intent = null;
-                        intent = new Intent(LoginActivity.this, Home_Activity.class);
-                        startActivity(intent);
-                    }
-                    
-                    clear();
-
-
-
-                } else if (response.equals("0")) {
-                    Log.d(TAG, " Response is 0 -> wrong user-pass :" + response);
-
-                    box.getBox("Err", "Wrong User & Password");
-
-                    clear();
-                    mUserName.requestFocus();
-                } else {
-
-                    Log.d(TAG, " Response is unknown :" + response);
-
-                    box.getBox("Response", response);
-
-                    clear();
-
-                }
-            }
-        }, new Response.ErrorListener() {
+    Response.ErrorListener volleyErrorListener() {
+        return new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
-                Log.i(TAG, "Error :" + error.toString());
 
                 String err = "";
 
                 if (error instanceof TimeoutError || error instanceof NoConnectionError) {
-                    err = "Communication Error! Unable to Connect Server";
+                    err = "Communication Error!";
 
                 } else if (error instanceof AuthFailureError) {
                     err = "Authentication Error!";
@@ -423,58 +472,14 @@ public class LoginActivity extends AppCompatActivity {
                 } else if (error instanceof ParseError) {
                     err = "Parse Error!";
                 } else err = error.toString();
-                dialog.dismiss();
-                box.getBox("ERR", err);
 
-
-            }
-        }) {
-            @Override
-            public String getBodyContentType() {
-                return "application/json; charset=utf-8";
-            }
-
-            @Override
-            public byte[] getBody() throws AuthFailureError {
-                try {
-                    return requestBody == null ? null : requestBody.getBytes("utf-8");
-                } catch (UnsupportedEncodingException uee) {
-                    VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", requestBody, "utf-8");
-                    return null;
+                if(dialog!=null) {
+                    dialog.dismiss();
+                    dialog = null;
                 }
+                box.getBox("Err", err);
             }
-
-            @Override
-            protected Response<String> parseNetworkResponse(NetworkResponse response) {
-
-                Response<String> res = super.parseNetworkResponse(response);
-                String data = res.result;
-                Log.i(TAG, data);
-
-                return res;
-            }
-
-
         };
-        mStringRequest.setRetryPolicy(new DefaultRetryPolicy(3*DefaultRetryPolicy.DEFAULT_TIMEOUT_MS, 0, 0));
-       /* mStringRequest.setRetryPolicy(new RetryPolicy() {
-            @Override
-            public int getCurrentTimeout() {
-                return 50000;
-            }
-
-            @Override
-            public int getCurrentRetryCount() {
-                return 50000;
-            }
-
-            @Override
-            public void retry(VolleyError error) throws VolleyError {
-
-            }
-        });*/
-        mRequestQueue.add(mStringRequest);
-
     }
 
     @Override
@@ -485,9 +490,9 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-    boolean isDC_user(String myWerks) {
+    boolean isDC_user(String group) {
         boolean retVal = false;
-        if(myWerks!=null && (myWerks.equalsIgnoreCase("DH24") || myWerks.equalsIgnoreCase("DH26"))) {
+        if(group!=null && group.equalsIgnoreCase("DC")) {
             return true;
         }
         return retVal;
@@ -495,6 +500,13 @@ public class LoginActivity extends AppCompatActivity {
 
     boolean isEcomm_user(String myWerks) {
         if(myWerks!=null && myWerks.equalsIgnoreCase("DH25")) {
+            return true;
+        }
+        return false;
+    }
+
+    boolean isHub_user(String hub) {
+        if(hub!=null && hub.equalsIgnoreCase("HUB")) {
             return true;
         }
         return false;

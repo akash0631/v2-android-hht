@@ -1,16 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="vertical" android:clickable="true" android:background="@color/bgPage">
-    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical" android:padding="5dp" android:id="@+id/control_row_packing_station">
-        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:padding="7dp" android:textColor="@color/black" android:textSize="18sp" android:text="Packing Station" />
-        <RelativeLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1">
-            <EditText android:id="@+id/text_packing_station" android:layout_width="match_parent" android:layout_height="48dp" android:padding="7dp" android:textColor="@color/black" android:background="@color/bgInput" android:textSize="18sp" android:hint="" android:maxLines="1" android:singleLine="true" android:imeOptions="actionDone" android:textColorHint="@color/textHint" />
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:clickable="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="5dp"
+        android:id="@+id/control_row_packing_station">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="7dp"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:text="Packing Station"/>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <EditText
+                android:id="@+id/text_packing_station"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="7dp"
+                android:textColor="@color/black"
+                android:background="@color/white"
+                android:textSize="18sp"
+                android:hint=""
+                android:maxLines="1"
+                android:singleLine="true"
+                android:imeOptions="actionDone"/>
+
         </RelativeLayout>
+
     </LinearLayout>
-    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical" android:padding="5dp" android:id="@+id/control_row_crate">
-        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:padding="7dp" android:textColor="@color/black" android:textSize="18sp" android:text="Crate" />
-        <RelativeLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1">
-            <EditText android:id="@+id/text_crate" android:layout_width="match_parent" android:layout_height="48dp" android:padding="7dp" android:textColor="@color/black" android:background="@color/bgInput" android:textSize="18sp" android:hint="Scan Crate" android:maxLines="1" android:singleLine="true" android:imeOptions="actionDone" android:textColorHint="@color/textHint" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="5dp"
+        android:id="@+id/control_row_crate">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="7dp"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:text="Crate"/>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <EditText
+                android:id="@+id/text_crate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="7dp"
+                android:textColor="@color/black"
+                android:background="@color/white"
+                android:textSize="18sp"
+                android:hint="Scan Crate"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:imeOptions="actionDone"/>
+
         </RelativeLayout>
+
     </LinearLayout>
-    <Button android:id="@+id/button_save" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Save" android:layout_margin="5dp" android:textColor="@color/white" android:background="@drawable/bg_btn_primary" android:textSize="13sp" />
+
+    <Button
+        android:id="@+id/button_save"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        android:layout_margin="5dp"
+        android:textColor="@color/white"
+        android:background="@color/colorPrimary" />
+
+
 </LinearLayout>

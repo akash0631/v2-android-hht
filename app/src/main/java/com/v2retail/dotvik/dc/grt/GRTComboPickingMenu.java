@@ -15,6 +15,7 @@ import android.widget.Button;
 
 import com.v2retail.dotvik.R;
 import com.v2retail.dotvik.dc.Process_Selection_Activity;
+import com.v2retail.dotvik.dc.reverseputway.GRTReversePutway;
 import com.v2retail.util.AlertBox;
 
 public class GRTComboPickingMenu extends Fragment implements View.OnClickListener {
@@ -22,7 +23,7 @@ public class GRTComboPickingMenu extends Fragment implements View.OnClickListene
     private static final String TAG = GRTComboPickingMenu.class.getName();
     private GRTComboPickingMenu.OnFragmentInteractionListener mListener;
 
-    Button btn_hu_zone_store,btn_crate_picking,btn_de_tag_hu,btn_sm_crate_scanning,btn_crate_msa,palette_putway,palette_receive,btn_hu_pick;
+    Button btn_hu_zone_store,btn_crate_picking,btn_de_tag_hu,btn_sm_crate_scanning,btn_crate_msa,grt_reverse_putway,palette_putway,palette_receive,btn_hu_pick;
     FragmentManager fm;
     Context con;
     View rootView;
@@ -60,6 +61,7 @@ public class GRTComboPickingMenu extends Fragment implements View.OnClickListene
         btn_crate_msa = rootView.findViewById(R.id.grt_combo_crate_to_msa_bin);
         palette_putway = rootView.findViewById(R.id.grt_combo_pick_palette_putway);
         palette_receive = rootView.findViewById(R.id.grt_combo_pick_palette_receive);
+        grt_reverse_putway = rootView.findViewById(R.id.grt_combo_grt_reverse_putway);
         btn_hu_pick = rootView.findViewById(R.id.grt_combo_hu_pick);
 
         btn_hu_zone_store.setOnClickListener(this);
@@ -67,6 +69,7 @@ public class GRTComboPickingMenu extends Fragment implements View.OnClickListene
         btn_de_tag_hu.setOnClickListener(this);
         btn_sm_crate_scanning.setOnClickListener(this);
         btn_crate_msa.setOnClickListener(this);
+        grt_reverse_putway.setOnClickListener(this);
         palette_putway.setOnClickListener(this);
         palette_receive.setOnClickListener(this);
         btn_hu_pick.setOnClickListener(this);
@@ -100,6 +103,9 @@ public class GRTComboPickingMenu extends Fragment implements View.OnClickListene
                 break;
             case R.id.grt_combo_crate_to_msa_bin:
                 fragment=new GRTCrateToMSABin();
+                break;
+            case R.id.grt_combo_grt_reverse_putway:
+                fragment=new GRTReversePutway();
                 break;
             case R.id.grt_combo_hu_pick:
                 fragment=new GRTSingleComboHUPick();

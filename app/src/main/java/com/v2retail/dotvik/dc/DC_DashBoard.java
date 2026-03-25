@@ -12,13 +12,17 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.v2retail.dotvik.R;
+import com.v2retail.dotvik.dc.bincreateidentifier.MenuBinCrateIdentifier;
+import com.v2retail.dotvik.dc.binwisepicking.MenuMSABinwisePickingFragment;
 import com.v2retail.dotvik.dc.grt.GRTCratePickingProcess;
 import com.v2retail.dotvik.dc.grt.GRTProcessMenu;
 import com.v2retail.dotvik.dc.ptl.PTLProcessFragment;
+import com.v2retail.dotvik.dc.ptlnew.MenuPTLNewFragment;
+import com.v2retail.dotvik.dc.ptlnew.fullcrate30.MenuPTLNewPickingFullCrate30;
+import com.v2retail.dotvik.dc.ptlnew.ptl40.MenuPTLNewPickingProcess40;
+import com.v2retail.dotvik.dc.ptlnew.withoutpallate.MenuPTLNewPickingWithoutPallateFragment;
+import com.v2retail.dotvik.dc.ptlnew.withpallate.MenuPTLNewPickingWithPallateFragment;
 import com.v2retail.util.AlertBox;
-import com.v2retail.util.TSPLPrinter;
-
-import org.json.JSONObject;
 
 
 /**
@@ -36,7 +40,14 @@ public class DC_DashBoard extends Fragment implements View.OnClickListener,
         GRTCratePickingProcess.OnFragmentInteractionListener,
         PTLProcessFragment.OnFragmentInteractionListener,
         GRTProcessMenu.OnFragmentInteractionListener,
-        MenuFragmentInwardTVSPaperLess.OnFragmentInteractionListener
+        MenuFragmentInwardTVSPaperLess.OnFragmentInteractionListener,
+        MenuPTLNewFragment.OnFragmentInteractionListener,
+        MenuPTLNewPickingWithPallateFragment.OnFragmentInteractionListener,
+        MenuPTLNewPickingWithoutPallateFragment.OnFragmentInteractionListener,
+        MenuPTLNewPickingFullCrate30.OnFragmentInteractionListener,
+        MenuPTLNewPickingProcess40.OnFragmentInteractionListener,
+        MenuMSABinwisePickingFragment.OnFragmentInteractionListener,
+        MenuBinCrateIdentifier.OnFragmentInteractionListener
 {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -57,6 +68,10 @@ public class DC_DashBoard extends Fragment implements View.OnClickListener,
     Button ptl_process;
     Button cla_process;
     Button v11_to_msa;
+    Button ptl_new;
+    Button msa_binwise_picking;
+    Button bin_crate_identifier;
+    Button msa_live_stock_take;
 
     private OnFragmentInteractionListener mListener;
 
@@ -99,13 +114,17 @@ public class DC_DashBoard extends Fragment implements View.OnClickListener,
         fm=getFragmentManager();
         con = getContext();
         box=new AlertBox(con);
-        inbound = (Button) view.findViewById(R.id.inward);
-        outbound = (Button) view.findViewById(R.id.outward);
-        stock_take = (Button) view.findViewById(R.id.stock_take);
-        grt_process =  (Button) view.findViewById(R.id.grt_process);
-        ptl_process =  (Button) view.findViewById(R.id.ptl_process);
-        cla_process = (Button) view.findViewById(R.id.cla_process);
-        v11_to_msa = (Button) view.findViewById(R.id.v11_to_msa);
+        inbound = view.findViewById(R.id.inward);
+        outbound = view.findViewById(R.id.outward);
+        stock_take = view.findViewById(R.id.stock_take);
+        grt_process = view.findViewById(R.id.grt_process);
+        ptl_process = view.findViewById(R.id.ptl_process);
+        cla_process = view.findViewById(R.id.cla_process);
+        v11_to_msa = view.findViewById(R.id.v11_to_msa);
+        ptl_new = view.findViewById(R.id.ptl_new);
+        msa_binwise_picking = view.findViewById(R.id.msa_binwise_picking);
+        bin_crate_identifier = view.findViewById(R.id.bin_crate_identifier);
+        msa_live_stock_take = view.findViewById(R.id.msa_live_stock_take);
 
         inbound.setOnClickListener(this);
         outbound.setOnClickListener(this);
@@ -114,6 +133,10 @@ public class DC_DashBoard extends Fragment implements View.OnClickListener,
         ptl_process.setOnClickListener(this);
         cla_process.setOnClickListener(this);
         v11_to_msa.setOnClickListener(this);
+        ptl_new.setOnClickListener(this);
+        msa_binwise_picking.setOnClickListener(this);
+        bin_crate_identifier.setOnClickListener(this);
+        msa_live_stock_take.setOnClickListener(this);
 
         return view;
     }
@@ -211,6 +234,18 @@ public class DC_DashBoard extends Fragment implements View.OnClickListener,
                 break;
             case R.id.v11_to_msa:
                 fragment = new V11ToMsaFragment();
+                break;
+            case R.id.ptl_new:
+                fragment = new MenuPTLNewFragment();
+                break;
+            case R.id.msa_binwise_picking:
+                fragment = new MenuMSABinwisePickingFragment();
+                break;
+            case R.id.bin_crate_identifier:
+                fragment = new MenuBinCrateIdentifier();
+                break;
+            case R.id.msa_live_stock_take:
+                fragment = new FragmentMSALiveStockTake();
                 break;
         }
         clearStack();

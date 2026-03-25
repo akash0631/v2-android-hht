@@ -23,6 +23,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 
 import com.v2retail.commons.UIFuncs;
 import com.v2retail.commons.Vars;
@@ -44,7 +45,7 @@ import java.util.Set;
  */
 public class MenuFragmentInwardTVSPaperLess extends Fragment implements View.OnClickListener {
 
-    Button btn_picking, btn_picking_confirmation, btn_reprint, btn_testprint;
+    Button btn_picking, btn_picking_confirmation, btn_reprint, btn_testprint, btn_picking_live_hu, btn_reprint_live_hu;
     FragmentManager fm;
     Context con;
     private OnFragmentInteractionListener mListener;
@@ -52,6 +53,8 @@ public class MenuFragmentInwardTVSPaperLess extends Fragment implements View.OnC
     Set<BluetoothDevice> pairedDevices = null;
     List<BluetoothDevice> bluetoothDevices = null;
     SharedPreferencesData data;
+    LinearLayout ll_tvs_paperless, ll_tvs_paperless_live_hu;
+    String mode;
 
     public MenuFragmentInwardTVSPaperLess() {
         // Required empty public constructor
@@ -64,8 +67,9 @@ public class MenuFragmentInwardTVSPaperLess extends Fragment implements View.OnC
                 .getSupportActionBar().setTitle("TVS Paperless Picking");
     }
 
-    public static MenuFragmentInwardTVSPaperLess newInstance() {
+    public static MenuFragmentInwardTVSPaperLess newInstance(String mode) {
         MenuFragmentInwardTVSPaperLess fragment = new MenuFragmentInwardTVSPaperLess();
+        fragment.mode = mode;
         return fragment;
     }
 
@@ -88,8 +92,23 @@ public class MenuFragmentInwardTVSPaperLess extends Fragment implements View.OnC
         btn_reprint = view.findViewById(R.id.btn_tvs_paperless_re_print);
         btn_testprint = view.findViewById(R.id.btn_tvs_paperless_test_print);
 
+        btn_picking_live_hu = view.findViewById(R.id.btn_tvs_paperless_picking_live_hu);
+        btn_reprint_live_hu = view.findViewById(R.id.btn_tvs_paperless_re_print_live_hu);
+
+        ll_tvs_paperless = view.findViewById(R.id.ll_tvs_paperless);
+        ll_tvs_paperless_live_hu = view.findViewById(R.id.ll_tvs_paperless_live_hu);
+
+        if(mode.equalsIgnoreCase(Vars.TVS_PAPER_LESS)){
+            ll_tvs_paperless.setVisibility(View.VISIBLE);
+            ll_tvs_paperless_live_hu.setVisibility(View.GONE);
+        }else{
+            ll_tvs_paperless.setVisibility(View.GONE);
+            ll_tvs_paperless_live_hu.setVisibility(View.VISIBLE);
+        }
+
         btn_picking.setOnClickListener(this);
         btn_picking_confirmation.setOnClickListener(this);
+        btn_picking_live_hu.setOnClickListener(this);
         btn_reprint.setOnClickListener(this);
         btn_testprint.setOnClickListener(this);
 
@@ -127,13 +146,12 @@ public class MenuFragmentInwardTVSPaperLess extends Fragment implements View.OnC
         Fragment fragment = null;
         switch (view.getId()) {
             case R.id.btn_tvs_paperless_picking:
-                fragment = PaperLessDate.newInstance(Vars.TVS_PAPER_LESS);
+            case R.id.btn_tvs_paperless_picking_live_hu:
+                fragment = PaperLessDate.newInstance(this.mode);
                 break;
-
-            case R.id.btn_tvs_paperless_picking_confirm:
+           case R.id.btn_tvs_paperless_picking_confirm:
 
                 break;
-
             case R.id.btn_tvs_paperless_re_print:
                 fragment = FragmentInwardTVSPaperLessRePrint.newInstance("TVS Paperless");
                 break;
@@ -171,7 +189,7 @@ public class MenuFragmentInwardTVSPaperLess extends Fragment implements View.OnC
             box.getBox("Printer Not Found", "No paired TVS bluetooth printer found. Please pair");
             return;
         }
-        printerHelper.sendPrintCommandToBluetoothPrinter(defaultPrinter, null);
+        printerHelper.sendPrintCommandToBluetoothPrinter(defaultPrinter, null,"2");
     }
 
     public interface OnFragmentInteractionListener {

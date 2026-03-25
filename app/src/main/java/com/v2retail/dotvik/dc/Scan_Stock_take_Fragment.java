@@ -45,6 +45,7 @@ import com.v2retail.dotvik.modal.StockTakeProcessEtBinModel;
 import com.v2retail.dotvik.modal.StockTakeProcessExHeaderModel;
 import com.v2retail.util.AlertBox;
 import com.v2retail.util.CameraCheck;
+import com.v2retail.util.CommonUtils;
 import com.v2retail.util.SharedPreferencesData;
 import com.v2retail.util.Tables;
 
@@ -177,7 +178,7 @@ public class Scan_Stock_take_Fragment extends Fragment implements View.OnClickLi
         unscanned_ch = (CheckBox) view.findViewById(R.id.unscanned);
 
         bin_et = (EditText) view.findViewById(R.id.bin_no); //huno
-        scrate_et = (EditText) view.findViewById(R.id.source_crate);//pack
+        scrate_et = (EditText) view.findViewById(R.id.dest_crate);//pack
         barcode_et = (EditText) view.findViewById(R.id.barcode_no);//ts
         article_et = (EditText) view.findViewById(R.id.article_no);//to
         tsq_et = (EditText) view.findViewById(R.id.tsq);//tsq
@@ -227,27 +228,42 @@ public class Scan_Stock_take_Fragment extends Fragment implements View.OnClickLi
         scrate_et.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
-                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    String crateScan = scrate_et.getText().toString();
-                    if (crateScan == null || crateScan.length() < 0 || crateScan.equals("")) {
-                        box.getBox("Alert", "Scan crate Scan !");
-                    } else {
-                        try {
-                            InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                            imm.hideSoftInputFromWindow(scrate_et.getWindowToken(), 0);
-                            loadCrateData();
-                        }catch (Exception e){
-                            box.getErrBox(e);
-                        }
-
-
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    CommonUtils.hideKeyboard(getActivity());
+                    String crate = scrate_et.getText().toString().toUpperCase().trim();
+                    if(crate.length()>0) {
+                        scrate_et.selectAll();
+                        loadCrateData();
                         return true;
                     }
                 }
-
                 return false;
             }
         });
+//        scrate_et.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+//            @Override
+//            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
+//                if (actionId == EditorInfo.IME_ACTION_DONE) {
+//                    String crateScan = scrate_et.getText().toString();
+//                    if (crateScan == null || crateScan.length() < 0 || crateScan.equals("")) {
+//                        box.getBox("Alert", "Scan crate Scan !");
+//                    } else {
+//                        try {
+//                            InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+//                            imm.hideSoftInputFromWindow(scrate_et.getWindowToken(), 0);
+//                            loadCrateData();
+//                        }catch (Exception e){
+//                            box.getErrBox(e);
+//                        }
+//
+//
+//                        return true;
+//                    }
+//                }
+//
+//                return false;
+//            }
+//        });
 
         barcode_et.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override

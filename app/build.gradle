@@ -1,14 +1,13 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 34
-    buildToolsVersion "33.0.1"
+    compileSdk 31
     defaultConfig {
         applicationId "com.v2retail.dotvik"
         minSdkVersion 25
-        targetSdkVersion 34
+        targetSdkVersion 31
         versionCode 1170
-        versionName "11.83"
+        versionName "12.098"
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
 
         vectorDrawables.useSupportLibrary = true
@@ -16,15 +15,14 @@ android {
             cruncherEnabled = false
         }
     }
-    signingConfigs {
-        release {
-            storeFile rootProject.file('V2Retail_at_456_keystore')
-            storePassword 'V2Retail@456'
-            keyAlias 'v2retail'
-            keyPassword 'V2Retail@456'
+    applicationVariants.configureEach { variant ->
+        variant.outputs.configureEach { output ->
+            def versionName = variant.versionName.replace('.', '_')
+            def customText = "V2R"
+            def newName = "${customText}_${versionName}.apk"
+            outputFileName = newName
         }
     }
-
     buildTypes {
         debug {
             minifyEnabled false
@@ -36,7 +34,6 @@ android {
             minifyEnabled false
             shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.release
         }
     }
 
@@ -50,6 +47,17 @@ android {
 
 
 android {
+    signingConfigs {
+        debug {
+            // storeFile file('H:\\keystore\\V2Retail_at_456_keystore')
+
+            storeFile file('/Users/maddy/Projects/V2Retail_at_456_keystore')
+            //storeFile file('D:\\Projects\\V2Retail_at_456_keystore')
+            storePassword 'V2Retail@456'
+            keyAlias 'v2retail'
+            keyPassword 'V2Retail@456'
+        }
+    }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -66,6 +74,11 @@ dependencies {
 
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation fileTree(dir: "$buildDir/native-libs", include: 'native-libs.jar')
+    def room_version = "2.4.3"
+
+    implementation "androidx.room:room-runtime:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version"
+    implementation "androidx.room:room-rxjava3:$room_version"
 
     implementation 'androidx.appcompat:appcompat:1.4.1'
     implementation 'com.google.android.material:material:1.5.0'

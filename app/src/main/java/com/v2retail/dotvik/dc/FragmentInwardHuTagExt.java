@@ -1,0 +1,477 @@
+package com.v2retail.dotvik.dc;
+
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.os.Bundle;
+
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+
+import android.os.Handler;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
+import android.view.KeyEvent;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkError;
+import com.android.volley.NetworkResponse;
+import com.android.volley.NoConnectionError;
+import com.android.volley.ParseError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.v2retail.ApplicationController;
+import com.v2retail.commons.UIFuncs;
+import com.v2retail.commons.Vars;
+import com.v2retail.dotvik.R;
+import com.v2retail.dotvik.dc.putwayinbin.FragmentHUToPallet;
+import com.v2retail.dotvik.dc.putwayinbin.PalletHU;
+import com.v2retail.util.AlertBox;
+import com.v2retail.util.SharedPreferencesData;
+import com.v2retail.util.Util;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class FragmentInwardHuTagExt extends Fragment implements View.OnClickListener {
+
+    private static final int REQUEST_VALIDATE_EXT_HU = 1501;
+    private static final int REQUEST_SAVE = 1503;
+
+    private static final String TAG = FragmentHUToPallet.class.getName();
+
+    View rootView;
+    String URL="";
+    String WERKS="";
+    String USER="";
+    Context con;
+    AlertBox box;
+    ProgressDialog dialog;
+    FragmentManager fm;
+
+    Button btn_back, btn_reset;
+    EditText txt_site, txt_scan_ext_hu, txt_ext_hu, txt_scan_act_hu, txt_act_hu, txt_sqty;
+
+    int scannedHU;
+
+    public FragmentInwardHuTagExt() {
+        // Required empty public constructor
+    }
+
+    public static FragmentInwardHuTagExt newInstance(String param1, String param2) {
+        FragmentInwardHuTagExt fragment = new FragmentInwardHuTagExt();
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        fm = getParentFragmentManager();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((Process_Selection_Activity) getActivity()).setActionBarTitle("HU Tag EXT");
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        rootView = inflater.inflate(R.layout.fragment_inward_hu_tag_ext, container, false);
+
+        con = getContext();
+        box=new AlertBox(con);
+        dialog=new ProgressDialog(con);
+        SharedPreferencesData data=new SharedPreferencesData(con);
+        URL=data.read("URL");
+        WERKS=data.read("WERKS");
+        USER=data.read("USER");
+
+        txt_site = rootView.findViewById(R.id.txt_hu_tag_ext_site);
+        txt_scan_ext_hu = rootView.findViewById(R.id.txt_hu_tag_ext_scan_ext_hu);
+        txt_ext_hu = rootView.findViewById(R.id.txt_hu_tag_ext_ext_hu);
+        txt_scan_act_hu = rootView.findViewById(R.id.txt_hu_tag_ext_scan_act_hu);
+        txt_act_hu = rootView.findViewById(R.id.txt_hu_tag_ext_act_hu);
+        txt_sqty = rootView.findViewById(R.id.txt_hu_tag_ext_sqty);
+
+        btn_back = rootView.findViewById(R.id.btn_hu_tag_ext_back);
+        btn_reset = rootView.findViewById(R.id.btn_hu_tag_ext_reset);
+
+        btn_back.setOnClickListener(this);
+        btn_reset.setOnClickListener(this);
+        //btn_save.setOnClickListener(this);
+
+        txt_site.setText(WERKS);
+
+        clear(false);
+        addInputEvents();
+
+        return rootView;
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.btn_hu_tag_ext_back:
+                box.confirmBack(fm, con);
+                break;
+            case R.id.btn_hu_tag_ext_reset:
+                box.getBox("Confirm", "Reset! Are you sure?", (dialogInterface, i) -> {
+                    clear(false);
+                }, (dialogInterface, i) -> {
+                    return;
+                });
+                break;
+//            case R.id.btn_hu_putway_pallet_to_hu_save:
+//                saveData();
+//                break;
+        }
+    }
+
+    private void addInputEvents() {
+        txt_scan_ext_hu.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    UIFuncs.hideKeyboard(getActivity());
+                    String value = UIFuncs.toUpperTrim(txt_scan_ext_hu);
+                    if (!value.isEmpty()) {
+                        validateExtHU(value);
+                        return true;
+                    }
+                }
+                return false;
+            }
+        });
+        txt_scan_ext_hu.addTextChangedListener(new TextWatcher() {
+            boolean scannerReading = false;
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if ((before == 0 && start == 0) && count > 3) {
+                    scannerReading = true;
+                } else {
+                    scannerReading = false;
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String value = s.toString().toUpperCase().trim();
+                if (!value.isEmpty() && scannerReading) {
+                    validateExtHU(value);
+                }
+            }
+        });
+        txt_scan_act_hu.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    UIFuncs.hideKeyboard(getActivity());
+                    String value = UIFuncs.toUpperTrim(txt_scan_act_hu);
+                    if (!value.isEmpty()) {
+                        saveHU(value);
+                        return true;
+                    }
+                }
+                return false;
+            }
+        });
+        txt_scan_act_hu.addTextChangedListener(new TextWatcher() {
+            boolean scannerReading = false;
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if ((before == 0 && start == 0) && count > 3) {
+                    scannerReading = true;
+                } else {
+                    scannerReading = false;
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String value = s.toString().toUpperCase().trim();
+                if (!value.isEmpty() && scannerReading) {
+                    saveHU(value);
+                }
+            }
+        });
+    }
+
+    private void showError(String title, String message) {
+        UIFuncs.errorSound(con);
+        AlertBox box = new AlertBox(getContext());
+        box.getBox(title, message);
+    }
+
+    private void clear(boolean isSave) {
+        UIFuncs.disableInput(con, txt_scan_act_hu);
+        //btn_save.setVisibility(View.GONE);
+        txt_scan_ext_hu.setText("");
+        txt_ext_hu.setText("");
+        txt_scan_act_hu.setText("");
+        txt_act_hu.setText("");
+        if(isSave){
+            txt_sqty.setText((++scannedHU) + "");
+        }else{
+            scannedHU = 0;
+            btn_reset.setVisibility(View.INVISIBLE);
+            txt_sqty.setText("0");
+        }
+        UIFuncs.enableInput(con, txt_scan_ext_hu);
+    }
+
+    private void validateExtHU(String extHu){
+        JSONObject args = new JSONObject();
+        try {
+            args.put("bapiname", Vars.ZWM_EXTERNAL_HU_VALIDATE);
+            args.put("IM_WERKS", WERKS);
+            args.put("IM_USER", USER);
+            args.put("IM_EXIDV", extHu);
+            showProcessingAndSubmit(Vars.ZWM_EXTERNAL_HU_VALIDATE, REQUEST_VALIDATE_EXT_HU, args);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            UIFuncs.errorSound(con);
+            if (dialog != null) {
+                dialog.dismiss();
+                dialog = null;
+            }
+            AlertBox box = new AlertBox(getContext());
+            box.getErrBox(e);
+        }
+    }
+
+    private void saveHU(String actHu){
+        JSONObject args = new JSONObject();
+        try {
+            args.put("bapiname", Vars.ZWM_ACTUAL_HU_SAVE);
+            args.put("IM_WERKS", WERKS);
+            args.put("IM_USER", USER);
+            args.put("IM_EXIDV", UIFuncs.toUpperTrim(txt_ext_hu));
+            args.put("IM_SAP_HU", actHu);
+            showProcessingAndSubmit(Vars.ZWM_ACTUAL_HU_SAVE, REQUEST_SAVE, args);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            UIFuncs.errorSound(con);
+            if (dialog != null) {
+                dialog.dismiss();
+                dialog = null;
+            }
+            AlertBox box = new AlertBox(getContext());
+            box.getErrBox(e);
+        }
+    }
+
+
+    public void showProcessingAndSubmit(String rfc, int request, JSONObject args) {
+
+        dialog = new ProgressDialog(getContext());
+
+        dialog.setMessage("Please wait...");
+        dialog.setCancelable(false);
+        dialog.show();
+
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    submitRequest(rfc, request, args);
+                } catch (Exception e) {
+                    dialog.dismiss();
+                    AlertBox box = new AlertBox(getContext());
+                    box.getErrBox(e);
+                }
+            }
+        }, 1000);
+    }
+
+    private void submitRequest(String rfc, int request, JSONObject args) {
+
+        final RequestQueue mRequestQueue;
+        JsonObjectRequest mJsonRequest = null;
+        String url = this.URL.substring(0, this.URL.lastIndexOf("/"));
+        url += "/noacljsonrfcadaptor?bapiname=" + rfc + "&aclclientid=android";
+
+        final JSONObject params = args;
+
+        Log.d(TAG, "payload ->" + params.toString());
+
+        mRequestQueue = ApplicationController.getInstance().getRequestQueue();
+        mJsonRequest = new JsonObjectRequest(Request.Method.POST, url, params, new Response.Listener<JSONObject>() {
+
+            @Override
+            public void onResponse(JSONObject responsebody) {
+                if (dialog != null) {
+                    dialog.dismiss();
+                    dialog = null;
+                }
+                Log.d(TAG, "response ->" + responsebody);
+
+                if (responsebody == null) {
+                    UIFuncs.errorSound(con);
+                    AlertBox box = new AlertBox(getContext());
+                    box.getBox("Err", "No response from Server");
+                } else if (responsebody.equals("") || responsebody.equals("null") || responsebody.equals("{}")) {
+                    UIFuncs.errorSound(con);
+                    AlertBox box = new AlertBox(getContext());
+                    box.getBox("Err", "Unable to Connect Server/ Empty Response");
+                    return;
+                } else {
+                    try {
+                        if (responsebody.has("EX_RETURN") && responsebody.get("EX_RETURN") instanceof JSONObject) {
+                            JSONObject returnobj = responsebody.getJSONObject("EX_RETURN");
+                            if (returnobj != null) {
+                                String type = returnobj.getString("TYPE");
+                                if (type != null) {
+                                    if (type.equals("E")) {
+                                        UIFuncs.errorSound(getContext());
+                                        AlertBox box = new AlertBox(getContext());
+                                        box.getBox("Err", returnobj.getString("MESSAGE"));
+                                        if (request == REQUEST_VALIDATE_EXT_HU) {
+                                            txt_scan_ext_hu.setText("");
+                                            txt_scan_ext_hu.requestFocus();
+                                            return;
+                                        }
+                                        if (request == REQUEST_SAVE) {
+                                            txt_scan_act_hu.setText("");
+                                            txt_scan_act_hu.requestFocus();
+                                            return;
+                                        }
+                                    } else {
+                                        if (request == REQUEST_VALIDATE_EXT_HU) {
+                                            btn_reset.setVisibility(View.VISIBLE);
+                                            txt_ext_hu.setText(UIFuncs.toUpperTrim(txt_scan_ext_hu));
+                                            txt_scan_ext_hu.setText("");
+                                            UIFuncs.enableInput(con, txt_scan_act_hu);
+                                            return;
+                                        }
+                                        if (request == REQUEST_SAVE) {
+                                            clear(true);
+                                            return;
+                                        }
+                                    }
+                                }
+                                return;
+                            }
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        AlertBox box = new AlertBox(getContext());
+                        box.getErrBox(e);
+                    }
+                }
+            }
+        }, volleyErrorListener()) {
+            @Override
+            public String getBodyContentType() {
+                return "application/json";
+            }
+
+            @Override
+            public byte[] getBody() {
+                return params.toString().getBytes();
+            }
+
+            @Override
+            protected Response<JSONObject> parseNetworkResponse(NetworkResponse response) {
+
+                Response<JSONObject> res = super.parseNetworkResponse(response);
+                Log.d(TAG, "Network response -> " + res.toString());
+
+                return res;
+            }
+        };
+        mJsonRequest.setRetryPolicy(new RetryPolicy() {
+            @Override
+            public int getCurrentTimeout() {
+                return 50000;
+            }
+
+            @Override
+            public int getCurrentRetryCount() {
+                return 1;
+            }
+
+            @Override
+            public void retry(VolleyError error) throws VolleyError {
+
+            }
+        });
+        mRequestQueue.add(mJsonRequest);
+        Log.d(TAG, "jsonRequest getUrl ->" + mJsonRequest.getUrl());
+        Log.d(TAG, "jsonRequest getBodyContentType->" + mJsonRequest.getBodyContentType());
+        Log.d(TAG, "jsonRequest getBody->" + mJsonRequest.getBody().toString());
+        Log.d(TAG, "jsonRequest getMethod->" + mJsonRequest.getMethod());
+        try {
+            Log.d(TAG, "jsonRequest getHeaders->" + mJsonRequest.getHeaders());
+        } catch (AuthFailureError authFailureError) {
+            authFailureError.printStackTrace();
+            if (dialog != null) {
+                dialog.dismiss();
+                dialog = null;
+            }
+            AlertBox box = new AlertBox(getContext());
+            box.getErrBox(authFailureError);
+        }
+    }
+
+    Response.ErrorListener volleyErrorListener() {
+        return new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                Log.i(TAG, "Error :" + error.toString());
+                String err = "";
+
+                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+                    err = "Communication Error!";
+
+                } else if (error instanceof AuthFailureError) {
+                    err = "Authentication Error!";
+                } else if (error instanceof ServerError) {
+                    err = "Server Side Error!";
+                } else if (error instanceof NetworkError) {
+                    err = "Network Error!";
+                } else if (error instanceof ParseError) {
+                    err = "Parse Error!";
+                } else err = error.toString();
+
+                if (dialog != null) {
+                    dialog.dismiss();
+                    dialog = null;
+                }
+                AlertBox box = new AlertBox(getContext());
+                box.getBox("Err", err);
+            }
+        };
+    }
+}

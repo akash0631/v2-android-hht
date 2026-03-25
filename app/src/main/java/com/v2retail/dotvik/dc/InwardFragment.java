@@ -14,6 +14,7 @@ import android.widget.Button;
 
 import com.v2retail.commons.Vars;
 import com.v2retail.dotvik.R;
+import com.v2retail.dotvik.dc.putwayinbin.GRTHUPutwayInBin;
 import com.v2retail.dotvik.store.PaperLessDate;
 import com.v2retail.util.AlertBox;
 
@@ -35,7 +36,7 @@ public class InwardFragment extends Fragment implements View.OnClickListener {
     Button create_scan;
     Button grc_putway;
     Button putway;
-    Button bin_consolidation,ecom_putway,stored_stock,grt_scanning03,grt_scanning01;
+    Button bin_consolidation,ecom_putway,stored_stock,grt_scanning03,grt_scanning01, grt_putway_hu_in_bin, hu_tag_ext;
     FragmentManager fm;
     Context con;
 
@@ -93,6 +94,8 @@ public class InwardFragment extends Fragment implements View.OnClickListener {
         stored_stock = (Button) view.findViewById(R.id.stored_stock);
         grt_scanning03 = (Button) view.findViewById(R.id.grt_putway03);
         grt_scanning01 = (Button) view.findViewById(R.id.grt_scanning01);
+        grt_putway_hu_in_bin = (Button) view.findViewById(R.id.grt_putway_hu_in_bin);
+        hu_tag_ext = (Button) view.findViewById(R.id.inward_hu_tag_ext);
 
         create_scan.setOnClickListener(this);
         grc_putway.setOnClickListener(this);
@@ -101,6 +104,8 @@ public class InwardFragment extends Fragment implements View.OnClickListener {
         stored_stock.setOnClickListener(this);
         grt_scanning03.setOnClickListener(this);
         grt_scanning01.setOnClickListener(this);
+        grt_putway_hu_in_bin.setOnClickListener(this);
+        hu_tag_ext.setOnClickListener(this);
        // bin_consolidation.setOnClickListener(this);
 
         Log.d(TAG, TAG + "Inward created");
@@ -173,6 +178,12 @@ public class InwardFragment extends Fragment implements View.OnClickListener {
 
             case R.id.grt_putway03:
                 fragment = new GRTPutway03Fragment();
+                break;
+            case R.id.grt_putway_hu_in_bin:
+                fragment = new GRTHUPutwayInBin();
+                break;
+            case R.id.inward_hu_tag_ext:
+                fragment = new FragmentInwardHuTagExt();
                 break;
         }
 

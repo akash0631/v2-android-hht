@@ -32,6 +32,8 @@ public class ETPickData implements Serializable {
     private String lgmc_descr;
     @SerializedName("URL")
     private String lgurl;
+    @SerializedName("SORT")
+    private String sort;
 
     public String getLgvbeln() {
         return lgvbeln;
@@ -135,5 +137,13 @@ public class ETPickData implements Serializable {
 
     public void setLglfimg(float lglfimg) {
         this.lglfimg = lglfimg;
+    }
+
+    public String getSort() {
+        return sort;
+    }
+
+    public void setSort(String sort) {
+        this.sort = sort;
     }
 }

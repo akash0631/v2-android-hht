@@ -66,7 +66,7 @@ public class FragmentInwardTVSPaperLessRePrint extends Fragment implements View.
     String WERKS;
     String USER;
     private static String parent;
-    Button btn_back, btn_reset;
+    Button btn_print, btn_back, btn_reset;
     EditText txt_printer, txt_hu;
     SharedPreferencesData data;
     String title;
@@ -112,9 +112,11 @@ public class FragmentInwardTVSPaperLessRePrint extends Fragment implements View.
         txt_printer = view.findViewById(R.id.txt_outward_tvs_paperless_reprint_printer);
         txt_hu = view.findViewById(R.id.txt_outward_tvs_paperless_reprint_huno);
 
+        btn_print = view.findViewById(R.id.btn_outward_tvs_paperless_reprint_print);
         btn_back = view.findViewById(R.id.btn_outward_tvs_paperless_reprint_back);
         btn_reset = view.findViewById(R.id.btn_outward_tvs_paperless_reprint_reset);
 
+        btn_print.setOnClickListener(this);
         btn_back.setOnClickListener(this);
         btn_reset.setOnClickListener(this);
 
@@ -132,12 +134,20 @@ public class FragmentInwardTVSPaperLessRePrint extends Fragment implements View.
             }
         }
 
+        if(data.isKeyExists(Vars.LAST_HU)){
+            txt_hu.setText(data.read(Vars.LAST_HU));
+        }
         return view;
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.btn_outward_tvs_paperless_reprint_print:
+                if(!UIFuncs.toUpperTrim(txt_hu).isEmpty()){
+                    validateHU(UIFuncs.toUpperTrim(txt_hu));
+                }
+                break;
             case R.id.btn_outward_tvs_paperless_reprint_back:
                 box.confirmBack(fm, con);
                 break;
@@ -199,8 +209,10 @@ public class FragmentInwardTVSPaperLessRePrint extends Fragment implements View.
                     UIFuncs.hideKeyboard(getActivity());
                     String value = UIFuncs.toUpperTrim(txt_hu);
                     if (value.length() > 0) {
-                        validateHU(value);
+                        btn_print.setVisibility(View.VISIBLE);
                         return true;
+                    }else{
+                        btn_print.setVisibility(View.GONE);
                     }
                 }
                 return false;
@@ -227,7 +239,9 @@ public class FragmentInwardTVSPaperLessRePrint extends Fragment implements View.
             public void afterTextChanged(Editable s) {
                 String value = s.toString().toUpperCase().trim();
                 if (value.length() > 0 && scannerReading) {
-                    validateHU(value);
+                    btn_print.setVisibility(View.VISIBLE);
+                }else{
+                    btn_print.setVisibility(View.GONE);
                 }
             }
         });
@@ -236,6 +250,7 @@ public class FragmentInwardTVSPaperLessRePrint extends Fragment implements View.
     private void clear() {
         txt_printer.setText(data.read(Vars.TVS_PRINTER));
         txt_hu.setText("");
+        btn_print.setVisibility(View.GONE);
         UIFuncs.disableInput(con, txt_hu);
         txt_printer.requestFocus();
     }
@@ -252,7 +267,6 @@ public class FragmentInwardTVSPaperLessRePrint extends Fragment implements View.
         }
         data.write(Vars.TVS_PRINTER, printerName);
         this.tvsprinter = printerName;
-        txt_hu.setText("");
         UIFuncs.enableInput(con, txt_hu);
     }
 
@@ -277,7 +291,7 @@ public class FragmentInwardTVSPaperLessRePrint extends Fragment implements View.
 
     private void printHu(JSONObject huObj) {
         TSPLPrinter printer = new TSPLPrinter(getContext());
-        printer.sendPrintCommandToBluetoothPrinter(this.tvsprinter, huObj);
+        printer.sendPrintCommandToBluetoothPrinter(this.tvsprinter, huObj, "2");
     }
 
     public void showProcessingAndSubmit(String rfc, int request, JSONObject args) {

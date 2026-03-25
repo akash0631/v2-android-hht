@@ -28,10 +28,14 @@ public class Vars {
 
     public static final String PAPER_LESS = "paperless";
     public static final String TVS_PAPER_LESS = "tvs_paperless";
+    public static final String TVS_PAPER_LESS_LHU = "tvs_paperless_live_hu";
     public static final String TVS_PRINTER = "TVS_PRINTER";
+    public static final String LAST_HU = "last_tvs_paperless_hu";
 
     public static final String BREADCRUMB_DISPLAY_INTERNAL = "Display > Internal";
     public static final String BREADCRUMB_IROD_TO_IROD = "IROD To IROD";
+    public static final String PTL_NEW_MODULE_HU_CLOSE = "PTL_NEW_HU_CLOSE";
+
 
 
     public static final Collection<String> PRODUCT_CODE_TYPES = list(CODE_128, CODE_39, EAN_8, EAN_13, CODE_93, QR_CODE);
@@ -129,6 +133,7 @@ public class Vars {
     public static String ZWM_STORE_IROD_DTAG_VALIDATE = "ZWM_STORE_IROD_DTAG_VALIDATE";
     public static String ZWM_STORE_IROD_DTAG = "ZWM_STORE_IROD_DTAG";
     public static String ZWM_STORE_IROD_NATURE = "ZWM_STORE_IROD_NATURE";
+    public static String ZWM_STORE_GRT_CATEGORY = "ZWM_STORE_GRT_CATEGORY";
     public static String ZWM_STORE_IROD_NATURE_MAPPING = "ZWM_STORE_IROD_NATURE_MAPPING";
 
     public static String ZWM_STORE_IROD_PICK_VALIDATE = "ZWM_STORE_IROD_PICK_VALIDATE";
@@ -144,5 +149,114 @@ public class Vars {
     public static String ZWM_STORE_IROD_GANDOLA_TAG = "ZWM_STORE_IROD_GANDOLA_TAG";
     public static String ZWM_PRINT_HU_TVS = "ZWM_PRINT_HU_TVS";
 
-    public static String ZWM_STK_IROD_GANDOLA_0001="ZWM_STK_IROD_GANDOLA_0001";
+    public static String ZWM_STK_IROD_GANDOLA_0001 = "ZWM_STK_IROD_GANDOLA_0001";
+    public static String ZWM_STORE_GRT_FROM_DISP_AREA = "ZWM_STORE_GRT_FROM_DISP_AREA";
+    public static String ZWM_GET_PACKING_MATERIAL = "ZWM_GET_PACKING_MATERIAL";
+    public static String ZWM_STORE_GET_STOCK = "ZWM_STORE_GET_STOCK";
+
+    public static String ZGRT_VALIDATE_HU = "ZGRT_VALIDATE_HU";
+    public static String ZGRT_VALIDATE_HU_BIN = "ZGRT_VALIDATE_HU_BIN";
+    public static String ZWM_VALIDATE_PALATE = "ZWM_VALIDATE_PALATE";
+    public static String ZWM_VALIDATE_PALATE_HU = "ZWM_VALIDATE_PALATE_HU";
+    public static String ZWM_PALATE_HU_SAVE = "ZWM_PALATE_HU_SAVE";
+    public static String ZWM_VALIDATE_PAL_BIN = "ZWM_VALIDATE_PAL_BIN";
+    public static String ZWM_VALIDATE_PAL_TO_BIN = "ZWM_VALIDATE_PAL_TO_BIN";
+
+    public static String ZWM_PALATE_VALIDATION = "ZWM_PALATE_VALIDATION";
+    public static String ZWM_CRATE_VALIDATION = "ZWM_CRATE_VALIDATION";
+    public static String ZWM_SAVE_PAL_CRATE = "ZWM_SAVE_PAL_CRATE";
+
+    public static String ZWM_PALATE_RECEIVE = "ZWM_PALATE_RECEIVE";
+    public static String ZWM_EXTERNAL_HU_VALIDATE = "ZWM_EXTERNAL_HU_VALIDATE";
+    public static String ZWM_ACTUAL_HU_SAVE = "ZWM_ACTUAL_HU_SAVE";
+
+    public static String ZWM_BIN_VALIDATION_PUT = "ZWM_BIN_VALIDATION_PUT";
+    public static String ZWM_HU_VALIDATION_PUT = "ZWM_HU_VALIDATION_PUT";
+
+    public static String ZWM_PICKLIST_PPPN = "ZWM_PICKLIST_PPPN";
+    public static String ZWM_PICK_SAVE_RFC = "ZWM_PICK_SAVE_RFC";
+
+    public static String ZWM_USER_AUTHORITY_CHECK = "ZWM_USER_AUTHORITY_CHECK";
+    public static String ZWM_INV_GRC_VALIDATION = "ZWM_INV_GRC_VALIDATION";
+    public static String ZWM_INV_GRC_HUB_SAVE = "ZWM_INV_GRC_HUB_SAVE";
+
+    public static String ZHUB_HU_VALIDATION_RFC = "ZHUB_HU_VALIDATION_RFC";
+    public static String ZDIS_HU_DC_HUB_PRO_RFC = "ZDIS_HU_DC_HUB_PRO_RFC";
+
+    public static String ZWM_PTL_GET_ZONE = "ZWM_PTL_GET_ZONE";
+    public static String ZWM_GET_MSA_SECTION_LIST = "ZWM_GET_MSA_SECTION_LIST";
+    public static String ZGRT_PICK_GET_TO_LIST_PTL = "ZGRT_PICK_GET_TO_LIST_PTL";
+    public static String ZGRT_PICK_GET_TO_LIST_PTL_V2 = "ZGRT_PICK_GET_TO_LIST_PTL_V2";
+    public static String ZWM_PTL_GET_TO_DETAILS = "ZWM_PTL_GET_TO_DETAILS";
+    public static String ZWM_PTL_PALETTE_VALIDATE = "ZWM_PTL_PALETTE_VALIDATE";
+    public static String ZWM_PTL_CRATE_VALIDATE = "ZWM_PTL_CRATE_VALIDATE";
+    public static String ZWM_PTL_BIN_VALIDATE = "ZWM_PTL_BIN_VALIDATE";
+    public static String ZWM_PTL_MSA_CRATE_VALIDATE = "ZWM_PTL_MSA_CRATE_VALIDATE";
+    public static String ZWM_PTL_MSA_CRATE_VALIDATE_V2 = "ZWM_PTL_MSA_CRATE_VALIDATE_V2";
+    public static String ZWM_PTL_V06_V09 = "ZWM_PTL_V06_V09";
+
+    public static String ZWM_PTL_FLOOR_STAGING_RFC = "ZWM_PTL_FLOOR_STAGING_RFC";
+    public static String ZWM_PTL_FLOOR_RECEIVING_RFC = "ZWM_PTL_FLOOR_RECEIVING_RFC";
+    public static String ZWM_PTL_STORE_STAGING_RFC = "ZWM_PTL_STORE_STAGING_RFC";
+
+    public static String    ZWM_PTL_ZONE_REC = "ZWM_PTL_ZONE_REC";
+
+    public static String ZWM_PTL_VALIDATE_STORE = "ZWM_PTL_VALIDATE_STORE";
+    public static String ZWM_PTL_VALIDATE_HU = "ZWM_PTL_VALIDATE_HU";
+
+    public static String ZWM_PTL_HU_VALIDATE_CLOSE = "ZWM_PTL_HU_VALIDATE_CLOSE";
+    public static String ZWM_PTL_TVS_HU_PRINT = "ZWM_PTL_TVS_HU_PRINT";
+    public static String ZWM_PTL_TVS_HU_PRINT_2 = "ZWM_PTL_TVS_HU_PRINT_2";
+
+    public static String ZWM_PTL_ZONE_CRATE_VALIDATE = "ZWM_PTL_ZONE_CRATE_VALIDATE";
+    public static String ZWM_PTL_ZONE_HU_VALIDATE = "ZWM_PTL_ZONE_HU_VALIDATE";
+
+    public static String ZWM_PTL_FLR_STG_PAL_VALIDAT_V2 = "ZWM_PTL_FLR_STG_PAL_VALIDAT_V2";
+    public static String ZWM_PTL_FLR_STG_CRT_VALID_V2 = "ZWM_PTL_FLR_STG_CRT_VALID_V2";
+    public static String ZGRT_PICK_GET_TO_LIST_PTL_V3 = "ZGRT_PICK_GET_TO_LIST_PTL_V3";
+    public static String ZWM_PTL_CRATE_VALIDATE_V2 = "ZWM_PTL_CRATE_VALIDATE_V2";
+
+    public static String ZPTL_GET_DATA_FROM_BIN_RFC = "ZPTL_GET_DATA_FROM_BIN_RFC";
+    public static String ZWM_PTL_BIN_VALIDATE_V3 = "ZWM_PTL_BIN_VALIDATE_V3";
+    public static String ZWM_PTL_MSA_CRATE_VALIDATE_V3 = "ZWM_PTL_MSA_CRATE_VALIDATE_V3";
+    public static String ZWM_PTL_FLR_STG_PAL_VALIDAT_V3 = "ZWM_PTL_FLR_STG_PAL_VALIDAT_V3";
+    public static String ZWM_PTL_FLR_STG_CRT_VALID_V3 = "ZWM_PTL_FLR_STG_CRT_VALID_V3";
+    public static String ZPTL_FLR_TAG_BIN_VAL_RFC_V3 = "ZPTL_FLR_TAG_BIN_VAL_RFC_V3";
+    public static String ZPTL_PLT_VALIDATE_BIN_TAG_RFC = "ZPTL_PLT_VALIDATE_BIN_TAG_RFC";
+    public static String ZPTL_GF_SEC_RFC_V3 = "ZPTL_GF_SEC_RFC_V3";
+    public static String ZWM_PTL_FLOOR_RECEIVING_RFC_V3 = "ZWM_PTL_FLOOR_RECEIVING_RFC_V3";
+    public static String ZPTL_STN_LIST_RCV_AT_HUBSTN_V3 = "ZPTL_STN_LIST_RCV_AT_HUBSTN_V3";
+    public static String ZPTL_PLT_RCV_AT_HUBSTN_RFC = "ZPTL_PLT_RCV_AT_HUBSTN_RFC";
+    public static String ZWM_PTL_HUBSTN_DATA_RFC_V3 = "ZWM_PTL_HUBSTN_DATA_RFC_V3";
+    public static String ZWM_PTL_CRT_TAG_VAL_RFC_V3 = "ZWM_PTL_CRT_TAG_VAL_RFC_V3";
+    public static String ZWM_PTL_CRATE_VALIDATE_V3 = "ZWM_PTL_CRATE_VALIDATE_V3";
+    public static String ZWM_PTL_SZ_PALATE_VALIDATE_V3 = "ZWM_PTL_SZ_PALATE_VALIDATE_V3";
+    public static String ZWM_PTL_MZ_SART_HUBCRT_VALI_V3 = "ZWM_PTL_MZ_SART_HUBCRT_VALI_V3";
+    public static String ZWM_PTL_GET_ZONE_STATION_V3 = "ZWM_PTL_GET_ZONE_STATION_V3";
+    public static String ZWM_PTL_VALIDATE_STORE_V3 = "ZWM_PTL_VALIDATE_STORE_V3";
+    public static String ZWM_PTL_VALIDATE_HU_V3 = "ZWM_PTL_VALIDATE_HU_V3";
+    public static String ZWM_PTL_PLT_REC_AT_ZONE_SRT_V3 = "ZWM_PTL_PLT_REC_AT_ZONE_SRT_V3";
+    public static String ZGRT_PICK_GET_PICK_DATA_V4 = "ZGRT_PICK_GET_PICK_DATA_V4";
+    public static String ZWM_PTL_CRATE_VALIDATE_V4 = "ZWM_PTL_CRATE_VALIDATE_V4";
+    public static String ZWM_PTL_MSA_CRATE_VALIDATE_V4 = "ZWM_PTL_MSA_CRATE_VALIDATE_V4";
+    public static String ZWM_PTL_PLT_REC_AT_ZONE_SRT_V4 = "ZWM_PTL_PLT_REC_AT_ZONE_SRT_V4";
+    public static String ZWM_PTL_ZONE_CRATE_VALIDATE_V3 = "ZWM_PTL_ZONE_CRATE_VALIDATE_V3";
+    public static String ZWM_PTL_ZONE_HU_VALIDATE_V3 = "ZWM_PTL_ZONE_HU_VALIDATE_V3";
+    public static String ZSTORE_DISCOUNT_GET_EAN_DATA = "ZSTORE_DISCOUNT_GET_EAN_DATA";
+    public static String ZSTORE_DISCOUNT_SAVE_EAN_DATA = "ZSTORE_DISCOUNT_SAVE_EAN_DATA";
+    public static String ZSDC_DIRECT_FLR_RFC = "ZSDC_DIRECT_FLR_RFC";
+    public static String ZSDC_DIRECT_ART_VAL_BARCOD_RFC = "ZSDC_DIRECT_ART_VAL_BARCOD_RFC";
+    public static String ZSDC_DIRECT_ART_VAL1_SAVE1_RFC = "ZSDC_DIRECT_ART_VAL1_SAVE1_RFC";
+    public static String ZBIN_GRT_HU_VALIDATION = "ZBIN_GRT_HU_VALIDATION";
+    public static String ZBIN_GRT_PICKLIST_VALIDATION = "ZBIN_GRT_PICKLIST_VALIDATION";
+    public static String ZBIN_GRT_BIN_DATA = "ZBIN_GRT_BIN_DATA";
+    public static String ZBIN_GRT_DATA_SAVE = "ZBIN_GRT_DATA_SAVE";
+    public static String ZWM_CRATE_IDENTIFIER_RFC = "ZWM_CRATE_IDENTIFIER_RFC";
+    public static String ZWM_BIN_IDENTIFIER_RFC = "ZWM_BIN_IDENTIFIER_RFC";
+    public static String ZSDC_DIRECT_HU_VAL_RFC = "ZSDC_DIRECT_HU_VAL_RFC";
+    public static String ZSDC_DIRECT_SAVE_RFC = "ZSDC_DIRECT_SAVE_RFC";
+    public static String ZWM_GET_STOCK_BIN = "ZWM_GET_STOCK_BIN";
+    public static String ZWM_GET_STOCK_TAKE_ID = "ZWM_GET_STOCK_TAKE_ID";
+    public static String ZWM_STK_ADJ_MSA_BIN = "ZWM_STK_ADJ_MSA_BIN";
+    public static String ZWM_LIVE_STOCK_SCANNING = "ZWM_LIVE_STOCK_SCANNING";
 }

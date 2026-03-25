@@ -28,7 +28,15 @@ public class EtEanDataModel {
     String MESRT;
     String UMREZ;
     String MEINH;
+    String newEan;
 
+    public String getNewEan() {
+        return newEan;
+    }
+
+    public void setNewEan(String newEan) {
+        this.newEan = newEan;
+    }
 
     public EtEanDataModel(String MATNR, String UMREZ, String MANDT, String EAN11) {
         this.MATNR = MATNR;

@@ -70,7 +70,7 @@ public class Scan_HU_GRC_Fragment extends Fragment implements View.OnClickListen
     TextView mResponseView;
     Context con;
     Button back;
-    Button scan;
+    //Button scan;
     Button save;
     FragmentManager fm;
     EditText ttl_hu_et;
@@ -168,7 +168,7 @@ public class Scan_HU_GRC_Fragment extends Fragment implements View.OnClickListen
 
 
         back = (Button) view.findViewById(R.id.back);
-        scan = (Button) view.findViewById(R.id.scan);
+        //scan = (Button) view.findViewById(R.id.scan);
 
         scan_hu_et = (EditText) view.findViewById(R.id.scan_hu_no);
         ttl_hu_et = (EditText) view.findViewById(R.id.ttl_hu);
@@ -216,9 +216,8 @@ public class Scan_HU_GRC_Fragment extends Fragment implements View.OnClickListen
         }
 
         back.setOnClickListener(this);
-        scan.setOnClickListener(this);
         save.setOnClickListener(this);
-
+        scan_hu_et.requestFocus();
         return view;
     }
 
@@ -241,20 +240,10 @@ public class Scan_HU_GRC_Fragment extends Fragment implements View.OnClickListen
                 } catch (Exception e) {
                     box.getErrBox(e);
                 }
-
                 break;
-
-            case R.id.scan:
-                Log.d(TAG, TAG + " Scanning...");
-                scan_hu_et.setText("");
-                if(CameraCheck.isCameraAvailable(con))
-                IntentIntegrator.forSupportFragment(Scan_HU_GRC_Fragment.this).setBeepEnabled(true).setOrientationLocked(true).setTimeout(10000).initiateScan();
-                break;
-
             case R.id.back:
                 fm.popBackStack();
                 break;
-
         }
     }
 
@@ -335,28 +324,22 @@ public class Scan_HU_GRC_Fragment extends Fragment implements View.OnClickListen
                         dtMat.add(str55);
                         scan_hu_et.setText("");
                     }
-
                 } else {
                     ScanQty += 1;
                     int tt = Integer.valueOf(ttl_hu_et.getText().toString());
                     short_hu_et.setText(String.valueOf(tt - ScanQty));
                     String str55 = scan_hu_et.getText().toString();
                     dtMat.add(str55);
-                    scan_hu_et.setText("");
                 }
-
             } else {
-
                 box.getBox("Alert!", "Incorrect HU");
-                return;
             }
         } else {
-
             box.getBox("Alert!", "Unable to Scan data / NO data input");
-            return;
         }
+        scan_hu_et.setText("");
+        scan_hu_et.requestFocus();
     }
-
 
     private void loadData() {
         //  barcode_numbers=barcode_number.toString();

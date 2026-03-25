@@ -20,8 +20,17 @@ import android.view.View;
 
 import com.v2retail.dotvik.R;
 //import com.v2retail.dotvik.ScannerActivity;
+import com.v2retail.dotvik.dc.bincreateidentifier.MenuBinCrateIdentifier;
+import com.v2retail.dotvik.dc.binwisepicking.MenuMSABinwisePickingFragment;
 import com.v2retail.dotvik.dc.grt.GRTProcessFragment;
 import com.v2retail.dotvik.dc.ptl.PTLProcessFragment;
+import com.v2retail.dotvik.dc.ptlnew.MenuPTLNewFragment;
+import com.v2retail.dotvik.dc.ptlnew.fullcrate30.MenuPTLNewPickingFullCrate30;
+import com.v2retail.dotvik.dc.ptlnew.ptl40.MenuPTLNewPickingProcess40;
+import com.v2retail.dotvik.dc.ptlnew.withoutpallate.MenuPTLNewPickingWithoutPallateFragment;
+import com.v2retail.dotvik.dc.ptlnew.withpallate.MenuPTLNewPickingWithPallateFragment;
+import com.v2retail.dotvik.dc.putwayinbin.GRTHUPutwayInBin;
+import com.v2retail.dotvik.dc.reverseputway.GRTReversePutway;
 import com.v2retail.util.AlertBox;
 
 
@@ -43,7 +52,17 @@ public class Process_Selection_Activity extends AppCompatActivity
         PTLProcessFragment.OnFragmentInteractionListener,
         GRTProcessFragment.OnFragmentInteractionListener,
         OutwardHUWeightFragment.OnFragmentInteractionListener,
-        MenuFragmentInwardTVSPaperLess.OnFragmentInteractionListener
+        MenuFragmentInwardTVSPaperLess.OnFragmentInteractionListener,
+        GRTHUPutwayInBin.OnFragmentInteractionListener,
+        GRTReversePutway.OnFragmentInteractionListener,
+        MenuPTLNewFragment.OnFragmentInteractionListener,
+        MenuPTLNewPickingWithPallateFragment.OnFragmentInteractionListener,
+        MenuPTLNewPickingWithoutPallateFragment.OnFragmentInteractionListener,
+        MenuPTLNewPickingFullCrate30.OnFragmentInteractionListener,
+        MenuPTLNewPickingProcess40.OnFragmentInteractionListener,
+        MenuMSABinwisePickingFragment.OnFragmentInteractionListener,
+        MenuBinCrateIdentifier.OnFragmentInteractionListener
+
 {
 
     String URL="";

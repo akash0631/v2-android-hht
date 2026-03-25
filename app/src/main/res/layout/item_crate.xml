@@ -1,9 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center_vertical" android:orientation="vertical">
-    <TextView android:id="@+id/text_crate_number" android:layout_width="match_parent" android:layout_height="wrap_content" android:padding="10dp" android:textSize="17sp" android:textStyle="bold" android:textColor="@color/black" />
-    <androidx.recyclerview.widget.RecyclerView android:id="@+id/recycler_view" android:layout_width="match_parent" android:layout_height="wrap_content" />
-    <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:orientation="horizontal" android:layout_marginEnd="5dp" android:layout_gravity="end">
-        <Button android:id="@+id/button_add_new_article" android:layout_width="wrap_content" android:layout_height="48dp" android:text="ADD NEW ARTICLE" android:padding="5dp" android:textSize="11dp" android:textColor="@color/white" android:background="@drawable/bg_btn_primary" />
-        <Button android:id="@+id/button_scan_new_article" android:layout_width="wrap_content" android:layout_height="48dp" android:text="SCAN NEW ARTICLE" android:padding="5dp" android:layout_marginStart="10dp" android:textSize="11dp" android:textColor="@color/white" android:background="@drawable/bg_btn_primary" />
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/text_crate_number"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginEnd="5dp"
+        android:layout_gravity="end">
+
+        <Button
+            android:id="@+id/button_add_new_article"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:text="ADD NEW ARTICLE"
+            android:padding="5dp"
+            android:textSize="11dp"
+            android:textColor="@color/white"
+            android:background="@color/colorPrimary" />
+
+        <Button
+            android:id="@+id/button_scan_new_article"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:text="SCAN NEW ARTICLE"
+            android:padding="5dp"
+            android:layout_marginStart="10dp"
+            android:textSize="11dp"
+            android:textColor="@color/white"
+            android:background="@color/colorPrimary" />
+
     </LinearLayout>
+
 </LinearLayout>
