@@ -14,7 +14,6 @@
         android:padding="24dp"
         android:gravity="center_horizontal">
 
-        <!-- Loading indicator -->
         <ProgressBar
             android:id="@+id/login_progress"
             style="?android:attr/progressBarStyle"
@@ -24,58 +23,37 @@
             android:layout_marginBottom="16dp"
             android:visibility="gone" />
 
-        <!-- Top spacer -->
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="32dp" />
+        <Space android:layout_width="match_parent" android:layout_height="32dp" />
 
-        <!-- App Icon -->
+        <!-- App Icon block -->
         <FrameLayout
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:background="@color/textPrimary"
-            android:layout_gravity="left">
+            android:background="@color/textPrimary">
 
-            <View
-                android:layout_width="13dp"
-                android:layout_height="13dp"
-                android:layout_gravity="top|left"
-                android:layout_margin="11dp"
+            <View android:layout_width="13dp" android:layout_height="13dp"
+                android:layout_gravity="top|left" android:layout_margin="11dp"
                 android:background="@color/white" />
-
-            <View
-                android:layout_width="13dp"
-                android:layout_height="13dp"
-                android:layout_gravity="top|right"
-                android:layout_margin="11dp"
+            <View android:layout_width="13dp" android:layout_height="13dp"
+                android:layout_gravity="top|right" android:layout_margin="11dp"
                 android:background="@color/white" />
-
-            <View
-                android:layout_width="13dp"
-                android:layout_height="13dp"
-                android:layout_gravity="bottom|left"
-                android:layout_margin="11dp"
+            <View android:layout_width="13dp" android:layout_height="13dp"
+                android:layout_gravity="bottom|left" android:layout_margin="11dp"
                 android:background="@color/white" />
-
-            <View
-                android:layout_width="13dp"
-                android:layout_height="13dp"
-                android:layout_gravity="bottom|right"
-                android:layout_margin="11dp"
+            <View android:layout_width="13dp" android:layout_height="13dp"
+                android:layout_gravity="bottom|right" android:layout_margin="11dp"
                 android:background="#777777" />
         </FrameLayout>
 
         <Space android:layout_width="match_parent" android:layout_height="16dp" />
 
-        <!-- App Title -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="V2 WMS"
             android:textSize="28sp"
             android:textStyle="bold"
-            android:textColor="@color/textPrimary"
-            android:layout_gravity="left" />
+            android:textColor="@color/textPrimary" />
 
         <TextView
             android:layout_width="match_parent"
@@ -83,90 +61,98 @@
             android:text="Warehouse Management System"
             android:textSize="12sp"
             android:textColor="@color/textLabel"
-            android:layout_marginBottom="32dp" />
+            android:layout_marginBottom="28dp" />
 
-        <!-- User ID Field -->
+        <!-- User ID -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="USER ID"
-            style="@style/WMS.Text.FieldLabel" />
+            android:textSize="10sp"
+            android:textStyle="bold"
+            android:textColor="@color/textLabel"
+            android:letterSpacing="0.08"
+            android:layout_marginBottom="4dp" />
 
         <EditText
             android:id="@+id/username"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/touch_target_min"
+            android:layout_height="48dp"
             android:background="@color/bgInput"
             android:textColor="@color/textPrimary"
             android:textColorHint="@color/textHint"
             android:textSize="14sp"
+            android:textStyle="bold"
             android:paddingStart="14dp"
             android:paddingEnd="14dp"
             android:hint="Enter user ID"
             android:inputType="text"
             android:maxLines="1"
             android:singleLine="true"
-            android:layout_marginBottom="14dp"
-            tools:text="RAJESH.KUMAR" />
+            android:layout_marginBottom="16dp" />
 
-        <!-- Password Field -->
+        <!-- Password -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="PASSWORD"
-            style="@style/WMS.Text.FieldLabel" />
+            android:textSize="10sp"
+            android:textStyle="bold"
+            android:textColor="@color/textLabel"
+            android:letterSpacing="0.08"
+            android:layout_marginBottom="4dp" />
 
         <EditText
             android:id="@+id/password"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/touch_target_min"
+            android:layout_height="48dp"
             android:background="@color/bgInput"
             android:textColor="@color/textPrimary"
             android:textColorHint="@color/textHint"
             android:textSize="14sp"
+            android:textStyle="bold"
             android:paddingStart="14dp"
             android:paddingEnd="14dp"
             android:hint="Enter password"
             android:imeActionId="6"
-            android:imeActionLabel="Sign In"
             android:imeOptions="actionDone"
             android:inputType="textPassword"
             android:maxLines="1"
             android:singleLine="true"
-            android:layout_marginBottom="20dp" />
+            android:layout_marginBottom="6dp" />
 
-        <!-- Status message (hidden by default) -->
         <TextView
             android:id="@+id/response"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="12dp"
+            android:padding="10dp"
             android:textColor="@color/colorError"
             android:textSize="12sp"
             android:visibility="gone"
-            android:layout_marginBottom="8dp" />
+            android:layout_marginBottom="4dp" />
 
         <!-- Sign In Button -->
         <Button
             android:id="@+id/email_sign_in_button"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/touch_target_min"
+            android:layout_height="48dp"
             android:background="@color/textPrimary"
             android:text="Sign in"
             android:textColor="@color/white"
             android:textSize="14sp"
             android:textStyle="bold"
-            android:letterSpacing="0.02"
-            android:layout_marginBottom="12dp" />
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="10dp" />
 
-        <!-- Scan Badge Button -->
+        <!-- Scan Badge -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/touch_target_min"
+            android:layout_height="48dp"
             android:background="@color/bgInput"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:padding="12dp">
+            android:paddingStart="14dp"
+            android:paddingEnd="14dp">
 
             <TextView
                 android:layout_width="0dp"
@@ -186,9 +172,7 @@
                 android:letterSpacing="0.1" />
         </LinearLayout>
 
-        <Space android:layout_width="match_parent" android:layout_height="24dp" />
-
-        <!-- Hidden clear button kept for code compatibility -->
+        <!-- Hidden clear button for code compatibility -->
         <Button
             android:id="@+id/clear"
             android:layout_width="match_parent"
@@ -199,7 +183,6 @@
             android:textColor="@color/textSecondary"
             android:visibility="gone" />
 
-        <!-- Version -->
         <TextView
             android:id="@+id/ver"
             android:layout_width="match_parent"
@@ -207,7 +190,7 @@
             android:gravity="center"
             android:textColor="@color/textLabel"
             android:textSize="10sp"
-            android:layout_marginTop="8dp" />
+            android:layout_marginTop="16dp" />
 
     </LinearLayout>
 </ScrollView>
