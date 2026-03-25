@@ -1,260 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".store.V01HuPickingFragment">
-
-    <!-- TODO: Update blank fragment layout -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_margin="2dp"
-                android:padding="5dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="5dp">
-
-                    <TextView
-                        android:layout_weight="1"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:text="Hu No"
-                        android:textSize="15sp" />
-
-                    <EditText
-                        android:layout_weight="1.5"
-                        android:textSize="15sp"
-                        android:id="@+id/huNo"
-                        android:layout_width="0dp"
-                        android:imeOptions="actionSearch"
-                        android:singleLine="true"
-                        android:inputType="text"
-                        android:lines="1"
-                        android:layout_height="wrap_content"
-                        android:hint="Enter Hu No." />
-
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent" android:layout_height="match_parent" tools:context=".store.V01HuPickingFragment" android:background="@color/bgPage">
+    <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="vertical">
+        <ScrollView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_weight="1">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:layout_margin="2dp" android:padding="5dp">
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:padding="5dp">
+                    <TextView android:layout_weight="1" android:layout_width="0dp" android:layout_height="wrap_content" android:text="Hu No" android:textSize="15sp" />
+                    <EditText android:layout_weight="1.5" android:textSize="15sp" android:id="@+id/huNo" android:layout_width="0dp" android:imeOptions="actionSearch" android:singleLine="true" android:inputType="text" android:lines="1" android:layout_height="48dp" android:hint="Enter Hu No." android:background="@color/bgInput" android:textColor="@color/textPrimary" android:textColorHint="@color/textHint" android:paddingStart="14dp" android:paddingEnd="14dp" />
                 </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="5dp">
-
-                    <TextView
-                        android:layout_weight="1"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:text="PickList"
-                        android:textSize="15sp" />
-
-                    <EditText
-                        android:layout_weight="1.5"
-                        android:textSize="15sp"
-                        android:id="@+id/pickListNo"
-                        android:layout_width="0dp"
-                        android:imeOptions="actionSearch"
-                        android:singleLine="true"
-                        android:inputType="text"
-                        android:lines="1"
-                        android:focusable="false"
-                        android:layout_height="wrap_content"
-                        android:hint="Enter PickList No." />
-
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:padding="5dp">
+                    <TextView android:layout_weight="1" android:layout_width="0dp" android:layout_height="wrap_content" android:text="PickList" android:textSize="15sp" />
+                    <EditText android:layout_weight="1.5" android:textSize="15sp" android:id="@+id/pickListNo" android:layout_width="0dp" android:imeOptions="actionSearch" android:singleLine="true" android:inputType="text" android:lines="1" android:focusable="false" android:layout_height="48dp" android:hint="Enter PickList No." android:background="@color/bgInput" android:textColor="@color/textPrimary" android:textColorHint="@color/textHint" android:paddingStart="14dp" android:paddingEnd="14dp" />
                 </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="5dp">
-
-                    <TextView
-                        android:layout_weight="1"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:text="Bin"
-                        android:textSize="15sp" />
-
-                    <EditText
-                        android:layout_weight="1.5"
-                        android:textSize="15sp"
-                        android:id="@+id/bin_no"
-                        android:layout_width="0dp"
-                        android:imeOptions="actionSearch"
-                        android:singleLine="true"
-                        android:inputType="text"
-                        android:lines="1"
-                        android:layout_height="wrap_content"
-                        android:hint="Enter Bin No." />
-
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:padding="5dp">
+                    <TextView android:layout_weight="1" android:layout_width="0dp" android:layout_height="wrap_content" android:text="Bin" android:textSize="15sp" />
+                    <EditText android:layout_weight="1.5" android:textSize="15sp" android:id="@+id/bin_no" android:layout_width="0dp" android:imeOptions="actionSearch" android:singleLine="true" android:inputType="text" android:lines="1" android:layout_height="48dp" android:hint="Enter Bin No." android:background="@color/bgInput" android:textColor="@color/textPrimary" android:textColorHint="@color/textHint" android:paddingStart="14dp" android:paddingEnd="14dp" />
                 </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="5dp">
-
-                    <TextView
-                        android:layout_weight="1"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:text="Article/Barcode"
-                        android:textSize="15sp" />
-
-                    <EditText
-                        android:layout_weight="1.5"
-                        android:textSize="15sp"
-                        android:id="@+id/barcode_no"
-                        android:layout_width="0dp"
-                        android:imeOptions="actionSearch"
-                        android:singleLine="true"
-                        android:inputType="number"
-                        android:lines="1"
-                        android:layout_height="wrap_content"
-                        android:hint="Barcode No." />
-
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:padding="5dp">
+                    <TextView android:layout_weight="1" android:layout_width="0dp" android:layout_height="wrap_content" android:text="Article/Barcode" android:textSize="15sp" />
+                    <EditText android:layout_weight="1.5" android:textSize="15sp" android:id="@+id/barcode_no" android:layout_width="0dp" android:imeOptions="actionSearch" android:singleLine="true" android:inputType="number" android:lines="1" android:layout_height="48dp" android:hint="Barcode No." android:background="@color/bgInput" android:textColor="@color/textPrimary" android:textColorHint="@color/textHint" android:paddingStart="14dp" android:paddingEnd="14dp" />
                 </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="5dp">
-
-                    <TextView
-                        android:layout_weight="1"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:text="Article No"
-                        android:textSize="15sp" />
-
-                    <EditText
-                        android:layout_weight="1.5"
-                        android:textSize="15sp"
-                        android:id="@+id/article_no"
-                        android:layout_width="0dp"
-                        android:enabled="true"
-                        android:focusable="false"
-                        android:layout_height="wrap_content"
-                        android:hint="Article No." />
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:padding="5dp">
+                    <TextView android:layout_weight="1" android:layout_width="0dp" android:layout_height="wrap_content" android:text="Article No" android:textSize="15sp" />
+                    <EditText android:layout_weight="1.5" android:textSize="15sp" android:id="@+id/article_no" android:layout_width="0dp" android:enabled="true" android:focusable="false" android:layout_height="48dp" android:hint="Article No." android:background="@color/bgInput" android:textColor="@color/textPrimary" android:textColorHint="@color/textHint" android:paddingStart="14dp" android:paddingEnd="14dp" />
                 </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="5dp">
-
-                    <TextView
-                        android:layout_weight="1"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:text="Destination"
-                        android:textSize="15sp" />
-
-                    <EditText
-                        android:layout_weight="1.5"
-                        android:textSize="15sp"
-                        android:id="@+id/destination_bin"
-                        android:layout_width="0dp"
-                        android:enabled="true"
-                        android:focusable="false"
-                        android:layout_height="wrap_content"
-                        android:hint="Destination" />
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:padding="5dp">
+                    <TextView android:layout_weight="1" android:layout_width="0dp" android:layout_height="wrap_content" android:text="Destination" android:textSize="15sp" />
+                    <EditText android:layout_weight="1.5" android:textSize="15sp" android:id="@+id/destination_bin" android:layout_width="0dp" android:enabled="true" android:focusable="false" android:layout_height="48dp" android:hint="Destination" android:background="@color/bgInput" android:textColor="@color/textPrimary" android:textColorHint="@color/textHint" android:paddingStart="14dp" android:paddingEnd="14dp" />
                 </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="5dp">
-
-                    <TextView
-                        android:layout_weight="1"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:text="Hu Qty/T.S.Q"
-                        android:textSize="15sp" />
-
-                    <EditText
-                        android:layout_weight=".65"
-                        android:textSize="15sp"
-                        android:id="@+id/huQ"
-                        android:enabled="true"
-                        android:focusable="false"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:hint="H.Q" />
-
-                    <EditText
-                        android:layout_weight=".65"
-                        android:textSize="15sp"
-                        android:id="@+id/tsq"
-                        android:enabled="true"
-                        android:focusable="false"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:hint="T.S.Q" />
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:padding="5dp">
+                    <TextView android:layout_weight="1" android:layout_width="0dp" android:layout_height="wrap_content" android:text="Hu Qty/T.S.Q" android:textSize="15sp" />
+                    <EditText android:layout_weight=".65" android:textSize="15sp" android:id="@+id/huQ" android:enabled="true" android:focusable="false" android:layout_width="0dp" android:layout_height="48dp" android:hint="H.Q" android:background="@color/bgInput" android:textColor="@color/textPrimary" android:textColorHint="@color/textHint" android:paddingStart="14dp" android:paddingEnd="14dp" />
+                    <EditText android:layout_weight=".65" android:textSize="15sp" android:id="@+id/tsq" android:enabled="true" android:focusable="false" android:layout_width="0dp" android:layout_height="48dp" android:hint="T.S.Q" android:background="@color/bgInput" android:textColor="@color/textPrimary" android:textColorHint="@color/textHint" android:paddingStart="14dp" android:paddingEnd="14dp" />
                 </LinearLayout>
             </LinearLayout>
         </ScrollView>
-
-        <TextView
-            android:layout_weight="0"
-            android:id="@+id/response"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_margin="2dp"
-            android:padding="5dp"
-            android:text="status:"
-            android:visibility="gone"
-            android:textColor="@color/colorPrimary" />
-
-        <LinearLayout
-            android:layout_weight="0"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="5dp">
-
-            <Button
-                android:layout_weight="1.5"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="Back"
-                android:id="@+id/back"
-                android:background="@drawable/shadow"
-                android:layout_margin="2dp"
-                android:textSize="15sp" />
-
-            <Button
-                android:layout_weight="1.5"
-                android:textSize="15sp"
-                android:text="Save"
-                android:id="@+id/save"
-                android:background="@drawable/shadow"
-                android:layout_margin="2dp"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:hint="" />
+        <TextView android:layout_weight="0" android:id="@+id/response" android:layout_width="match_parent" android:layout_height="60dp" android:layout_margin="2dp" android:padding="5dp" android:text="status:" android:visibility="gone" android:textColor="@color/colorPrimary" />
+        <LinearLayout android:layout_weight="0" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:padding="5dp">
+            <Button android:layout_weight="1.5" android:layout_width="0dp" android:layout_height="wrap_content" android:text="Back" android:id="@+id/back" android:background="@drawable/bg_btn_primary" android:layout_margin="2dp" android:textSize="15sp" android:textColor="@color/white" />
+            <Button android:layout_weight="1.5" android:textSize="15sp" android:text="Save" android:id="@+id/save" android:background="@drawable/bg_btn_primary" android:layout_margin="2dp" android:layout_width="0dp" android:layout_height="wrap_content" android:hint="" android:textColor="@color/white" />
         </LinearLayout>
-
     </LinearLayout>
-
-
 </FrameLayout>
