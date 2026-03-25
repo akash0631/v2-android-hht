@@ -29,11 +29,11 @@
             <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
                 <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:background="@color/statGreenBg" android:padding="14dp" android:layout_marginEnd="4dp">
                     <TextView android:id="@+id/tv_hu_closed_count" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="0" android:textSize="30sp" android:textStyle="bold" android:textColor="@color/colorSuccess" android:letterSpacing="-0.04" />
-                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="HUs CLOSED" android:textSize="9sp" android:textStyle="bold" android:textColor="@color/textLabel" android:letterSpacing="0.08" android:layout_marginTop="4dp" />
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="HUs CLOSED" android:textSize="10sp" android:textStyle="bold" android:textColor="@color/textLabel" android:letterSpacing="0.08" android:layout_marginTop="4dp" />
                 </LinearLayout>
                 <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:background="#F3E5F5" android:padding="14dp" android:layout_marginStart="4dp">
                     <TextView android:id="@+id/tv_hu_pending_count" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="0" android:textSize="30sp" android:textStyle="bold" android:textColor="#5B21B6" android:letterSpacing="-0.04" />
-                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="PENDING" android:textSize="9sp" android:textStyle="bold" android:textColor="@color/textLabel" android:letterSpacing="0.08" android:layout_marginTop="4dp" />
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="PENDING" android:textSize="10sp" android:textStyle="bold" android:textColor="@color/textLabel" android:letterSpacing="0.08" android:layout_marginTop="4dp" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
