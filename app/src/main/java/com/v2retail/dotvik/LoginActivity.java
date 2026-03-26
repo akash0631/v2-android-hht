@@ -332,13 +332,12 @@ public class LoginActivity extends AppCompatActivity {
 
         final RequestQueue mRequestQueue;
         JsonObjectRequest mJsonRequest = null;
-        String url = this.URL.substring(0, this.URL.lastIndexOf("/"));
-        url += "/noacljsonrfcadaptor?bapiname=" + rfc + "&aclclientid=android";
+        String url = this.URL; // Use ValueXMW directly — works with Azure middleware
 
         final JSONObject params = args;
 
         mRequestQueue = ApplicationController.getInstance().getRequestQueue();
-        mJsonRequest = new JsonObjectRequest(Request.Method.POST, url, params, new Response.Listener<JSONObject>() {
+        mJsonRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
 
             @Override
             public void onResponse(JSONObject responsebody) {
