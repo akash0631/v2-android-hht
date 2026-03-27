@@ -22,30 +22,76 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Build Release APK
+      - name: Decode keystore
+        run: |
+          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > /tmp/V2Retail_at_456_keystore
+          echo "Keystore decoded: $(ls -lh /tmp/V2Retail_at_456_keystore)"
+
+      - name: Build signed release APK
+        env:
+          KEYSTORE_PATH: /tmp/V2Retail_at_456_keystore
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
         run: |
           chmod +x gradlew
           ./gradlew assembleRelease --no-daemon
 
-      - name: Collect APK
+      - name: Verify APK signature
         run: |
-          find app/build/outputs/apk -name '*.apk'
           APK=$(find app/build/outputs/apk/release -name '*.apk' | head -1)
-          echo "APK: $APK"
+          echo "APK path: $APK"
+          echo "APK size: $(du -sh $APK)"
+          apksigner verify --print-certs "$APK" | grep -E "Signer|Subject|SHA-256"
           cp "$APK" V2_HHT_Azure_Release.apk
-          du -sh V2_HHT_Azure_Release.apk
 
-      - name: Upload Artifact
+      - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: V2-HHT-Azure-Release
           path: V2_HHT_Azure_Release.apk
 
-      - name: Create Release
+      - name: Get version name
+        id: version
+        run: |
+          VER=$(grep 'versionName' app/build.gradle | head -1 | sed 's/.*"\(.*\)".*/\1/')
+          echo "version=$VER" >> $GITHUB_OUTPUT
+          echo "Version: $VER"
+
+      - name: Push to R2 CDN (assets.eatnubo.com/hht/)
+        run: |
+          pip install boto3 -q
+          python3 << 'PYEOF'
+          import boto3, os
+          s3 = boto3.client(
+              's3',
+              endpoint_url=os.environ['R2_ENDPOINT'],
+              aws_access_key_id=os.environ['R2_ACCESS_KEY'],
+              aws_secret_access_key=os.environ['R2_SECRET_KEY'],
+              region_name='auto'
+          )
+          s3.upload_file(
+              'V2_HHT_Azure_Release.apk',
+              'nubo',
+              'hht/V2_HHT_Azure_Release.apk',
+              ExtraArgs={'ContentType': 'application/vnd.android.package-archive'}
+          )
+          print("Uploaded to R2: assets.eatnubo.com/hht/V2_HHT_Azure_Release.apk")
+          PYEOF
+        env:
+          R2_ENDPOINT: ${{ secrets.R2_ENDPOINT }}
+          R2_ACCESS_KEY: ${{ secrets.R2_ACCESS_KEY }}
+          R2_SECRET_KEY: ${{ secrets.R2_SECRET_KEY }}
+
+      - name: Create GitHub release
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: v12.098-${{ github.run_number }}
-          name: 'V2 HHT v12.098 Build ${{ github.run_number }}'
+          tag_name: v${{ steps.version.outputs.version }}-build${{ github.run_number }}
+          name: 'V2 HHT v${{ steps.version.outputs.version }} Build ${{ github.run_number }}'
+          body: |
+            Version: ${{ steps.version.outputs.version }}
+            Build: ${{ github.run_number }}
+            Commit: ${{ github.sha }}
           files: V2_HHT_Azure_Release.apk
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
