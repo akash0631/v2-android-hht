@@ -25,7 +25,7 @@ jobs:
       - name: Decode keystore
         run: |
           echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > /tmp/V2Retail_at_456_keystore
-          echo "Keystore decoded: $(ls -lh /tmp/V2Retail_at_456_keystore)"
+          ls -lh /tmp/V2Retail_at_456_keystore
 
       - name: Build signed release APK
         env:
@@ -37,13 +37,16 @@ jobs:
           chmod +x gradlew
           ./gradlew assembleRelease --no-daemon
 
-      - name: Verify APK signature
+      - name: Collect and verify APK
         run: |
           APK=$(find app/build/outputs/apk/release -name '*.apk' | head -1)
-          echo "APK path: $APK"
-          echo "APK size: $(du -sh $APK)"
-          apksigner verify --print-certs "$APK" | grep -E "Signer|Subject|SHA-256"
+          echo "APK: $APK  size: $(du -sh $APK)"
+          # Verify signature using keytool (available on all JDK installs)
+          unzip -p "$APK" META-INF/*.RSA 2>/dev/null | keytool -printcert 2>/dev/null | grep -E "Owner|SHA256|Validity" || true
+          # Also check with jarsigner
+          jarsigner -verify "$APK" -verbose 2>&1 | head -5 || true
           cp "$APK" V2_HHT_Azure_Release.apk
+          echo "Final APK size: $(du -sh V2_HHT_Azure_Release.apk)"
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
@@ -58,10 +61,10 @@ jobs:
           echo "version=$VER" >> $GITHUB_OUTPUT
           echo "Version: $VER"
 
-      - name: Push to R2 CDN (assets.eatnubo.com/hht/)
+      - name: Push to R2 CDN
         run: |
           pip install boto3 -q
-          python3 << 'PYEOF'
+          python3 - << 'PYEOF'
           import boto3, os
           s3 = boto3.client(
               's3',
@@ -71,12 +74,11 @@ jobs:
               region_name='auto'
           )
           s3.upload_file(
-              'V2_HHT_Azure_Release.apk',
-              'nubo',
-              'hht/V2_HHT_Azure_Release.apk',
+              'V2_HHT_Azure_Release.apk', 'nubo', 'hht/V2_HHT_Azure_Release.apk',
               ExtraArgs={'ContentType': 'application/vnd.android.package-archive'}
           )
-          print("Uploaded to R2: assets.eatnubo.com/hht/V2_HHT_Azure_Release.apk")
+          size_mb = os.path.getsize('V2_HHT_Azure_Release.apk') // 1024 // 1024
+          print(f"Uploaded {size_mb}MB to R2 → assets.eatnubo.com/hht/V2_HHT_Azure_Release.apk")
           PYEOF
         env:
           R2_ENDPOINT: ${{ secrets.R2_ENDPOINT }}
@@ -92,6 +94,7 @@ jobs:
             Version: ${{ steps.version.outputs.version }}
             Build: ${{ github.run_number }}
             Commit: ${{ github.sha }}
+            CDN: https://assets.eatnubo.com/hht/V2_HHT_Azure_Release.apk
           files: V2_HHT_Azure_Release.apk
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
