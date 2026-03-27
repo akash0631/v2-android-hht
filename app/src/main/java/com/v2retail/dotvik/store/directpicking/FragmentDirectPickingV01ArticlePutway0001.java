@@ -355,7 +355,6 @@ public class FragmentDirectPickingV01ArticlePutway0001 extends Fragment implemen
                 return;
             }
             txt_article.setText(barcodeData.getMatnr());
-            txt_article_type.setText(barcodeData.getArtType() != null ? barcodeData.getArtType() : "");
             txt_scan_qty.setText(Util.formatDouble(sqty));
             barcodeData.setScanQty(Util.formatDouble(sqty));
             return;
