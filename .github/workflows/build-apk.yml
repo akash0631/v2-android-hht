@@ -74,11 +74,11 @@ jobs:
               region_name='auto'
           )
           s3.upload_file(
-              'V2_HHT_Azure_Release.apk', 'nubo', 'hht/V2_HHT_Azure_Release.apk',
+              'V2_HHT_Azure_Release.apk', 'v2retail', 'V2_HHT_Azure_Release.apk',
               ExtraArgs={'ContentType': 'application/vnd.android.package-archive'}
           )
           size_mb = os.path.getsize('V2_HHT_Azure_Release.apk') // 1024 // 1024
-          print(f"Uploaded {size_mb}MB to R2 → assets.eatnubo.com/hht/V2_HHT_Azure_Release.apk")
+          print(f"Uploaded {size_mb}MB to R2 → apk.v2retail.net/download")
           PYEOF
         env:
           R2_ENDPOINT: ${{ secrets.R2_ENDPOINT }}
@@ -94,7 +94,7 @@ jobs:
             Version: ${{ steps.version.outputs.version }}
             Build: ${{ github.run_number }}
             Commit: ${{ github.sha }}
-            CDN: https://assets.eatnubo.com/hht/V2_HHT_Azure_Release.apk
+            CDN: https://apk.v2retail.net/download
           files: V2_HHT_Azure_Release.apk
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
