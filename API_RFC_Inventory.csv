@@ -1,0 +1,278 @@
+RFC_Function_Module,HTTP_Method,URL_Build_Pattern,Example_Base_Host_Notes
+(All SAP RFC calls via Volley JsonObjectRequest use the same pattern),POST,{parentOfValueXMW}/noacljsonrfcadaptor?bapiname={RFC_Function_Module}&aclclientid=android,"Code builds parent as requestUrl.substring(0; requestUrl.lastIndexOf(""/"")). Default login URL in AppConstants: https://v2-hht-api.azurewebsites.net/api/hht/ValueXMW  =>  RFC base: https://v2-hht-api.azurewebsites.net/api/hht/noacljsonrfcadaptor?...  Body is JSON; params usually include duplicate bapiname key."
+ZADVERB_CRATE_VALI_TO_CONV,POST,{base}/noacljsonrfcadaptor?bapiname=ZADVERB_CRATE_VALI_TO_CONV&aclclientid=android,Vars + fragments
+ZADVERB_CRATE_VALIDATE,POST,{base}/noacljsonrfcadaptor?bapiname=ZADVERB_CRATE_VALIDATE&aclclientid=android,Vars + fragments
+ZADVERB_GET_PICK_DATA,POST,{base}/noacljsonrfcadaptor?bapiname=ZADVERB_GET_PICK_DATA&aclclientid=android,Vars + fragments
+ZADVERB_PICK_GET_TO_LIST,POST,{base}/noacljsonrfcadaptor?bapiname=ZADVERB_PICK_GET_TO_LIST&aclclientid=android,Vars + fragments
+ZADVERB_SAVE_PICK_DATA,POST,{base}/noacljsonrfcadaptor?bapiname=ZADVERB_SAVE_PICK_DATA&aclclientid=android,Vars + fragments
+ZBIN_GRT_BIN_DATA,POST,{base}/noacljsonrfcadaptor?bapiname=ZBIN_GRT_BIN_DATA&aclclientid=android,Vars + fragments
+ZBIN_GRT_DATA_SAVE,POST,{base}/noacljsonrfcadaptor?bapiname=ZBIN_GRT_DATA_SAVE&aclclientid=android,Vars + fragments
+ZBIN_GRT_HU_VALIDATION,POST,{base}/noacljsonrfcadaptor?bapiname=ZBIN_GRT_HU_VALIDATION&aclclientid=android,Vars + fragments
+ZBIN_GRT_PICKLIST_VALIDATION,POST,{base}/noacljsonrfcadaptor?bapiname=ZBIN_GRT_PICKLIST_VALIDATION&aclclientid=android,Vars + fragments
+ZCOMBO_PICK_VALIDATE_HU_SAVE,POST,{base}/noacljsonrfcadaptor?bapiname=ZCOMBO_PICK_VALIDATE_HU_SAVE&aclclientid=android,Vars + fragments
+ZCOMBO_PICK_VALIDATE_SAVE_SORT,POST,{base}/noacljsonrfcadaptor?bapiname=ZCOMBO_PICK_VALIDATE_SAVE_SORT&aclclientid=android,Vars + fragments
+ZCOMBO_VALIDATE_CRATE,POST,{base}/noacljsonrfcadaptor?bapiname=ZCOMBO_VALIDATE_CRATE&aclclientid=android,Vars + fragments
+ZCOMBO_VALIDATE_PALLETE,POST,{base}/noacljsonrfcadaptor?bapiname=ZCOMBO_VALIDATE_PALLETE&aclclientid=android,Vars + fragments
+ZCOMBO_VALIDATE_PALLETE_REC,POST,{base}/noacljsonrfcadaptor?bapiname=ZCOMBO_VALIDATE_PALLETE_REC&aclclientid=android,Vars + fragments
+ZDIS_HU_DC_HUB_PRO_RFC,POST,{base}/noacljsonrfcadaptor?bapiname=ZDIS_HU_DC_HUB_PRO_RFC&aclclientid=android,Vars + fragments
+ZECOM_BIN_VALIDATE,POST,{base}/noacljsonrfcadaptor?bapiname=ZECOM_BIN_VALIDATE&aclclientid=android,Putway_Empty_Crate
+ZECOM_CANCELPUT_MSA_SAVE,POST,{base}/noacljsonrfcadaptor?bapiname=ZECOM_CANCELPUT_MSA_SAVE&aclclientid=android,Vars + fragments
+ZECOM_CANCELPUT_SAVE,POST,{base}/noacljsonrfcadaptor?bapiname=ZECOM_CANCELPUT_SAVE&aclclientid=android,Vars + fragments
+ZECOM_CANCELPUT_VALIDATE_BIN,POST,{base}/noacljsonrfcadaptor?bapiname=ZECOM_CANCELPUT_VALIDATE_BIN&aclclientid=android,Vars + fragments
+ZECOM_CANCELPUT_VALIDATE_CRATE,POST,{base}/noacljsonrfcadaptor?bapiname=ZECOM_CANCELPUT_VALIDATE_CRATE&aclclientid=android,Vars + fragments
+ZECOM_CANCELPUT_VALIDATE_PLANT,POST,{base}/noacljsonrfcadaptor?bapiname=ZECOM_CANCELPUT_VALIDATE_PLANT&aclclientid=android,Vars + fragments
+ZECOM_CLA_BIN_VALIDATE,POST,{base}/noacljsonrfcadaptor?bapiname=ZECOM_CLA_BIN_VALIDATE&aclclientid=android,CLA_* fragments
+ZECOM_CLA_CRATE_PALETTE_SAVE,POST,{base}/noacljsonrfcadaptor?bapiname=ZECOM_CLA_CRATE_PALETTE_SAVE&aclclientid=android,CLA_ScanEcomCrateInPalette
+ZECOM_CLA_CRATE_VALIDATE,POST,{base}/noacljsonrfcadaptor?bapiname=ZECOM_CLA_CRATE_VALIDATE&aclclientid=android,CLA_ScanEcomCrateInPalette
+ZECOM_CLA_PALETTE_BIN_TAG_SAVE,POST,{base}/noacljsonrfcadaptor?bapiname=ZECOM_CLA_PALETTE_BIN_TAG_SAVE&aclclientid=android,CLA_* fragments
+ZECOM_CLA_PALETTE_VALIDATE,POST,{base}/noacljsonrfcadaptor?bapiname=ZECOM_CLA_PALETTE_VALIDATE&aclclientid=android,CLA_* fragments
+ZECOM_COURIER_HANDOVER_SAVE,POST,{base}/noacljsonrfcadaptor?bapiname=ZECOM_COURIER_HANDOVER_SAVE&aclclientid=android,CLA handover fragments
+ZECOM_CRATE_PICKING_VALIDATE,POST,{base}/noacljsonrfcadaptor?bapiname=ZECOM_CRATE_PICKING_VALIDATE&aclclientid=android,Pick_Order_For_Packing PicklistTaggingToPackingStation
+ZECOM_CRATE_VALIDATE,POST,{base}/noacljsonrfcadaptor?bapiname=ZECOM_CRATE_VALIDATE&aclclientid=android,SavePicklistFragment
+ZECOM_CRATE_VALIDATE_UPDATE,POST,{base}/noacljsonrfcadaptor?bapiname=ZECOM_CRATE_VALIDATE_UPDATE&aclclientid=android,Putway_Empty_Crate
+ZECOM_GET_DELIVERY_INFO,POST,{base}/noacljsonrfcadaptor?bapiname=ZECOM_GET_DELIVERY_INFO&aclclientid=android,Delivery_Update_Fragment
+ZECOM_GET_PICK_DATA,POST,{base}/noacljsonrfcadaptor?bapiname=ZECOM_GET_PICK_DATA&aclclientid=android,SavePicklistFragment
+ZECOM_GET_ZONE_LIST,POST,{base}/noacljsonrfcadaptor?bapiname=ZECOM_GET_ZONE_LIST&aclclientid=android,EComm_QC_Picking
+ZECOM_GET_ZONE_PICKLIST,POST,{base}/noacljsonrfcadaptor?bapiname=ZECOM_GET_ZONE_PICKLIST&aclclientid=android,EComm_QC_Picking
+ZECOM_PICK_GET_TO_LIST,POST,{base}/noacljsonrfcadaptor?bapiname=ZECOM_PICK_GET_TO_LIST&aclclientid=android,EComm_Picking_DateFilter
+ZECOM_PICK32_SAVE,POST,{base}/noacljsonrfcadaptor?bapiname=ZECOM_PICK32_SAVE&aclclientid=android,Multi_Order_Picking_V32
+ZECOM_PICK32_VALIDATE_BIN,POST,{base}/noacljsonrfcadaptor?bapiname=ZECOM_PICK32_VALIDATE_BIN&aclclientid=android,Multi_Order_Picking_V32
+ZECOM_PICK32_VALIDATE_CRATE,POST,{base}/noacljsonrfcadaptor?bapiname=ZECOM_PICK32_VALIDATE_CRATE&aclclientid=android,Multi_Order_Picking_V32
+ZECOM_PUTWALL_BIN_V33_SAVE,POST,{base}/noacljsonrfcadaptor?bapiname=ZECOM_PUTWALL_BIN_V33_SAVE&aclclientid=android,Order_Putway_in_Pigeon
+ZECOM_PUTWALL_BIN_VALIDATE,POST,{base}/noacljsonrfcadaptor?bapiname=ZECOM_PUTWALL_BIN_VALIDATE&aclclientid=android,Order_Putway_in_Pigeon
+ZECOM_PUTWALL_GET_SO_BIN,POST,{base}/noacljsonrfcadaptor?bapiname=ZECOM_PUTWALL_GET_SO_BIN&aclclientid=android,Order_Putway_in_Pigeon
+ZECOM_SAVE_PICK_DATA,POST,{base}/noacljsonrfcadaptor?bapiname=ZECOM_SAVE_PICK_DATA&aclclientid=android,SavePicklistFragment
+ZECOM_SAVE_PICK_NOT_FOUND_DATA,POST,{base}/noacljsonrfcadaptor?bapiname=ZECOM_SAVE_PICK_NOT_FOUND_DATA&aclclientid=android,SavePicklistFragment
+ZECOM_SAVE_ZONE_PICKING_DATA,POST,{base}/noacljsonrfcadaptor?bapiname=ZECOM_SAVE_ZONE_PICKING_DATA&aclclientid=android,EComm_QC_Picking
+ZECOM_STORE_ORDER_REJECT,POST,{base}/noacljsonrfcadaptor?bapiname=ZECOM_STORE_ORDER_REJECT&aclclientid=android,Vars + fragments
+ZECOM_UPD_DELIVERY_STATUS,POST,{base}/noacljsonrfcadaptor?bapiname=ZECOM_UPD_DELIVERY_STATUS&aclclientid=android,Delivery_Update_Fragment EcomReturnProcess
+ZECOM_VALIDATE_HANDOVER_AWB,POST,{base}/noacljsonrfcadaptor?bapiname=ZECOM_VALIDATE_HANDOVER_AWB&aclclientid=android,CLA handover fragments
+ZECOM_VALIDATE_MANIFESTO_CRATE,POST,{base}/noacljsonrfcadaptor?bapiname=ZECOM_VALIDATE_MANIFESTO_CRATE&aclclientid=android,CLA handover fragments
+ZFM_HU_WGT,POST,{base}/noacljsonrfcadaptor?bapiname=ZFM_HU_WGT&aclclientid=android,Vars + fragments
+ZFM_HU_WGT_SAVE,POST,{base}/noacljsonrfcadaptor?bapiname=ZFM_HU_WGT_SAVE&aclclientid=android,Vars + fragments
+ZFMS_CRATE_GET_DATA,POST,{base}/noacljsonrfcadaptor?bapiname=ZFMS_CRATE_GET_DATA&aclclientid=android,Vars + fragments
+ZFMS_SCREEN,POST,{base}/noacljsonrfcadaptor?bapiname=ZFMS_SCREEN&aclclientid=android,Vars + fragments
+ZGRT_CANCELPUT_VALIDATE_BIN,POST,{base}/noacljsonrfcadaptor?bapiname=ZGRT_CANCELPUT_VALIDATE_BIN&aclclientid=android,Vars + fragments
+ZGRT_CANCELPUT_VALIDATE_CRATE,POST,{base}/noacljsonrfcadaptor?bapiname=ZGRT_CANCELPUT_VALIDATE_CRATE&aclclientid=android,Vars + fragments
+ZGRT_COMBO_ZONE_VALIDATE,POST,{base}/noacljsonrfcadaptor?bapiname=ZGRT_COMBO_ZONE_VALIDATE&aclclientid=android,Vars + fragments
+ZGRT_HU_STORE_VALIDATE,POST,{base}/noacljsonrfcadaptor?bapiname=ZGRT_HU_STORE_VALIDATE&aclclientid=android,Vars + fragments
+ZGRT_HU_VALIDATE,POST,{base}/noacljsonrfcadaptor?bapiname=ZGRT_HU_VALIDATE&aclclientid=android,Vars + fragments
+ZGRT_HU_VALIDATE_PICK_CLOSE,POST,{base}/noacljsonrfcadaptor?bapiname=ZGRT_HU_VALIDATE_PICK_CLOSE&aclclientid=android,Vars + fragments
+ZGRT_HU_ZONE_VALIDATE,POST,{base}/noacljsonrfcadaptor?bapiname=ZGRT_HU_ZONE_VALIDATE&aclclientid=android,Vars + fragments
+ZGRT_MIX_SIN_SORT_VALIDATE,POST,{base}/noacljsonrfcadaptor?bapiname=ZGRT_MIX_SIN_SORT_VALIDATE&aclclientid=android,Vars + fragments
+ZGRT_PICK_CRATE_SIN_VALIDATE,POST,{base}/noacljsonrfcadaptor?bapiname=ZGRT_PICK_CRATE_SIN_VALIDATE&aclclientid=android,Vars + fragments
+ZGRT_PICK_CRATE_VALIDATE,POST,{base}/noacljsonrfcadaptor?bapiname=ZGRT_PICK_CRATE_VALIDATE&aclclientid=android,Vars + fragments
+ZGRT_PICK_EMPTY_PICKED_CRATE,POST,{base}/noacljsonrfcadaptor?bapiname=ZGRT_PICK_EMPTY_PICKED_CRATE&aclclientid=android,Vars + fragments
+ZGRT_PICK_GET_PICK_DATA,POST,{base}/noacljsonrfcadaptor?bapiname=ZGRT_PICK_GET_PICK_DATA&aclclientid=android,Vars + fragments
+ZGRT_PICK_GET_PICK_DATA_V4,POST,{base}/noacljsonrfcadaptor?bapiname=ZGRT_PICK_GET_PICK_DATA_V4&aclclientid=android,Vars + fragments
+ZGRT_PICK_GET_TO_LIST,POST,{base}/noacljsonrfcadaptor?bapiname=ZGRT_PICK_GET_TO_LIST&aclclientid=android,Vars + fragments
+ZGRT_PICK_GET_TO_LIST_PTL,POST,{base}/noacljsonrfcadaptor?bapiname=ZGRT_PICK_GET_TO_LIST_PTL&aclclientid=android,Vars + fragments
+ZGRT_PICK_GET_TO_LIST_PTL_V2,POST,{base}/noacljsonrfcadaptor?bapiname=ZGRT_PICK_GET_TO_LIST_PTL_V2&aclclientid=android,Vars + fragments
+ZGRT_PICK_GET_TO_LIST_PTL_V3,POST,{base}/noacljsonrfcadaptor?bapiname=ZGRT_PICK_GET_TO_LIST_PTL_V3&aclclientid=android,Vars + fragments
+ZGRT_PICK_MSA_VALIDATE_SAVE,POST,{base}/noacljsonrfcadaptor?bapiname=ZGRT_PICK_MSA_VALIDATE_SAVE&aclclientid=android,Vars + fragments
+ZGRT_PICK_SAVE_HU_DATA,POST,{base}/noacljsonrfcadaptor?bapiname=ZGRT_PICK_SAVE_HU_DATA&aclclientid=android,Vars + fragments
+ZGRT_PICK_SAVE_PICK_DATA,POST,{base}/noacljsonrfcadaptor?bapiname=ZGRT_PICK_SAVE_PICK_DATA&aclclientid=android,Vars + fragments
+ZGRT_PICK_VALIDATE_HU,POST,{base}/noacljsonrfcadaptor?bapiname=ZGRT_PICK_VALIDATE_HU&aclclientid=android,Vars + fragments
+ZGRT_PICK_VALIDATE_SAVE_SORT,POST,{base}/noacljsonrfcadaptor?bapiname=ZGRT_PICK_VALIDATE_SAVE_SORT&aclclientid=android,Vars + fragments
+ZGRT_PICK_ZONE_CRATE_VALIDATE,POST,{base}/noacljsonrfcadaptor?bapiname=ZGRT_PICK_ZONE_CRATE_VALIDATE&aclclientid=android,Vars + fragments
+ZGRT_PICK_ZVALIDATE_SAVE_SORT,POST,{base}/noacljsonrfcadaptor?bapiname=ZGRT_PICK_ZVALIDATE_SAVE_SORT&aclclientid=android,Vars + fragments
+ZGRT_RETURN_CRATE_VALIDATE,POST,{base}/noacljsonrfcadaptor?bapiname=ZGRT_RETURN_CRATE_VALIDATE&aclclientid=android,Vars + fragments
+ZGRT_RETURN_GET_EAN_DATA,POST,{base}/noacljsonrfcadaptor?bapiname=ZGRT_RETURN_GET_EAN_DATA&aclclientid=android,Vars + fragments
+ZGRT_SIN_CRATE_COMBO_VALIDATE,POST,{base}/noacljsonrfcadaptor?bapiname=ZGRT_SIN_CRATE_COMBO_VALIDATE&aclclientid=android,Vars + fragments
+ZGRT_SIN_STORE_VALIDATE,POST,{base}/noacljsonrfcadaptor?bapiname=ZGRT_SIN_STORE_VALIDATE&aclclientid=android,Vars + fragments
+ZGRT_VALIDATE_HU,POST,{base}/noacljsonrfcadaptor?bapiname=ZGRT_VALIDATE_HU&aclclientid=android,Vars + fragments
+ZGRT_VALIDATE_HU_BIN,POST,{base}/noacljsonrfcadaptor?bapiname=ZGRT_VALIDATE_HU_BIN&aclclientid=android,Vars + fragments
+ZGRT_ZONE_CRATE_SIN_VALIDATE,POST,{base}/noacljsonrfcadaptor?bapiname=ZGRT_ZONE_CRATE_SIN_VALIDATE&aclclientid=android,Vars + fragments
+ZGRT_ZONE_CRATE_VALIDATE_SAVE,POST,{base}/noacljsonrfcadaptor?bapiname=ZGRT_ZONE_CRATE_VALIDATE_SAVE&aclclientid=android,Vars + fragments
+ZGRT_ZONE_MSA_CRATE_VALIDATE,POST,{base}/noacljsonrfcadaptor?bapiname=ZGRT_ZONE_MSA_CRATE_VALIDATE&aclclientid=android,Vars + fragments
+ZGRTRET_CRATE_TO_MSA_SAVE,POST,{base}/noacljsonrfcadaptor?bapiname=ZGRTRET_CRATE_TO_MSA_SAVE&aclclientid=android,Vars + fragments
+ZGRTRET_SAVE_PUTAWAY_DETAILS,POST,{base}/noacljsonrfcadaptor?bapiname=ZGRTRET_SAVE_PUTAWAY_DETAILS&aclclientid=android,Vars + fragments
+ZHHTUSR_DEL_PICKING_RFC,POST,{base}/noacljsonrfcadaptor?bapiname=ZHHTUSR_DEL_PICKING_RFC&aclclientid=android,Commented in PaperLessDate.java only
+ZHUB_HU_VALIDATION_RFC,POST,{base}/noacljsonrfcadaptor?bapiname=ZHUB_HU_VALIDATION_RFC&aclclientid=android,Vars + fragments
+ZOMINI_BIN_BARCODE_VALIDATE,POST,{base}/noacljsonrfcadaptor?bapiname=ZOMINI_BIN_BARCODE_VALIDATE&aclclientid=android,Vars + fragments
+ZOMINI_PICK_STORE,POST,{base}/noacljsonrfcadaptor?bapiname=ZOMINI_PICK_STORE&aclclientid=android,Vars + fragments
+ZOMINI_PICK_STORE_SAVE_TT,POST,{base}/noacljsonrfcadaptor?bapiname=ZOMINI_PICK_STORE_SAVE_TT&aclclientid=android,Vars + fragments
+ZPTL_CANCELPUT_VALIDATE_BIN,POST,{base}/noacljsonrfcadaptor?bapiname=ZPTL_CANCELPUT_VALIDATE_BIN&aclclientid=android,Vars + fragments
+ZPTL_CANCELPUT_VALIDATE_CRATE,POST,{base}/noacljsonrfcadaptor?bapiname=ZPTL_CANCELPUT_VALIDATE_CRATE&aclclientid=android,Vars + fragments
+ZPTL_FLR_TAG_BIN_VAL_RFC_V3,POST,{base}/noacljsonrfcadaptor?bapiname=ZPTL_FLR_TAG_BIN_VAL_RFC_V3&aclclientid=android,Vars + fragments
+ZPTL_GET_DATA_FROM_BIN_RFC,POST,{base}/noacljsonrfcadaptor?bapiname=ZPTL_GET_DATA_FROM_BIN_RFC&aclclientid=android,Vars + fragments
+ZPTL_GF_SEC_RFC_V3,POST,{base}/noacljsonrfcadaptor?bapiname=ZPTL_GF_SEC_RFC_V3&aclclientid=android,Vars + fragments
+ZPTL_PLT_RCV_AT_HUBSTN_RFC,POST,{base}/noacljsonrfcadaptor?bapiname=ZPTL_PLT_RCV_AT_HUBSTN_RFC&aclclientid=android,Vars + fragments
+ZPTL_PLT_VALIDATE_BIN_TAG_RFC,POST,{base}/noacljsonrfcadaptor?bapiname=ZPTL_PLT_VALIDATE_BIN_TAG_RFC&aclclientid=android,Vars + fragments
+ZPTL_RETURN_CRATE_VALIDATE,POST,{base}/noacljsonrfcadaptor?bapiname=ZPTL_RETURN_CRATE_VALIDATE&aclclientid=android,Vars + fragments
+ZPTL_RETURN_GET_EAN_DATA,POST,{base}/noacljsonrfcadaptor?bapiname=ZPTL_RETURN_GET_EAN_DATA&aclclientid=android,Vars + fragments
+ZPTL_STN_LIST_RCV_AT_HUBSTN_V3,POST,{base}/noacljsonrfcadaptor?bapiname=ZPTL_STN_LIST_RCV_AT_HUBSTN_V3&aclclientid=android,Vars + fragments
+ZPTLRET_CRATE_TO_MSA_SAVE,POST,{base}/noacljsonrfcadaptor?bapiname=ZPTLRET_CRATE_TO_MSA_SAVE&aclclientid=android,Vars + fragments
+ZPTLRET_SAVE_PUTAWAY_DETAILS,POST,{base}/noacljsonrfcadaptor?bapiname=ZPTLRET_SAVE_PUTAWAY_DETAILS&aclclientid=android,Vars + fragments
+ZRFC_SDC_PUT31,POST,{base}/noacljsonrfcadaptor?bapiname=ZRFC_SDC_PUT31&aclclientid=android,V01HuPickingFragment
+ZRFC_SDC_PUT31_BIN_VALIDATION,POST,{base}/noacljsonrfcadaptor?bapiname=ZRFC_SDC_PUT31_BIN_VALIDATION&aclclientid=android,V01HuPickingFragment
+ZSDC_DIRECT_ART_VAL_BARCOD_RFC,POST,{base}/noacljsonrfcadaptor?bapiname=ZSDC_DIRECT_ART_VAL_BARCOD_RFC&aclclientid=android,Vars + fragments
+ZSDC_DIRECT_ART_VAL1_SAVE1_RFC,POST,{base}/noacljsonrfcadaptor?bapiname=ZSDC_DIRECT_ART_VAL1_SAVE1_RFC&aclclientid=android,Vars + direct picking fragments
+ZSDC_DIRECT_FLR_RFC,POST,{base}/noacljsonrfcadaptor?bapiname=ZSDC_DIRECT_FLR_RFC&aclclientid=android,Vars + fragments
+ZSDC_DIRECT_HU_VAL_RFC,POST,{base}/noacljsonrfcadaptor?bapiname=ZSDC_DIRECT_HU_VAL_RFC&aclclientid=android,Vars + fragments
+ZSDC_DIRECT_SAVE_RFC,POST,{base}/noacljsonrfcadaptor?bapiname=ZSDC_DIRECT_SAVE_RFC&aclclientid=android,Vars + fragments
+ZSDC_STORE_PICKBIN_SAVE,POST,{base}/noacljsonrfcadaptor?bapiname=ZSDC_STORE_PICKBIN_SAVE&aclclientid=android,Vars + fragments
+ZSDC_STORE_PICKBIN_VALIDATION,POST,{base}/noacljsonrfcadaptor?bapiname=ZSDC_STORE_PICKBIN_VALIDATION&aclclientid=android,Vars + fragments
+ZSTORE_DISCOUNT_GET_EAN_DATA,POST,{base}/noacljsonrfcadaptor?bapiname=ZSTORE_DISCOUNT_GET_EAN_DATA&aclclientid=android,Vars + DiscountFragment
+ZSTORE_DISCOUNT_SAVE_EAN_DATA,POST,{base}/noacljsonrfcadaptor?bapiname=ZSTORE_DISCOUNT_SAVE_EAN_DATA&aclclientid=android,Vars + DiscountFragment
+ZSTORE_DISCOUNT_STORE_VALI,POST,{base}/noacljsonrfcadaptor?bapiname=ZSTORE_DISCOUNT_STORE_VALI&aclclientid=android,DiscountFragment
+ZWM_ACTUAL_HU_SAVE,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_ACTUAL_HU_SAVE&aclclientid=android,Vars + fragments
+ZWM_APP_ARTICLE_AGEING,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_APP_ARTICLE_AGEING&aclclientid=android,GetStockFragment
+ZWM_APP_ARTICLE_DETAILS,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_APP_ARTICLE_DETAILS&aclclientid=android,Article_Scan_Fragment
+ZWM_APP_ARTICLE_SA_RETAIL_APP,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_APP_ARTICLE_SA_RETAIL_APP&aclclientid=android,GetStockFragment
+ZWM_APP_ARTICLE_SALES_DETAIL,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_APP_ARTICLE_SALES_DETAIL&aclclientid=android,Article_Sale_Scan_Fragment Article_Sales_Detail_Fragment
+ZWM_BIN_IDENTIFIER_RFC,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_BIN_IDENTIFIER_RFC&aclclientid=android,Vars + fragments
+ZWM_BIN_VALIDATION_PUT,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_BIN_VALIDATION_PUT&aclclientid=android,Vars + fragments
+ZWM_CLA_BIN_VALIDATE,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_CLA_BIN_VALIDATE&aclclientid=android,PalletePutwayFragment PalletePickingFragment
+ZWM_CLA_HU_PALETTE_SAVE,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_CLA_HU_PALETTE_SAVE&aclclientid=android,ScanHuInPalleteFragment
+ZWM_CLA_HU_VALIDATE,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_CLA_HU_VALIDATE&aclclientid=android,ScanHuInPalleteFragment
+ZWM_CLA_PALETTE_BIN_TAG_SAVE,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_CLA_PALETTE_BIN_TAG_SAVE&aclclientid=android,PalletePutwayFragment PalletePickingFragment
+ZWM_CLA_PALETTE_VALIDATE,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_CLA_PALETTE_VALIDATE&aclclientid=android,ScanHuInPalleteFragment PalletePickingFragment
+ZWM_CRATE_IDENTIFIER_RFC,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_CRATE_IDENTIFIER_RFC&aclclientid=android,Vars + fragments
+ZWM_CRATE_VALIDATION,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_CRATE_VALIDATION&aclclientid=android,Vars + fragments
+ZWM_CREATE_HU_AND_ASSIGN,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_CREATE_HU_AND_ASSIGN&aclclientid=android,PapperLessScan paperless mode
+ZWM_CREATE_HU_AND_ASSIGN_TVS,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_CREATE_HU_AND_ASSIGN_TVS&aclclientid=android,PapperLessScan TVS modes
+ZWM_DC_HU_GRT_VAL,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_DC_HU_GRT_VAL&aclclientid=android,GrtHuMoveFragment
+ZWM_DC_HUGRT_BINHU_VAL,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_DC_HUGRT_BINHU_VAL&aclclientid=android,GrtHuMoveFragment
+ZWM_DC_HUGRT_HU_VAL,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_DC_HUGRT_HU_VAL&aclclientid=android,GrtHuMoveFragment
+ZWM_DC_HUGRT_SAVE,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_DC_HUGRT_SAVE&aclclientid=android,GrtHuMoveFragment
+ZWM_DELIVERY_GET_DETAILS_PLP2,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_DELIVERY_GET_DETAILS_PLP2&aclclientid=android,PapperLessPicking PapperLessScan PaperLessDate
+ZWM_EXTERNAL_HU_VALIDATE,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_EXTERNAL_HU_VALIDATE&aclclientid=android,Vars + fragments
+ZWM_GET_BIN_DETAILS,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_GET_BIN_DETAILS&aclclientid=android,GRCPutwayFragment
+ZWM_GET_GRC_BINS,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_GET_GRC_BINS&aclclientid=android,TO_Creation_Fragment
+ZWM_GET_HHTUSER_DELIVERY,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_GET_HHTUSER_DELIVERY&aclclientid=android,PaperLessDate
+ZWM_GET_MSA_SECTION_LIST,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_GET_MSA_SECTION_LIST&aclclientid=android,Vars + fragments
+ZWM_GET_PACKING_MATERIAL,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_GET_PACKING_MATERIAL&aclclientid=android,PapperLessPicking
+ZWM_GET_STO_DATA,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_GET_STO_DATA&aclclientid=android,EcomPutwayFragment
+ZWM_GET_STOCK_BIN,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_GET_STOCK_BIN&aclclientid=android,Vars + fragments
+ZWM_GET_STOCK_TAKE_ID,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_GET_STOCK_TAKE_ID&aclclientid=android,Vars + fragments
+ZWM_GR_GET_DETAILS,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_GR_GET_DETAILS&aclclientid=android,GRCPutwayFragment
+ZWM_GRT_SAVE,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_GRT_SAVE&aclclientid=android,GRTScanning01Fragment
+ZWM_GRT_VALIDATE_CRATE,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_GRT_VALIDATE_CRATE&aclclientid=android,GRTScanning01Fragment
+ZWM_HU_VALIDATION_PUT,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_HU_VALIDATION_PUT&aclclientid=android,Vars + fragments
+ZWM_HUPUT31_SAVE,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_HUPUT31_SAVE&aclclientid=android,V01HuPickingFragment
+ZWM_INV_GRC_HUB_SAVE,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_INV_GRC_HUB_SAVE&aclclientid=android,Vars + fragments
+ZWM_INV_GRC_VALIDATION,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_INV_GRC_VALIDATION&aclclientid=android,Vars + fragments
+ZWM_LIVE_STOCK_SCANNING,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_LIVE_STOCK_SCANNING&aclclientid=android,Vars + fragments
+ZWM_PALATE_HU_SAVE,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_PALATE_HU_SAVE&aclclientid=android,Vars + fragments
+ZWM_PALATE_RECEIVE,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_PALATE_RECEIVE&aclclientid=android,Vars + fragments
+ZWM_PALATE_VALIDATION,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_PALATE_VALIDATION&aclclientid=android,Vars + fragments
+ZWM_PICK_SAVE_RFC,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_PICK_SAVE_RFC&aclclientid=android,Vars + fragments
+ZWM_PICKLIST_PPPN,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_PICKLIST_PPPN&aclclientid=android,Vars + fragments
+ZWM_PO_GET_DETAILS,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_PO_GET_DETAILS&aclclientid=android,ValidateCrate_Process_Fragment Stock_In_Out_Fragment
+ZWM_PO_SCAN_DATA_SAVE,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_PO_SCAN_DATA_SAVE&aclclientid=android,ValidateCrate_Process_Fragment
+ZWM_PRINT_HU_TVS,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_PRINT_HU_TVS&aclclientid=android,Vars + fragments
+ZWM_PTL_BIN_VALIDATE,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_PTL_BIN_VALIDATE&aclclientid=android,Vars + fragments
+ZWM_PTL_BIN_VALIDATE_V3,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_PTL_BIN_VALIDATE_V3&aclclientid=android,Vars + fragments
+ZWM_PTL_CRATE_VALIDATE,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_PTL_CRATE_VALIDATE&aclclientid=android,Vars + fragments
+ZWM_PTL_CRATE_VALIDATE_V2,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_PTL_CRATE_VALIDATE_V2&aclclientid=android,Vars + fragments
+ZWM_PTL_CRATE_VALIDATE_V3,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_PTL_CRATE_VALIDATE_V3&aclclientid=android,Vars + fragments
+ZWM_PTL_CRATE_VALIDATE_V4,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_PTL_CRATE_VALIDATE_V4&aclclientid=android,Vars + fragments
+ZWM_PTL_CRT_TAG_VAL_RFC_V3,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_PTL_CRT_TAG_VAL_RFC_V3&aclclientid=android,Vars + fragments
+ZWM_PTL_FLOOR_RECEIVING_RFC,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_PTL_FLOOR_RECEIVING_RFC&aclclientid=android,Vars + fragments
+ZWM_PTL_FLOOR_RECEIVING_RFC_V3,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_PTL_FLOOR_RECEIVING_RFC_V3&aclclientid=android,Vars + fragments
+ZWM_PTL_FLOOR_STAGING_RFC,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_PTL_FLOOR_STAGING_RFC&aclclientid=android,Vars + fragments
+ZWM_PTL_FLR_STG_CRT_VALID_V2,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_PTL_FLR_STG_CRT_VALID_V2&aclclientid=android,Vars + fragments
+ZWM_PTL_FLR_STG_CRT_VALID_V3,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_PTL_FLR_STG_CRT_VALID_V3&aclclientid=android,Vars + fragments
+ZWM_PTL_FLR_STG_PAL_VALIDAT_V2,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_PTL_FLR_STG_PAL_VALIDAT_V2&aclclientid=android,Vars + fragments
+ZWM_PTL_FLR_STG_PAL_VALIDAT_V3,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_PTL_FLR_STG_PAL_VALIDAT_V3&aclclientid=android,Vars + fragments
+ZWM_PTL_GET_TO_DETAILS,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_PTL_GET_TO_DETAILS&aclclientid=android,Vars + fragments
+ZWM_PTL_GET_ZONE,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_PTL_GET_ZONE&aclclientid=android,Vars + fragments
+ZWM_PTL_GET_ZONE_STATION_V3,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_PTL_GET_ZONE_STATION_V3&aclclientid=android,Vars + fragments
+ZWM_PTL_HU_VALIDATE_CLOSE,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_PTL_HU_VALIDATE_CLOSE&aclclientid=android,Vars + fragments
+ZWM_PTL_HUBSTN_DATA_RFC_V3,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_PTL_HUBSTN_DATA_RFC_V3&aclclientid=android,Vars + fragments
+ZWM_PTL_MSA_CRATE_VALIDATE,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_PTL_MSA_CRATE_VALIDATE&aclclientid=android,Vars + fragments
+ZWM_PTL_MSA_CRATE_VALIDATE_V2,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_PTL_MSA_CRATE_VALIDATE_V2&aclclientid=android,Vars + fragments
+ZWM_PTL_MSA_CRATE_VALIDATE_V3,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_PTL_MSA_CRATE_VALIDATE_V3&aclclientid=android,Vars + fragments
+ZWM_PTL_MSA_CRATE_VALIDATE_V4,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_PTL_MSA_CRATE_VALIDATE_V4&aclclientid=android,Vars + fragments
+ZWM_PTL_MZ_SART_HUBCRT_VALI_V3,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_PTL_MZ_SART_HUBCRT_VALI_V3&aclclientid=android,Vars + fragments
+ZWM_PTL_PALETTE_VALIDATE,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_PTL_PALETTE_VALIDATE&aclclientid=android,Vars + fragments
+ZWM_PTL_PLT_REC_AT_ZONE_SRT_V3,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_PTL_PLT_REC_AT_ZONE_SRT_V3&aclclientid=android,Vars + fragments
+ZWM_PTL_PLT_REC_AT_ZONE_SRT_V4,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_PTL_PLT_REC_AT_ZONE_SRT_V4&aclclientid=android,Vars + fragments
+ZWM_PTL_STORE_STAGING_RFC,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_PTL_STORE_STAGING_RFC&aclclientid=android,Vars + fragments
+ZWM_PTL_SZ_PALATE_VALIDATE_V3,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_PTL_SZ_PALATE_VALIDATE_V3&aclclientid=android,Vars + fragments
+ZWM_PTL_TVS_HU_PRINT,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_PTL_TVS_HU_PRINT&aclclientid=android,Vars + fragments
+ZWM_PTL_TVS_HU_PRINT_2,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_PTL_TVS_HU_PRINT_2&aclclientid=android,Vars + fragments
+ZWM_PTL_V06_V09,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_PTL_V06_V09&aclclientid=android,Vars + fragments
+ZWM_PTL_VALIDATE_HU,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_PTL_VALIDATE_HU&aclclientid=android,Vars + fragments
+ZWM_PTL_VALIDATE_HU_V3,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_PTL_VALIDATE_HU_V3&aclclientid=android,Vars + fragments
+ZWM_PTL_VALIDATE_STORE,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_PTL_VALIDATE_STORE&aclclientid=android,Vars + fragments
+ZWM_PTL_VALIDATE_STORE_V3,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_PTL_VALIDATE_STORE_V3&aclclientid=android,Vars + fragments
+ZWM_PTL_ZONE_CRATE_VALIDATE,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_PTL_ZONE_CRATE_VALIDATE&aclclientid=android,Vars + fragments
+ZWM_PTL_ZONE_CRATE_VALIDATE_V3,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_PTL_ZONE_CRATE_VALIDATE_V3&aclclientid=android,Vars + fragments
+ZWM_PTL_ZONE_HU_VALIDATE,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_PTL_ZONE_HU_VALIDATE&aclclientid=android,Vars + fragments
+ZWM_PTL_ZONE_HU_VALIDATE_V3,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_PTL_ZONE_HU_VALIDATE_V3&aclclientid=android,Vars + fragments
+ZWM_PTL_ZONE_REC,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_PTL_ZONE_REC&aclclientid=android,Vars + fragments
+ZWM_RFC_GRT_PUTWAY_CRATE_VAL,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_RFC_GRT_PUTWAY_CRATE_VAL&aclclientid=android,GRTPutway03Fragment
+ZWM_RFC_GRT_PUTWAY_POST,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_RFC_GRT_PUTWAY_POST&aclclientid=android,GRTPutway03Fragment
+ZWM_RFC_STOCK_MOVEMENT_V21,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_RFC_STOCK_MOVEMENT_V21&aclclientid=android,StockMovementPickingFragment
+ZWM_RFC_STOCK_TAKE_ARTI_VALI,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_RFC_STOCK_TAKE_ARTI_VALI&aclclientid=android,StoredStockFragment V11ToMsaFragment Scan_Stock_take_Fragment
+ZWM_RFC_STOCK_TAKE_BIN_VALI,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_RFC_STOCK_TAKE_BIN_VALI&aclclientid=android,StoredStockFragment V11ToMsaFragment Scan_Stock_take_Fragment
+ZWM_RFC_STOCK_TAKE_CRATE_VALI,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_RFC_STOCK_TAKE_CRATE_VALI&aclclientid=android,StoredStockFragment V11ToMsaFragment Scan_Stock_take_Fragment
+ZWM_RFC_STOCK_TAKE_GET_DETAILS,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_RFC_STOCK_TAKE_GET_DETAILS&aclclientid=android,Stock_Take_Process_Fragment Scan_Stock_take_Fragment
+ZWM_RFC_STOCK_TAKE_SAVE_DATA,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_RFC_STOCK_TAKE_SAVE_DATA&aclclientid=android,Scan_Stock_take_Fragment
+ZWM_RFC_STOCK_TAKE_SAVE_V11,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_RFC_STOCK_TAKE_SAVE_V11&aclclientid=android,StoredStockFragment V11ToMsaFragment
+ZWM_RFC_STOCK_VALIDATE_BARCODE,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_RFC_STOCK_VALIDATE_BARCODE&aclclientid=android,Scan_Stock_take_Fragment
+ZWM_RFC_STOCK_VALIDATE_V21,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_RFC_STOCK_VALIDATE_V21&aclclientid=android,StockMovementPickingFragment
+ZWM_RFC_STORE_EAN_DATA,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_RFC_STORE_EAN_DATA&aclclientid=android,Scan_grc_putway_Process_Fragment GRTScanning01Fragment
+ZWM_RFC_STORE_EAN_DATA_STK,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_RFC_STORE_EAN_DATA_STK&aclclientid=android,StoreBinConsolidationFragment GRTScanning01Fragment
+ZWM_RFC_STORE_PICK_VALIDATE,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_RFC_STORE_PICK_VALIDATE&aclclientid=android,Vars + fragments
+ZWM_RFC_VALIDATE_CRATE,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_RFC_VALIDATE_CRATE&aclclientid=android,Commented in GRTScanning01Fragment
+ZWM_RFC_VALIDATE_DC_SLOC,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_RFC_VALIDATE_DC_SLOC&aclclientid=android,StoredStockFragment V11ToMsaFragment GRTScanning01Fragment
+ZWM_SAVE_EMPTY_BIN,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_SAVE_EMPTY_BIN&aclclientid=android,EmptyBinFragment
+ZWM_SAVE_GRC_TO_DATA,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_SAVE_GRC_TO_DATA&aclclientid=android,EcomPutwayFragment
+ZWM_SAVE_PAL_CRATE,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_SAVE_PAL_CRATE&aclclientid=android,Vars + fragments
+ZWM_STK_ADJ_MSA_BIN,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_STK_ADJ_MSA_BIN&aclclientid=android,Vars + fragments
+ZWM_STK_IROD_GANDOLA_0001,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_STK_IROD_GANDOLA_0001&aclclientid=android,Vars + fragments
+ZWM_STORE_BIN_001_VALIDATION,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_STORE_BIN_001_VALIDATION&aclclientid=android,Vars + fragments
+ZWM_STORE_BIN_CON_PICKING_HU,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_STORE_BIN_CON_PICKING_HU&aclclientid=android,StoreBinConsolidationFragment
+ZWM_STORE_BIN_LIST_VALIDATION,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_STORE_BIN_LIST_VALIDATION&aclclientid=android,StoreBinConsolidationFragment
+ZWM_STORE_BIN_STOCK,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_STORE_BIN_STOCK&aclclientid=android,Vars + fragments
+ZWM_STORE_BINCONHU_GET_DETAILS,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_STORE_BINCONHU_GET_DETAILS&aclclientid=android,HuBinConsPutwayFragment
+ZWM_STORE_FLOOR_PUTWAY,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_STORE_FLOOR_PUTWAY&aclclientid=android,Scan_Floor_putway_Process_Fragment
+ZWM_STORE_FLOOR_PUTWAY_HU,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_STORE_FLOOR_PUTWAY_HU&aclclientid=android,FullHuPutwayFragment
+ZWM_STORE_GANDOLA_VALIDATE,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_STORE_GANDOLA_VALIDATE&aclclientid=android,Vars + fragments
+ZWM_STORE_GET_BIN,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_STORE_GET_BIN&aclclientid=android,Floor_Putway_Fragment HuBinConsPutwayFragment
+ZWM_STORE_GET_HUS,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_STORE_GET_HUS&aclclientid=android,HU_GRC_Process_Fragment
+ZWM_STORE_GET_STOCK,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_STORE_GET_STOCK&aclclientid=android,Vars + Scan_TRFDispToProc Scan_Floor_putway
+ZWM_STORE_GRC_PUTWAY,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_STORE_GRC_PUTWAY&aclclientid=android,Scan_grc_putway_Process_Fragment
+ZWM_STORE_GRT_CATEGORY,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_STORE_GRT_CATEGORY&aclclientid=android,Vars + GRT_From_DisplayFragment
+ZWM_STORE_GRT_FROM_DISP_AREA,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_STORE_GRT_FROM_DISP_AREA&aclclientid=android,Vars + fragments
+ZWM_STORE_HU_GET_DETAILS,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_STORE_HU_GET_DETAILS&aclclientid=android,FullHuPutwayFragment GRC_Putway_Fragment
+ZWM_STORE_HU_PUTWAY_BIN_CON,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_STORE_HU_PUTWAY_BIN_CON&aclclientid=android,HuBinConsPutwayFragment
+ZWM_STORE_HU_VALIDATE,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_STORE_HU_VALIDATE&aclclientid=android,StoreBinConsolidationFragment
+ZWM_STORE_IROD_ARTICLE_FIND,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_STORE_IROD_ARTICLE_FIND&aclclientid=android,Vars + fragments
+ZWM_STORE_IROD_BIN_POST,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_STORE_IROD_BIN_POST&aclclientid=android,Vars + fragments
+ZWM_STORE_IROD_DTAG,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_STORE_IROD_DTAG&aclclientid=android,Vars + fragments
+ZWM_STORE_IROD_DTAG_VALIDATE,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_STORE_IROD_DTAG_VALIDATE&aclclientid=android,Vars + fragments
+ZWM_STORE_IROD_EAN_STOCK_V01,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_STORE_IROD_EAN_STOCK_V01&aclclientid=android,Vars + fragments
+ZWM_STORE_IROD_EAN_VALIDATE,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_STORE_IROD_EAN_VALIDATE&aclclientid=android,Vars + fragments
+ZWM_STORE_IROD_EMPTY,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_STORE_IROD_EMPTY&aclclientid=android,Vars + fragments
+ZWM_STORE_IROD_GANDOLA_TAG,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_STORE_IROD_GANDOLA_TAG&aclclientid=android,Vars + fragments
+ZWM_STORE_IROD_NATURE,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_STORE_IROD_NATURE&aclclientid=android,Vars + fragments
+ZWM_STORE_IROD_NATURE_MAPPING,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_STORE_IROD_NATURE_MAPPING&aclclientid=android,Vars + fragments
+ZWM_STORE_IROD_PICK,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_STORE_IROD_PICK&aclclientid=android,Vars + fragments
+ZWM_STORE_IROD_PICK_VALIDATE,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_STORE_IROD_PICK_VALIDATE&aclclientid=android,Vars + fragments
+ZWM_STORE_IROD_PUT,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_STORE_IROD_PUT&aclclientid=android,Vars + fragments
+ZWM_STORE_IROD_PUTWAY_VALID1,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_STORE_IROD_PUTWAY_VALID1&aclclientid=android,Vars + fragments
+ZWM_STORE_IROD_PUTWAY_VALIDATE,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_STORE_IROD_PUTWAY_VALIDATE&aclclientid=android,Vars + fragments
+ZWM_STORE_IROD_TAG,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_STORE_IROD_TAG&aclclientid=android,Vars + fragments
+ZWM_STORE_IROD_TRAN_VALIDATE,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_STORE_IROD_TRAN_VALIDATE&aclclientid=android,Vars + fragments
+ZWM_STORE_IROD_VALIDATE,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_STORE_IROD_VALIDATE&aclclientid=android,Vars + fragments
+ZWM_STORE_PICKLIST_BIN,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_STORE_PICKLIST_BIN&aclclientid=android,Vars + fragments
+ZWM_STORE_PUSHTOSAP_0001_IROD,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_STORE_PUSHTOSAP_0001_IROD&aclclientid=android,PostDataOffiineFragment
+ZWM_STORE_RETURN_TO_MSA,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_STORE_RETURN_TO_MSA&aclclientid=android,Vars + fragments
+ZWM_STORE_TRANSFER_SLOC_TO_SLO,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_STORE_TRANSFER_SLOC_TO_SLO&aclclientid=android,Scan_TRFDispToProc_Fragment
+ZWM_TO_CREATE_FROM_GR_DATA,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_TO_CREATE_FROM_GR_DATA&aclclientid=android,GRCPutwayFragment
+ZWM_TO_CREATE_FROM_SCAN_DATA,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_TO_CREATE_FROM_SCAN_DATA&aclclientid=android,TO_Creation_Fragment
+ZWM_TVS_VAL_EXTERNAL_HU,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_TVS_VAL_EXTERNAL_HU&aclclientid=android,PapperLessPicking TVS live HU mode
+ZWM_USER_AUTHORITY_CHECK,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_USER_AUTHORITY_CHECK&aclclientid=android,Vars + fragments
+ZWM_VALI_CRATE_EMPTYBIN,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_VALI_CRATE_EMPTYBIN&aclclientid=android,EmptyBinFragment
+ZWM_VALIDATE_CRATE,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_VALIDATE_CRATE&aclclientid=android,ValidateCrate_Process_Fragment
+ZWM_VALIDATE_EMPTY_BIN,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_VALIDATE_EMPTY_BIN&aclclientid=android,EmptyBinFragment
+ZWM_VALIDATE_EXTERNAL_HU,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_VALIDATE_EXTERNAL_HU&aclclientid=android,PapperLessPicking paperless mode
+ZWM_VALIDATE_PAL_BIN,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_VALIDATE_PAL_BIN&aclclientid=android,Vars + fragments
+ZWM_VALIDATE_PAL_TO_BIN,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_VALIDATE_PAL_TO_BIN&aclclientid=android,Vars + fragments
+ZWM_VALIDATE_PALATE,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_VALIDATE_PALATE&aclclientid=android,Vars + fragments
+ZWM_VALIDATE_PALATE_HU,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_VALIDATE_PALATE_HU&aclclientid=android,Vars + fragments
+ZWM_VALIDATE_PURCHASE_ORDER,POST,{base}/noacljsonrfcadaptor?bapiname=ZWM_VALIDATE_PURCHASE_ORDER&aclclientid=android,Stock_In_Out_Fragment

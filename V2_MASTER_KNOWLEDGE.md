@@ -312,7 +312,7 @@ The v12 HHT app sends JSON POST to the base URL. Old Tomcat middleware
 Also, `submitRequest()` strips the last path segment (`/xmwgw`) from the URL,
 so RFC calls go to `192.168.151.40:16080/noacljsonrfcadaptor` (missing `/xmwgw`).
 
-### Current Working Setup (v12.103)
+### Current Working Setup (v12.108)
 ```
 PROD:  v2-hht-api.azurewebsites.net/api/hht → Azure Middleware → SAP PROD
 DEV:   hht-api.v2retail.net/dev → CF Worker (hht-proxy) → RFC Proxy → SAP DEV
