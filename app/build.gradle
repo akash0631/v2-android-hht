@@ -48,6 +48,13 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
         }
+        // Test-only build: own package id and label, so it installs beside the live app and never replaces it.
+        clustertest {
+            initWith debug
+            applicationIdSuffix ".clustertest"
+            versionNameSuffix "-clustertest"
+            matchingFallbacks = ['debug']
+        }
     }
 
     lintOptions {
