@@ -1,0 +1,132 @@
+{
+ "EX_RETURN": {
+  "TYPE": "",
+  "MESSAGE": ""
+ },
+ "EX_LIKP": {
+  "VBELN": "8000004041",
+  "KUNNR": "HB28",
+  "WERKS": "HB28"
+ },
+ "ET_BIN_MC": [
+  {
+   "MATNR": "Material Number",
+   "VBELN": "Delivery",
+   "VLPLA": "Source Storage Bin",
+   "VISTM": "Source actual quantity in stockkeeping unit",
+   "REMAIN_QTY": "Base Quantity Packed in the Handling Unit Item",
+   "STORE": "Name"
+  },
+  {
+   "MATNR": "000001130000186001",
+   "VBELN": "8000004041",
+   "VLPLA": "A0-0206-A1",
+   "VISTM": "2.000",
+   "REMAIN_QTY": "2.000",
+   "STORE": "HB28-BEGUSRAI-2(V2)"
+  },
+  {
+   "MATNR": "000001130000199002",
+   "VBELN": "8000004041",
+   "VLPLA": "A0-0206-B1",
+   "VISTM": "2.000",
+   "REMAIN_QTY": "2.000",
+   "STORE": "HB28-BEGUSRAI-2(V2)"
+  },
+  {
+   "MATNR": "000001130000206002",
+   "VBELN": "8000004041",
+   "VLPLA": "A0-0206-B4",
+   "VISTM": "2.000",
+   "REMAIN_QTY": "2.000",
+   "STORE": "HB28-BEGUSRAI-2(V2)"
+  },
+  {
+   "MATNR": "000001110002463002",
+   "VBELN": "8000004041",
+   "VLPLA": "A0-0203-A4",
+   "VISTM": "1.000",
+   "REMAIN_QTY": "1.000",
+   "STORE": "HB28-BEGUSRAI-2(V2)"
+  }
+ ],
+ "ET_EAN_DATA": [
+  {
+   "MATNR": "Material Number",
+   "MEINH": "Alternative Unit of Measure for Stockkeeping Unit",
+   "UMREZ": "Numerator for Conversion to Base Units of Measure",
+   "EAN11": "International Article Number (EAN/UPC)"
+  },
+  {
+   "MATNR": "000001110002463002",
+   "MEINH": "EA",
+   "UMREZ": "1",
+   "EAN11": "5040100"
+  },
+  {
+   "MATNR": "000001130000186001",
+   "MEINH": "EA",
+   "UMREZ": "1",
+   "EAN11": "5078097"
+  },
+  {
+   "MATNR": "000001130000199002",
+   "MEINH": "EA",
+   "UMREZ": "1",
+   "EAN11": "5078820"
+  },
+  {
+   "MATNR": "000001130000206002",
+   "MEINH": "EA",
+   "UMREZ": "1",
+   "EAN11": "5078899"
+  }
+ ],
+ "ET_LIPS": [
+  {
+   "VBELN": "Delivery",
+   "POSNR": "Delivery Item",
+   "MATNR": "Material Number",
+   "WERKS": "Plant",
+   "LGORT": "Storage location",
+   "CHARG": "Batch Number",
+   "VRKME": "Sales unit"
+  },
+  {
+   "VBELN": "8000004041",
+   "POSNR": "000010",
+   "MATNR": "000001110002463002",
+   "WERKS": "DH24",
+   "LGORT": "0001",
+   "CHARG": "",
+   "VRKME": "EA"
+  },
+  {
+   "VBELN": "8000004041",
+   "POSNR": "000020",
+   "MATNR": "000001130000186001",
+   "WERKS": "DH24",
+   "LGORT": "0001",
+   "CHARG": "",
+   "VRKME": "EA"
+  },
+  {
+   "VBELN": "8000004041",
+   "POSNR": "000030",
+   "MATNR": "000001130000199002",
+   "WERKS": "DH24",
+   "LGORT": "0001",
+   "CHARG": "",
+   "VRKME": "EA"
+  },
+  {
+   "VBELN": "8000004041",
+   "POSNR": "000040",
+   "MATNR": "000001130000206002",
+   "WERKS": "DH24",
+   "LGORT": "0001",
+   "CHARG": "",
+   "VRKME": "EA"
+  }
+ ]
+}

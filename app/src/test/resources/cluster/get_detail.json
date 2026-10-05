@@ -1,0 +1,138 @@
+{
+ "RUN_ID": "ZPT_P5_E2E3",
+ "WERKS": "DH24",
+ "CLUSTERS": [
+  {
+   "CLUSTER_NO": 1,
+   "READY": true,
+   "HUS": 2,
+   "STOPS": 4,
+   "LINES": 6,
+   "PCS": 9.0,
+   "SLOTS": [
+    {
+     "SLOT": 1,
+     "STORE": "HB28",
+     "DLV_NO": "0001",
+     "VBELN": "8000004041",
+     "LINES": 4,
+     "PCS": 7.0,
+     "TO_OK": 4
+    },
+    {
+     "SLOT": 2,
+     "STORE": "HB12",
+     "DLV_NO": "0001",
+     "VBELN": "8000004040",
+     "LINES": 2,
+     "PCS": 2.0,
+     "TO_OK": 2
+    }
+   ]
+  }
+ ],
+ "LINES": [
+  {
+   "CLUSTER_NO": 1,
+   "SLOT": 1,
+   "CSEQ": 1,
+   "STOP": 1,
+   "LINE_NO": "0000002",
+   "STORE": "HB28",
+   "DLV_NO": "0001",
+   "VBELN": "8000004041",
+   "POSNR": "000010",
+   "MATNR": "000001110002463002",
+   "LGTYP": "E01",
+   "LGPLA": "A0-0203-A4",
+   "QTY": 1.0,
+   "TANUM": "0000034320",
+   "LSTAT": "TO_OK"
+  },
+  {
+   "CLUSTER_NO": 1,
+   "SLOT": 1,
+   "CSEQ": 2,
+   "STOP": 2,
+   "LINE_NO": "0000003",
+   "STORE": "HB28",
+   "DLV_NO": "0001",
+   "VBELN": "8000004041",
+   "POSNR": "000020",
+   "MATNR": "000001130000186001",
+   "LGTYP": "E01",
+   "LGPLA": "A0-0206-A1",
+   "QTY": 2.0,
+   "TANUM": "0000034320",
+   "LSTAT": "TO_OK"
+  },
+  {
+   "CLUSTER_NO": 1,
+   "SLOT": 2,
+   "CSEQ": 3,
+   "STOP": 2,
+   "LINE_NO": "0000005",
+   "STORE": "HB12",
+   "DLV_NO": "0001",
+   "VBELN": "8000004040",
+   "POSNR": "000010",
+   "MATNR": "000001130000186001",
+   "LGTYP": "E01",
+   "LGPLA": "A0-0206-A1",
+   "QTY": 1.0,
+   "TANUM": "0000034321",
+   "LSTAT": "TO_OK"
+  },
+  {
+   "CLUSTER_NO": 1,
+   "SLOT": 1,
+   "CSEQ": 4,
+   "STOP": 3,
+   "LINE_NO": "0000004",
+   "STORE": "HB28",
+   "DLV_NO": "0001",
+   "VBELN": "8000004041",
+   "POSNR": "000030",
+   "MATNR": "000001130000199002",
+   "LGTYP": "E01",
+   "LGPLA": "A0-0206-B1",
+   "QTY": 2.0,
+   "TANUM": "0000034320",
+   "LSTAT": "TO_OK"
+  },
+  {
+   "CLUSTER_NO": 1,
+   "SLOT": 2,
+   "CSEQ": 5,
+   "STOP": 3,
+   "LINE_NO": "0000006",
+   "STORE": "HB12",
+   "DLV_NO": "0001",
+   "VBELN": "8000004040",
+   "POSNR": "000020",
+   "MATNR": "000001130000199002",
+   "LGTYP": "E01",
+   "LGPLA": "A0-0206-B1",
+   "QTY": 1.0,
+   "TANUM": "0000034321",
+   "LSTAT": "TO_OK"
+  },
+  {
+   "CLUSTER_NO": 1,
+   "SLOT": 1,
+   "CSEQ": 6,
+   "STOP": 4,
+   "LINE_NO": "0000001",
+   "STORE": "HB28",
+   "DLV_NO": "0001",
+   "VBELN": "8000004041",
+   "POSNR": "000040",
+   "MATNR": "000001130000206002",
+   "LGTYP": "E01",
+   "LGPLA": "A0-0206-B4",
+   "QTY": 2.0,
+   "TANUM": "0000034320",
+   "LSTAT": "TO_OK"
+  }
+ ]
+}

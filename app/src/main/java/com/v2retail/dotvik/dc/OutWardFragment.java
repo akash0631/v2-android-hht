@@ -35,7 +35,7 @@ public class OutWardFragment extends Fragment implements View.OnClickListener,
     private static final String ARG_PARAM2 = "param2";
     Button picking;
     Button hu_scan;
-    Button paperless_picking;
+    Button paperless_picking, cluster_picking;
     Button dc_grt;
     Button hu_cla;
     Context con;
@@ -98,6 +98,7 @@ public class OutWardFragment extends Fragment implements View.OnClickListener,
         picking = (Button) view.findViewById(R.id.picking);
         hu_scan = (Button) view.findViewById(R.id.Hu_Scan);
         paperless_picking = (Button) view.findViewById(R.id.paperless_picking);
+        cluster_picking = view.findViewById(R.id.cluster_picking);
 
         dc_grt = (Button) view.findViewById(R.id.dc_grt);
         hu_cla = (Button) view.findViewById(R.id.hu_move_cla);
@@ -113,6 +114,7 @@ public class OutWardFragment extends Fragment implements View.OnClickListener,
         picking.setOnClickListener(this);
         hu_scan.setOnClickListener(this);
         paperless_picking.setOnClickListener(this);
+        cluster_picking.setOnClickListener(this);
         shade_stock_movement.setOnClickListener(this);
         empty_bin.setOnClickListener(this);
         grt_hu_move.setOnClickListener(this);
@@ -163,6 +165,9 @@ public class OutWardFragment extends Fragment implements View.OnClickListener,
                 break;
             case R.id.paperless_picking:
                 fragment = PaperLessDate.newInstance(Vars.PAPER_LESS);
+                break;
+            case R.id.cluster_picking:
+                fragment = ClusterPickingFragment.newInstance();
                 break;
 
             case R.id.grt_hu_move:
